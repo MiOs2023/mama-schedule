@@ -13,10 +13,8 @@
 body{font-family:'Noto Sans JP',sans-serif;background:#FFF5F7;min-height:100vh;color:#333}
 :root{
   --pink:#F472B6;--pink-light:#FCE7F3;--pink-mid:#FBCFE8;--pink-dark:#BE185D;
-  --rose:#FFF1F5;--cream:#FFFBF0;
-  --purple:#A855F7;--purple-light:#F3E8FF;
-  --teal:#14B8A6;--teal-light:#CCFBF1;
-  --amber:#F59E0B;--amber-light:#FEF3C7;
+  --rose:#FFF1F5;--purple:#A855F7;--purple-light:#F3E8FF;
+  --teal:#14B8A6;--amber:#F59E0B;--amber-light:#FEF3C7;
   --green:#22C55E;--green-light:#DCFCE7;
   --text:#1F2937;--text-sub:#6B7280;--text-hint:#9CA3AF;
   --border:#FCE7F3;--shadow:0 2px 12px rgba(244,114,182,0.15);
@@ -57,14 +55,14 @@ body{font-family:'Noto Sans JP',sans-serif;background:#FFF5F7;min-height:100vh;c
 .stat-unit{font-size:11px;color:var(--text-sub)}
 .budget-bar{height:8px;background:var(--pink-mid);border-radius:4px;overflow:hidden}
 .budget-fill{height:100%;background:linear-gradient(90deg,#F472B6,#EC4899);border-radius:4px}
+.cat-tabs{display:flex;gap:6px;overflow-x:auto;padding-bottom:4px;margin-bottom:12px;-webkit-overflow-scrolling:touch}
+.cat-btn{padding:5px 12px;border-radius:16px;border:1.5px solid var(--pink-mid);background:white;font-size:11px;cursor:pointer;white-space:nowrap;font-family:'Noto Sans JP',sans-serif;transition:all 0.2s}
+.cat-btn.active{background:var(--pink-dark);color:white;border-color:var(--pink-dark)}
 .guide-week-btn{padding:6px 14px;border-radius:20px;border:1.5px solid var(--pink-mid);background:white;font-size:12px;cursor:pointer;white-space:nowrap;font-family:'Noto Sans JP',sans-serif;transition:all 0.2s}
 .guide-week-btn.active{background:var(--pink-dark);color:white;border-color:var(--pink-dark)}
 .guide-item{display:flex;gap:8px;padding:6px 0;border-bottom:1px solid var(--rose);font-size:13px;line-height:1.5}
 .guide-item:last-child{border-bottom:none}
 .guide-dot{width:6px;height:6px;border-radius:50%;background:var(--pink);margin-top:6px;flex-shrink:0}
-.cat-tabs{display:flex;gap:6px;overflow-x:auto;padding-bottom:4px;margin-bottom:12px;-webkit-overflow-scrolling:touch}
-.cat-btn{padding:5px 12px;border-radius:16px;border:1.5px solid var(--pink-mid);background:white;font-size:11px;cursor:pointer;white-space:nowrap;font-family:'Noto Sans JP',sans-serif;transition:all 0.2s}
-.cat-btn.active{background:var(--pink-dark);color:white;border-color:var(--pink-dark)}
 .check-item{display:flex;align-items:flex-start;gap:10px;padding:10px 0;border-bottom:1px solid var(--rose)}
 .check-item:last-child{border-bottom:none}
 .check-box{width:20px;height:20px;border-radius:6px;border:2px solid var(--pink);display:flex;align-items:center;justify-content:center;cursor:pointer;flex-shrink:0;margin-top:1px;transition:all 0.2s}
@@ -91,7 +89,7 @@ body{font-family:'Noto Sans JP',sans-serif;background:#FFF5F7;min-height:100vh;c
 .fridge-btn{padding:5px 10px;border-radius:12px;border:1.5px solid #BBF7D0;background:white;font-size:11px;cursor:pointer;transition:all 0.2s;font-family:'Noto Sans JP',sans-serif}
 .fridge-btn.sel{background:var(--green-light);border-color:var(--green);color:#15803D}
 .ai-result{background:linear-gradient(135deg,var(--purple-light),var(--rose));border-radius:16px;padding:14px;margin-top:12px;border:1px solid #DDD6FE}
-.ai-result-title{font-size:12px;font-weight:700;color:var(--purple);margin-bottom:8px;display:flex;align-items:center;gap:4px}
+.ai-result-title{font-size:12px;font-weight:700;color:var(--purple);margin-bottom:8px}
 .ai-content{font-size:13px;color:var(--text);line-height:1.7;white-space:pre-wrap}
 .ai-loading{display:flex;align-items:center;gap:8px;color:var(--purple);font-size:13px}
 .dot-anim span{display:inline-block;animation:bounce 1.2s infinite}
@@ -116,6 +114,7 @@ body{font-family:'Noto Sans JP',sans-serif;background:#FFF5F7;min-height:100vh;c
 .form-label span{font-size:11px;font-weight:400;color:var(--text-hint);margin-left:4px}
 .form-input{width:100%;padding:10px 14px;border:1.5px solid var(--pink-mid);border-radius:12px;font-size:14px;font-family:'Noto Sans JP',sans-serif;background:white;color:var(--text);outline:none;transition:border 0.2s}
 .form-input:focus{border-color:var(--pink)}
+.form-select{width:100%;padding:10px 14px;border:1.5px solid var(--pink-mid);border-radius:12px;font-size:14px;font-family:'Noto Sans JP',sans-serif;background:white;color:var(--text);outline:none}
 .radio-group{display:flex;flex-wrap:wrap;gap:8px}
 .radio-btn{padding:8px 14px;border-radius:14px;border:1.5px solid var(--pink-mid);background:white;font-size:12px;cursor:pointer;transition:all 0.2s;font-family:'Noto Sans JP',sans-serif}
 .radio-btn.sel{background:var(--pink-dark);color:white;border-color:var(--pink-dark)}
@@ -124,8 +123,7 @@ body{font-family:'Noto Sans JP',sans-serif;background:#FFF5F7;min-height:100vh;c
 .toggle.on{background:var(--pink)}
 .toggle-knob{width:20px;height:20px;border-radius:50%;background:white;position:absolute;top:2px;left:2px;transition:transform 0.2s;box-shadow:0 1px 4px rgba(0,0,0,0.2)}
 .toggle.on .toggle-knob{transform:translateX(20px)}
-.child-row{display:flex;gap:8px;align-items:center;margin-bottom:8px}
-.child-row .form-input{flex:1}
+.child-row{display:flex;gap:8px;align-items:center;margin-bottom:8px;flex-wrap:wrap}
 .remove-btn{width:32px;height:32px;border-radius:50%;border:1.5px solid #FCA5A5;background:white;color:#EF4444;cursor:pointer;font-size:16px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
 .setup-submit{width:100%;padding:14px;background:linear-gradient(135deg,var(--pink),var(--pink-dark));color:white;border:none;border-radius:16px;font-size:16px;font-weight:700;cursor:pointer;font-family:'Zen Maru Gothic',sans-serif;margin-top:8px;box-shadow:0 4px 16px rgba(244,114,182,0.4);transition:transform 0.2s}
 .setup-submit:hover{transform:translateY(-1px)}
@@ -136,6 +134,8 @@ body{font-family:'Noto Sans JP',sans-serif;background:#FFF5F7;min-height:100vh;c
 .premium-text{font-size:12px;color:var(--purple);margin-bottom:6px}
 .premium-btn{padding:6px 16px;background:var(--purple);color:white;border:none;border-radius:10px;font-size:12px;cursor:pointer;font-family:'Noto Sans JP',sans-serif}
 .affiliate-note{font-size:10px;color:var(--text-hint);text-align:center;padding:8px 0;border-top:1px solid var(--border)}
+.day-label{font-size:11px;color:var(--text-sub);min-width:20px;padding-top:8px}
+.child-schedule-input{flex:1;padding:6px 10px;border:1.5px solid var(--pink-mid);border-radius:8px;font-size:12px;font-family:'Noto Sans JP',sans-serif;background:white;color:var(--text);outline:none}
 ::-webkit-scrollbar{width:4px;height:4px}
 ::-webkit-scrollbar-track{background:transparent}
 ::-webkit-scrollbar-thumb{background:var(--pink-mid);border-radius:2px}
@@ -146,11 +146,18 @@ body{font-family:'Noto Sans JP',sans-serif;background:#FFF5F7;min-height:100vh;c
 <script type="text/babel">
 const {useState,useEffect,useCallback}=React;
 const AFFILIATE={amazon:"mamaschedule-22",rakuten:"091e72cb.e2dd584d.091e72cc.2c9b6a81"};
+const WEEKDAYS=['月','火','水','木','金','土','日'];
+const BUDGET_OPTIONS=[
+  {label:'3万円以内',value:30000},{label:'3万〜5万円',value:50000},
+  {label:'5万〜7万円',value:70000},{label:'7万〜9万円',value:90000},
+  {label:'9万〜11万円',value:110000},{label:'11万〜13万円',value:130000},
+  {label:'13万〜15万円',value:150000},{label:'15万円以上',value:200000},
+];
 const WEEKLY_GUIDE={
   34:{body:["子宮底長が大きくなり胃への圧迫感が増す","赤ちゃんの体重は約2kg","頻尿・動悸が出やすい時期"],todo:["産院への緊急連絡先を確認","入院バッグの中身リストアップ","産前休暇の生活リズムを整える"],caution:["長時間の立ち仕事は避ける","1時間ごとに休憩をとる","むくみがひどい場合は受診"]},
   35:{body:["赤ちゃんの肺がほぼ完成","胎動がやや落ち着く場合も","恥骨痛・腰痛が出やすい"],todo:["入院バッグを揃え始める","美容室・サロン予約を入れる","家の断捨離を始める"],caution:["急な破水に備えて外出時は準備を","無理な運動は控える"]},
-  36:{body:["赤ちゃんの頭が骨盤に入り始める","おりものが増える","前駆陣痛が来る場合も"],todo:["入院バッグ完成","ネイル・まつげサロンを済ませる","沐浴グッズをそろえる"],caution:["いつ陣痛が来ても対応できる準備を","前駆陣痛と本陣痛の違いを確認"]},
-  37:{body:["正期産に入る（37〜41週）","いつ陣痛が来てもOKな時期","体重増加がゆるやかに"],todo:["全準備の最終確認","パートナーへの引き継ぎ完了","冷凍作り置きを始める"],caution:["一人での遠出は控える","常に携帯の充電を満タンに"]},
+  36:{body:["赤ちゃんの頭が骨盤に入り始める","おりものが増える","前駆陣痛が来る場合も"],todo:["入院バッグ完成","ネイル・まつ毛・眉毛を整える","沐浴グッズをそろえる"],caution:["いつ陣痛が来ても対応できる準備を","前駆陣痛と本陣痛の違いを確認"]},
+  37:{body:["正期産に入る（37〜41週）","いつ陣痛が来てもOKな時期","体重増加がゆるやかに"],todo:["全準備の最終確認","冷凍作り置きを始める","産後のサポート体制を確認する"],caution:["一人での遠出は控える","常に携帯の充電を満タンに"]},
   38:{body:["赤ちゃんの体重約3kg","子宮口が少しずつ開き始める","おなかが下がってくる感覚"],todo:["産院への連絡タイミングを再確認","家族への緊急連絡網を作る","産後の食材ストックを確認"],caution:["10分間隔の規則的な陣痛で産院へ","破水したら即座に産院へ連絡"]},
   39:{body:["出産直前の準備が整う","胎動の変化に注意","睡眠が取りにくくなる場合も"],todo:["最終的な部屋の片付け","産後の家事代行・サポートを確認","リラックス法の練習"],caution:["毎日の胎動カウントを続ける","強い頭痛・視野異常は即受診"]},
   40:{body:["予定日！でも±2週間は正常","子宮収縮が増える","いつでも準備OK"],todo:["産院との最終連絡","パートナーに常にそばにいてもらう","リラックスして過ごす"],caution:["予定日を過ぎても焦らない","何か異変を感じたらすぐ受診"]},
@@ -189,10 +196,10 @@ const CHECKLIST_DATA={
     {name:"断捨離・収納整理",hint:"赤ちゃんのものを置くスペースを作る",min:0,avg:0,high:0},
   ],
   "美容・身だしなみ":[
-    {name:"美容室（カット）",hint:"産後3〜4ヶ月は行けない。37週までに",min:3000,avg:7000,high:15000},
-    {name:"ネイル除去",hint:"帝王切開・手術時は必須。36週までに",min:3000,avg:5000,high:10000},
-    {name:"まつげサロン",hint:"入院中はビューラー使用不可の場合も",min:3000,avg:6000,high:15000},
-    {name:"眉毛サロン",hint:"産後しばらく通えない。今のうちに",min:2000,avg:4000,high:8000},
+    {name:"美容室",hint:"産後3〜4ヶ月は行けなくなるかも。35週までに",min:3000,avg:7000,high:15000},
+    {name:"ネイル除去、爪は短くカット",hint:"ネイルオフ必須。新生児のお世話のために爪を短く切る。35週までに",min:3000,avg:5000,high:10000},
+    {name:"まつげサロン",hint:"入院中は化粧不可の場合も",min:3000,avg:6000,high:15000},
+    {name:"眉毛サロン",hint:"写真写りが格段とよくなる",min:2000,avg:4000,high:8000},
   ],
   "手続き・書類":[
     {name:"出生届の準備",hint:"出生後14日以内に提出。書類を事前確認",min:0,avg:0,high:0},
@@ -207,11 +214,12 @@ const WEEKLY_TASKS={
   34:["入院バッグリストを作る","産院の緊急連絡先を保存","美容室・サロン予約"],
   35:["入院バッグを揃え始める","断捨離：クローゼット","ベビースペースを確保"],
   36:["入院バッグ完成","ネイル・まつ毛を整える","エアコン清掃手配"],
-  37:["全準備の最終確認","冷凍作り置き開始","引き継ぎ書類完成"],
+  37:["全準備の最終確認","冷凍作り置き開始","産後サポート体制を確認"],
   38:["産後サポート体制確認","食材ストック確認","リラックス法練習"],
   39:["最終部屋の片付け","緊急連絡網の確認","ゆっくり過ごす"],
   40:["産院と最終確認","パートナーと過ごす","好きなことをして待つ"],
 };
+const DEFAULT_PROFILE={name:'',dueDate:'',birthType:'natural',pattern:'first',children:[],workEnabled:false,food:'both',budgetOption:150000,budgetCustom:'',defaultAxis:['avg'],selfcare:[],garbage:[]};
 
 function App(){
   const [profile,setProfile]=useState(()=>{try{const s=localStorage.getItem('pregnancy_profile');return s?JSON.parse(s):null}catch{return null}});
@@ -224,6 +232,7 @@ function App(){
   const [aiLoading,setAiLoading]=useState(false);
   const [guideWeek,setGuideWeek]=useState(null);
   const [checkCat,setCheckCat]=useState(Object.keys(CHECKLIST_DATA)[0]);
+  const [showSetup,setShowSetup]=useState(false);
 
   useEffect(()=>{if(profile)localStorage.setItem('pregnancy_profile',JSON.stringify(profile))},[profile]);
   useEffect(()=>{localStorage.setItem('pregnancy_checks',JSON.stringify(checks))},[checks]);
@@ -238,7 +247,6 @@ function App(){
     const diff=Math.round((due-today)/(7*24*60*60*1000));
     return Math.max(34,Math.min(40,40-diff));
   },[profile]);
-
   const getDaysLeft=useCallback(()=>{
     if(!profile?.dueDate)return'—';
     const due=new Date(profile.dueDate);
@@ -250,30 +258,35 @@ function App(){
   const week=profile?getWeek():34;
   const daysLeft=profile?getDaysLeft():56;
   const progress=Math.min(100,Math.round(((week-34)/6)*100));
-  useEffect(()=>{if(profile)setGuideWeek(week)},[profile,week]);
+  useEffect(()=>{if(profile&&!guideWeek)setGuideWeek(week)},[profile,week]);
 
-  const toggleCheck=(cat,idx)=>{const key=`${cat}_${idx}`;setChecks(p=>({...p,[key]:!p[key]}));};
+  const toggleCheck=(cat,idx)=>{const key=`${cat}_${idx}`;setChecks(p=>({...p,[key]:!p[key],[`${cat}_${idx}_na`]:false}));};
+  const toggleNA=(cat,idx)=>{const key=`${cat}_${idx}_na`;setChecks(p=>({...p,[key]:!p[key],[`${cat}_${idx}`]:false}));};
   const toggleMission=(idx)=>{const today=new Date().toDateString();const key=`${today}_${idx}`;setMissions(p=>({...p,[key]:!p[key]}));};
   const isMissionDone=(idx)=>{const today=new Date().toDateString();return!!missions[`${today}_${idx}`];};
   const todayMissions=(WEEKLY_TASKS[week]||WEEKLY_TASKS[34]).slice(0,3);
-
+  const getBudget=()=>profile?.budgetOption==='custom'?parseInt(profile?.budgetCustom||0):parseInt(profile?.budgetOption||150000);
   const getBudgetPct=()=>{
-    if(!profile?.budget)return 0;
+    const budget=getBudget();if(!budget)return 0;
     let spent=0;
-    Object.entries(checks).forEach(([k,v])=>{if(!v)return;const[cat,idx]=k.split('_');const items=CHECKLIST_DATA[cat];if(items&&items[parseInt(idx)])spent+=items[parseInt(idx)].avg||0;});
-    return Math.min(100,Math.round((spent/profile.budget)*100));
+    Object.entries(checks).forEach(([k,v])=>{
+      if(!v||k.includes('_na'))return;
+      const parts=k.split('_');if(parts.length<2)return;
+      const idx=parseInt(parts[parts.length-1]);
+      const cat=parts.slice(0,-1).join('_');
+      const items=CHECKLIST_DATA[cat];
+      if(items&&items[idx])spent+=items[idx].avg||0;
+    });
+    return Math.min(100,Math.round((spent/budget)*100));
   };
-
   const makeLink=(name,type)=>{
     const q=encodeURIComponent(name+' 妊婦');
     if(type==='amazon')return`https://www.amazon.co.jp/s?k=${q}&tag=${AFFILIATE.amazon}`;
     if(type==='rakuten')return`https://search.rakuten.co.jp/search/mall/${q}/?af_id=${AFFILIATE.rakuten}`;
     return`https://room.rakuten.co.jp/`;
   };
-
   const callAI=async()=>{
-    if(aiLoading)return;
-    setAiLoading(true);setAiResult('');
+    if(aiLoading)return;setAiLoading(true);setAiResult('');
     const pattern=profile?.pattern==='second'?'上の子あり（家族向けレシピ希望）':'初めての妊娠';
     const prompt=`妊娠${week}週の妊婦です。${pattern}。体重:${health.weight||'未入力'}kg、気分:${health.mood||'普通'}、症状:${health.symptoms.join('・')||'特になし'}。冷蔵庫にある食材:${health.fridge.join('・')||'特になし'}。以下を簡潔に提案してください（日本語・改行あり・温かみのある口調）：1.今日の栄養アドバイス（2〜3行）2.朝ごはんレシピ（食材・作り方3行以内）3.昼ごはんレシピ（食材・作り方3行以内）4.夕ごはんレシピ（食材・作り方3行以内）5.嗜好品を楽しむヒント（コーヒー→ディカフェなどアレンジ）6.買い物が必要な食材リスト（箇条書き）`;
     try{
@@ -285,13 +298,18 @@ function App(){
     setAiLoading(false);
   };
 
-  if(!profile)return<SetupScreen onDone={setProfile}/>;
+  // 設定更新：既存データを保持しつつ変更箇所だけ上書き
+  const handleProfileUpdate=(updates)=>{setProfile(p=>({...p,...updates}));setShowSetup(false);};
+
+  if(!profile)return<SetupScreen onDone={(p)=>setProfile({...DEFAULT_PROFILE,...p})} isFirst={true}/>;
+  if(showSetup)return<SetupScreen onDone={handleProfileUpdate} initialData={profile} isFirst={false} onCancel={()=>setShowSetup(false)}/>;
+
   return(
     <div className="app">
       <div className="header">
         <div className="header-top">
           <div className="app-title">🌸 ままスケ</div>
-          <button className="settings-btn" onClick={()=>setProfile(null)}>⚙️</button>
+          <button className="settings-btn" onClick={()=>setShowSetup(true)}>⚙️</button>
         </div>
         <div className="week-info">
           <div className="week-badge">{week}週</div>
@@ -302,7 +320,7 @@ function App(){
       <div className="content">
         {tab===0&&<HomeTab week={week} profile={profile} workHours={workHours} setWorkHours={setWorkHours} todayMissions={todayMissions} isMissionDone={isMissionDone} toggleMission={toggleMission} budgetPct={getBudgetPct()} checks={checks}/>}
         {tab===1&&<GuideTab week={week} guideWeek={guideWeek} setGuideWeek={setGuideWeek} profile={profile}/>}
-        {tab===2&&<CheckTab profile={profile} checks={checks} toggleCheck={toggleCheck} checkCat={checkCat} setCheckCat={setCheckCat} makeLink={makeLink}/>}
+        {tab===2&&<CheckTab profile={profile} checks={checks} toggleCheck={toggleCheck} toggleNA={toggleNA} checkCat={checkCat} setCheckCat={setCheckCat} makeLink={makeLink}/>}
         {tab===3&&<HealthTab health={health} setHealth={setHealth} aiResult={aiResult} aiLoading={aiLoading} callAI={callAI}/>}
         {tab===4&&<ScheduleTab profile={profile} week={week}/>}
       </div>
@@ -318,32 +336,131 @@ function App(){
   );
 }
 
-function SetupScreen({onDone}){
-  const [form,setForm]=useState({name:'',dueDate:'',birthType:'natural',pattern:'first',children:[],workEnabled:false,food:'both',budget:'150000',defaultAxis:'avg',selfcare:false,garbage:[]});
-  const days=['月','火','水','木','金','土','日'];
-  const toggleGarbage=(d)=>setForm(p=>({...p,garbage:p.garbage.includes(d)?p.garbage.filter(x=>x!==d):[...p.garbage,d]}));
-  const addChild=()=>setForm(p=>({...p,children:[...p.children,{name:'',age:''}]}));
+function SetupScreen({onDone,initialData,isFirst,onCancel}){
+  const [form,setForm]=useState(()=>initialData?{...DEFAULT_PROFILE,...initialData}:{...DEFAULT_PROFILE});
+  const [budgetMode,setBudgetMode]=useState(()=>initialData?.budgetOption==='custom'?'custom':'select');
+  const toggleArr=(key,v)=>setForm(p=>({...p,[key]:(p[key]||[]).includes(v)?(p[key]||[]).filter(x=>x!==v):[...(p[key]||[]),v]}));
+  const addChild=()=>setForm(p=>({...p,children:[...(p.children||[]),{name:'',age:'',routines:{},pickups:{}}]}));
   const updateChild=(i,k,v)=>setForm(p=>({...p,children:p.children.map((c,j)=>j===i?{...c,[k]:v}:c)}));
+  const updateChildDay=(i,field,day,v)=>setForm(p=>({...p,children:p.children.map((c,j)=>j===i?{...c,[field]:{...(c[field]||{}),[day]:v}}:c)}));
   const removeChild=(i)=>setForm(p=>({...p,children:p.children.filter((_,j)=>j!==i)}));
+
   return(
     <div className="setup-overlay">
       <div className="setup-header">
-        <div className="setup-title">🌸 ままスケへようこそ</div>
-        <div className="setup-sub">あなたに合わせたスケジュールを作成します</div>
+        <div className="setup-title">🌸 {isFirst?'ままスケへようこそ':'設定を変更する'}</div>
+        <div className="setup-sub">{isFirst?'あなたに合わせたスケジュールを作成します':'変更したい項目だけ更新できます'}</div>
       </div>
       <div className="setup-body">
-        <div className="form-group"><label className="form-label">お名前 <span>任意</span></label><input className="form-input" placeholder="例：さくら" value={form.name} onChange={e=>setForm(p=>({...p,name:e.target.value}))}/></div>
-        <div className="form-group"><label className="form-label">出産予定日</label><input className="form-input" type="date" value={form.dueDate} onChange={e=>setForm(p=>({...p,dueDate:e.target.value}))}/></div>
-        <div className="form-group"><label className="form-label">出産方法</label><div className="radio-group">{[['natural','自然分娩'],['induced','誘発分娩'],['painless','無痛分娩'],['csection','帝王切開']].map(([v,l])=>(<button key={v} className={`radio-btn${form.birthType===v?' sel':''}`} onClick={()=>setForm(p=>({...p,birthType:v}))}>{l}</button>))}</div></div>
-        <div className="form-group"><label className="form-label">パターン</label><div className="radio-group"><button className={`radio-btn${form.pattern==='first'?' sel':''}`} onClick={()=>setForm(p=>({...p,pattern:'first'}))}>🌱 初めて・久しぶり</button><button className={`radio-btn${form.pattern==='second'?' sel':''}`} onClick={()=>setForm(p=>({...p,pattern:'second'}))}>👨‍👩‍👧 上の子あり</button></div></div>
-        {form.pattern==='second'&&(<div className="form-group"><label className="form-label">上の子の情報</label>{form.children.map((c,i)=>(<div key={i} className="child-row"><input className="form-input" placeholder="名前" value={c.name} onChange={e=>updateChild(i,'name',e.target.value)}/><input className="form-input" placeholder="年齢" type="number" min="0" max="15" value={c.age} onChange={e=>updateChild(i,'age',e.target.value)} style={{width:70}}/><button className="remove-btn" onClick={()=>removeChild(i)}>×</button></div>))}<button className="add-btn" onClick={addChild}>＋ 子供を追加</button></div>)}
-        <div className="form-group"><label className="form-label">在宅ワーク</label><div className="toggle-row"><span style={{fontSize:13,color:'var(--text)'}}>在宅ワークがある</span><div className={`toggle${form.workEnabled?' on':''}`} onClick={()=>setForm(p=>({...p,workEnabled:!p.workEnabled}))}><div className="toggle-knob"/></div></div></div>
-        <div className="form-group"><label className="form-label">食材調達方法</label><div className="radio-group">{[['super','スーパー'],['delivery','宅配'],['both','両方']].map(([v,l])=>(<button key={v} className={`radio-btn${form.food===v?' sel':''}`} onClick={()=>setForm(p=>({...p,food:v}))}>{l}</button>))}</div></div>
-        <div className="form-group"><label className="form-label">準備品の総予算</label><input className="form-input" type="number" placeholder="150000" value={form.budget} onChange={e=>setForm(p=>({...p,budget:e.target.value}))}/></div>
-        <div className="form-group"><label className="form-label">商品選択の基準</label><div className="radio-group">{[['min','💰 コスパ重視'],['avg','⭐ 口コミ重視'],['high','✨ デザイン重視']].map(([v,l])=>(<button key={v} className={`radio-btn${form.defaultAxis===v?' sel':''}`} onClick={()=>setForm(p=>({...p,defaultAxis:v}))}>{l}</button>))}</div></div>
-        <div className="form-group"><label className="form-label">セルフケア</label><div className="toggle-row"><span style={{fontSize:13,color:'var(--text)'}}>ストレッチ・散歩をスケジュールに入れる</span><div className={`toggle${form.selfcare?' on':''}`} onClick={()=>setForm(p=>({...p,selfcare:!p.selfcare}))}><div className="toggle-knob"/></div></div></div>
-        <div className="form-group"><label className="form-label">ゴミ出し日 <span>複数選択可</span></label><div className="radio-group">{days.map(d=>(<button key={d} className={`radio-btn${form.garbage.includes(d)?' sel':''}`} onClick={()=>toggleGarbage(d)}>{d}曜</button>))}</div></div>
-        <button className="setup-submit" onClick={()=>form.dueDate&&onDone(form)}>🌸 スタート！</button>
+        <div className="form-group">
+          <label className="form-label">お名前 <span>任意</span></label>
+          <input className="form-input" placeholder="例：さくら" value={form.name||''} onChange={e=>setForm(p=>({...p,name:e.target.value}))}/>
+        </div>
+        <div className="form-group">
+          <label className="form-label">出産予定日</label>
+          <input className="form-input" type="date" value={form.dueDate||''} onChange={e=>setForm(p=>({...p,dueDate:e.target.value}))}/>
+        </div>
+        <div className="form-group">
+          <label className="form-label">出産方法</label>
+          <div className="radio-group">
+            {[['natural','自然分娩'],['planned','計画分娩（誘発・帝王切開など）']].map(([v,l])=>(
+              <button key={v} className={`radio-btn${form.birthType===v?' sel':''}`} onClick={()=>setForm(p=>({...p,birthType:v}))}>{l}</button>
+            ))}
+          </div>
+        </div>
+        <div className="form-group">
+          <label className="form-label">パターン</label>
+          <div className="radio-group">
+            <button className={`radio-btn${form.pattern==='first'?' sel':''}`} onClick={()=>setForm(p=>({...p,pattern:'first'}))}>🌱 初めて・久しぶり</button>
+            <button className={`radio-btn${form.pattern==='second'?' sel':''}`} onClick={()=>setForm(p=>({...p,pattern:'second'}))}>👨‍👩‍👧 上の子あり</button>
+          </div>
+        </div>
+        {form.pattern==='second'&&(
+          <div className="form-group">
+            <label className="form-label">上の子の情報</label>
+            {(form.children||[]).map((c,i)=>(
+              <div key={i} style={{background:'var(--rose)',borderRadius:14,padding:12,marginBottom:10}}>
+                <div className="child-row">
+                  <input className="form-input" placeholder="名前" value={c.name||''} onChange={e=>updateChild(i,'name',e.target.value)} style={{flex:1}}/>
+                  <input className="form-input" placeholder="年齢" type="number" min="0" max="15" value={c.age||''} onChange={e=>updateChild(i,'age',e.target.value)} style={{width:70}}/>
+                  <button className="remove-btn" onClick={()=>removeChild(i)}>×</button>
+                </div>
+                <div style={{marginTop:8}}>
+                  <div style={{fontSize:12,fontWeight:700,color:'var(--text-sub)',marginBottom:6}}>📅 曜日ごとの習い事・予定</div>
+                  {WEEKDAYS.map(day=>(
+                    <div key={day} style={{display:'flex',gap:6,marginBottom:4,alignItems:'center'}}>
+                      <span className="day-label">{day}</span>
+                      <input className="child-schedule-input" placeholder={`習い事・予定`} value={(c.routines||{})[day]||''} onChange={e=>updateChildDay(i,'routines',day,e.target.value)}/>
+                    </div>
+                  ))}
+                  <div style={{fontSize:12,fontWeight:700,color:'var(--text-sub)',margin:'8px 0 6px'}}>🚗 送迎時間</div>
+                  {WEEKDAYS.map(day=>(
+                    <div key={day} style={{display:'flex',gap:6,marginBottom:4,alignItems:'center'}}>
+                      <span className="day-label">{day}</span>
+                      <input className="child-schedule-input" placeholder={`送迎時間（例：15:30）`} value={(c.pickups||{})[day]||''} onChange={e=>updateChildDay(i,'pickups',day,e.target.value)}/>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            ))}
+            <button className="add-btn" onClick={addChild}>＋ 子供を追加</button>
+          </div>
+        )}
+        <div className="form-group">
+          <label className="form-label">在宅ワーク</label>
+          <div className="toggle-row">
+            <span style={{fontSize:13,color:'var(--text)'}}>在宅ワークがある</span>
+            <div className={`toggle${form.workEnabled?' on':''}`} onClick={()=>setForm(p=>({...p,workEnabled:!p.workEnabled}))}><div className="toggle-knob"/></div>
+          </div>
+        </div>
+        <div className="form-group">
+          <label className="form-label">食材調達方法</label>
+          <div className="radio-group">
+            {[['super','スーパー'],['delivery','宅配'],['both','両方']].map(([v,l])=>(
+              <button key={v} className={`radio-btn${form.food===v?' sel':''}`} onClick={()=>setForm(p=>({...p,food:v}))}>{l}</button>
+            ))}
+          </div>
+        </div>
+        <div className="form-group">
+          <label className="form-label">準備品の総予算</label>
+          <div className="radio-group" style={{marginBottom:8}}>
+            <button className={`radio-btn${budgetMode==='select'?' sel':''}`} onClick={()=>{setBudgetMode('select');setForm(p=>({...p,budgetOption:150000}))}}>選択式</button>
+            <button className={`radio-btn${budgetMode==='custom'?' sel':''}`} onClick={()=>{setBudgetMode('custom');setForm(p=>({...p,budgetOption:'custom'}))}}>手入力</button>
+          </div>
+          {budgetMode==='select'?(
+            <select className="form-select" value={form.budgetOption||150000} onChange={e=>setForm(p=>({...p,budgetOption:parseInt(e.target.value)}))}>
+              {BUDGET_OPTIONS.map(b=>(<option key={b.value} value={b.value}>{b.label}</option>))}
+            </select>
+          ):(
+            <input className="form-input" type="number" placeholder="例：180000" value={form.budgetCustom||''} onChange={e=>setForm(p=>({...p,budgetCustom:e.target.value}))}/>
+          )}
+        </div>
+        <div className="form-group">
+          <label className="form-label">準備品選択の基準 <span>複数選択可</span></label>
+          <div className="radio-group">
+            {[['min','💰 コスパ重視'],['avg','⭐ 口コミ重視'],['high','✨ デザイン・利便性重視']].map(([v,l])=>(
+              <button key={v} className={`radio-btn${(form.defaultAxis||[]).includes(v)?' sel':''}`} onClick={()=>toggleArr('defaultAxis',v)}>{l}</button>
+            ))}
+          </div>
+        </div>
+        <div className="form-group">
+          <label className="form-label">セルフケア <span>複数選択可</span></label>
+          <div className="radio-group">
+            {[['beauty','💄 美容タイム'],['stretch','🧘 ストレッチ'],['walk','🚶 散歩']].map(([v,l])=>(
+              <button key={v} className={`radio-btn${(form.selfcare||[]).includes(v)?' sel':''}`} onClick={()=>toggleArr('selfcare',v)}>{l}</button>
+            ))}
+          </div>
+        </div>
+        <div className="form-group">
+          <label className="form-label">ゴミ出し日 <span>複数選択可</span></label>
+          <div className="radio-group">
+            {WEEKDAYS.map(d=>(
+              <button key={d} className={`radio-btn${(form.garbage||[]).includes(d)?' sel':''}`} onClick={()=>toggleArr('garbage',d)}>{d}曜</button>
+            ))}
+          </div>
+        </div>
+        <button className="setup-submit" onClick={()=>form.dueDate&&onDone(form)}>🌸 {isFirst?'スタート！':'変更を保存する'}</button>
+        {!isFirst&&<button style={{width:'100%',padding:12,background:'transparent',border:'1.5px solid var(--pink-mid)',borderRadius:16,color:'var(--text-sub)',fontSize:14,cursor:'pointer',marginTop:8,fontFamily:"'Noto Sans JP',sans-serif"}} onClick={onCancel}>キャンセル</button>}
       </div>
     </div>
   );
@@ -352,26 +469,72 @@ function SetupScreen({onDone}){
 function HomeTab({week,profile,workHours,setWorkHours,todayMissions,isMissionDone,toggleMission,budgetPct,checks}){
   const today=new Date();
   const weekday=['日','月','火','水','木','金','土'][today.getDay()];
-  const isGarbage=profile?.garbage?.includes(weekday+'曜');
+  const isGarbage=(profile?.garbage||[]).includes(weekday+'曜');
   const tmr=new Date(today);tmr.setDate(tmr.getDate()+1);
   const tmrWeekday=['日','月','火','水','木','金','土'][tmr.getDay()];
-  const isGarbageTmr=profile?.garbage?.includes(tmrWeekday+'曜');
+  const isGarbageTmr=(profile?.garbage||[]).includes(tmrWeekday+'曜');
   const totalItems=Object.values(CHECKLIST_DATA).reduce((a,b)=>a+b.length,0);
-  const doneItems=Object.values(checks).filter(Boolean).length;
+  const doneItems=Object.values(checks).filter((v,_,arr)=>v).length;
   const checkPct=Math.round((doneItems/totalItems)*100);
+  const todayWeekday=WEEKDAYS[today.getDay()===0?6:today.getDay()-1];
+
   return(
     <>
       {isGarbage&&<div className="alert-banner"><span className="alert-icon">🗑️</span><span className="alert-text"><strong>今日はゴミの日です！</strong><br/>出し忘れに注意してください</span></div>}
       {isGarbageTmr&&!isGarbage&&<div className="alert-banner"><span className="alert-icon">🗑️</span><span className="alert-text"><strong>明日はゴミの日です</strong>。夜のうちに準備しておきましょう</span></div>}
       {week>=37&&<div className="alert-banner"><span className="alert-icon">⚠️</span><span className="alert-text"><strong>正期産に入りました（{week}週）</strong><br/>いつ陣痛が来てもOK！携帯を常に充電しておきましょう</span></div>}
-      <div className="card"><div className="card-title">📋 今日のミッション</div>{todayMissions.map((m,i)=>(<div key={i} className="mission-item"><div className={`mission-check${isMissionDone(i)?' done':''}`} onClick={()=>toggleMission(i)}/><span className={`mission-text${isMissionDone(i)?' done':''}`}>{m}</span></div>))}</div>
-      {profile.workEnabled&&(<div className="card"><div className="card-title">💻 今日の在宅ワーク時間</div><div className="work-input-row"><span style={{fontSize:13,color:'#92400E'}}>今日の作業予定：</span><input className="work-input" type="number" min="0" max="8" step="0.5" value={workHours} onChange={e=>setWorkHours(parseFloat(e.target.value)||0)}/><span style={{fontSize:13,color:'#92400E'}}>時間</span></div>{workHours>4&&<div style={{fontSize:12,color:'#BE185D',marginTop:8,padding:'6px 10px',background:'#FCE7F3',borderRadius:10}}>💗 {workHours}時間は少し多め。体をいたわって休憩を忘れずに</div>}</div>)}
+      <div className="card">
+        <div className="card-title">📋 今日のミッション</div>
+        {todayMissions.map((m,i)=>(
+          <div key={i} className="mission-item">
+            <div className={`mission-check${isMissionDone(i)?' done':''}`} onClick={()=>toggleMission(i)}/>
+            <span className={`mission-text${isMissionDone(i)?' done':''}`}>{m}</span>
+          </div>
+        ))}
+      </div>
+      {profile.workEnabled&&(
+        <div className="card">
+          <div className="card-title">💻 今日の在宅ワーク時間</div>
+          <div className="work-input-row">
+            <span style={{fontSize:13,color:'#92400E'}}>今日の作業予定：</span>
+            <input className="work-input" type="number" min="0" max="8" step="0.5" value={workHours} onChange={e=>setWorkHours(parseFloat(e.target.value)||0)}/>
+            <span style={{fontSize:13,color:'#92400E'}}>時間</span>
+          </div>
+          {workHours>4&&<div style={{fontSize:12,color:'#BE185D',marginTop:8,padding:'6px 10px',background:'#FCE7F3',borderRadius:10}}>💗 {workHours}時間は少し多め。体をいたわって休憩を忘れずに</div>}
+        </div>
+      )}
       <div className="stats-grid" style={{marginBottom:12}}>
         <div className="stat-card"><div className="stat-label">準備の進捗</div><div className="stat-value">{checkPct}<span className="stat-unit">%</span></div><div className="progress-bar" style={{marginTop:6}}><div className="progress-fill" style={{width:`${checkPct}%`}}/></div></div>
         <div className="stat-card"><div className="stat-label">予算消化率</div><div className="stat-value">{budgetPct}<span className="stat-unit">%</span></div><div className="budget-bar" style={{marginTop:6}}><div className="budget-fill" style={{width:`${budgetPct}%`}}/></div></div>
       </div>
-      {profile.selfcare&&(<div className="card"><div className="card-title">🧘 今日のセルフケア</div>{[['🚶 朝の散歩','10〜15分。近所をゆっくり歩くだけでOK'],['🧘 妊婦ヨガ','お昼前後に10分。骨盤周りをほぐして'],['😴 昼寝・休憩','14時頃に30分。横になるだけでも回復します']].map(([t,s],i)=>(<div key={i} className="schedule-item"><div className="schedule-content"><div className="schedule-name">{t}</div><div className="schedule-sub">{s}</div></div></div>))}</div>)}
-      {profile.pattern==='second'&&profile.children?.length>0&&(<div className="card"><div className="card-title">👨‍👩‍👧 上の子スケジュール</div>{profile.children.map((c,i)=>(<div key={i} className="mission-item"><span style={{fontSize:16}}>👶</span><div><div style={{fontSize:13,fontWeight:500}}>{c.name||`お子さん${i+1}`}（{c.age}歳）</div><div style={{fontSize:11,color:'var(--text-sub)'}}>{parseInt(c.age)<=2?'保育園の送迎・お昼寝時間を確認':parseInt(c.age)<=5?'幼稚園バスの時間・お迎えを確認':'学校の下校時間・習い事を確認'}</div></div></div>))}</div>)}
+      {(profile.selfcare||[]).length>0&&(
+        <div className="card">
+          <div className="card-title">✨ 今日のセルフケア</div>
+          {(profile.selfcare||[]).includes('beauty')&&<div className="schedule-item"><div className="schedule-content"><div className="schedule-name">💄 美容タイム</div><div className="schedule-sub">スキンケア・ヘアケアなど自分を整える時間。産前の今だからこそ丁寧に</div></div></div>}
+          {(profile.selfcare||[]).includes('stretch')&&<div className="schedule-item"><div className="schedule-content"><div className="schedule-name">🧘 ストレッチ・妊婦ヨガ</div><div className="schedule-sub">お昼前後に10〜15分。骨盤周りをほぐして体を整えて</div></div></div>}
+          {(profile.selfcare||[]).includes('walk')&&<div className="schedule-item"><div className="schedule-content"><div className="schedule-name">🚶 散歩</div><div className="schedule-sub">10〜20分、ゆっくりペースで。気分転換にもなります</div></div></div>}
+        </div>
+      )}
+      {profile.pattern==='second'&&(profile.children||[]).length>0&&(
+        <div className="card">
+          <div className="card-title">👨‍👩‍👧 今日の上の子スケジュール（{todayWeekday}曜日）</div>
+          {(profile.children||[]).map((c,i)=>{
+            const routine=(c.routines||{})[todayWeekday]||'';
+            const pickup=(c.pickups||{})[todayWeekday]||'';
+            return(
+              <div key={i} className="mission-item">
+                <span style={{fontSize:16}}>👶</span>
+                <div style={{flex:1}}>
+                  <div style={{fontSize:13,fontWeight:500}}>{c.name||`お子さん${i+1}`}（{c.age}歳）</div>
+                  {routine&&<div style={{fontSize:12,color:'var(--pink-dark)',marginTop:2}}>📚 {routine}</div>}
+                  {pickup&&<div style={{fontSize:12,color:'var(--teal)',marginTop:2}}>🚗 送迎：{pickup}</div>}
+                  {!routine&&!pickup&&<div style={{fontSize:11,color:'var(--text-hint)',marginTop:2}}>⚙️設定から曜日ごとの予定を入力できます</div>}
+                </div>
+              </div>
+            );
+          })}
+        </div>
+      )}
       <div style={{textAlign:'center',padding:'12px 0'}}><a href="https://room.rakuten.co.jp/" target="_blank" style={{fontSize:12,color:'var(--pink-dark)',textDecoration:'none',background:'var(--pink-light)',padding:'6px 16px',borderRadius:12,border:'1px solid var(--pink-mid)'}}>🛍️ おすすめベビー用品を楽天ルームで見る →</a></div>
       <div className="affiliate-note">※商品リンクにはアフィリエイトが含まれます</div>
     </>
@@ -381,28 +544,74 @@ function HomeTab({week,profile,workHours,setWorkHours,todayMissions,isMissionDon
 function GuideTab({week,guideWeek,setGuideWeek,profile}){
   const gw=guideWeek||week;
   const guide=WEEKLY_GUIDE[gw]||WEEKLY_GUIDE[34];
-  const isFirst=profile?.pattern!=='second';
   return(
     <>
       <div className="cat-tabs">{[34,35,36,37,38,39,40].map(w=>(<button key={w} className={`guide-week-btn${gw===w?' active':''}`} onClick={()=>setGuideWeek(w)}>{w}週</button>))}</div>
       <div className="card"><div className="card-title">🤰 {gw}週の体の変化</div>{guide.body.map((b,i)=><div key={i} className="guide-item"><div className="guide-dot"/><span>{b}</span></div>)}</div>
-      <div className="card"><div className="card-title">✅ {gw}週にやること</div>{guide.todo.map((t,i)=><div key={i} className="guide-item"><div className="guide-dot" style={{background:'var(--teal)'}}/><span>{t}</span></div>)}{profile?.birthType==='csection'&&<div className="guide-item"><div className="guide-dot" style={{background:'var(--purple)'}}/><span>帝王切開：術前検査・麻酔科との相談を確認</span></div>}{profile?.birthType==='painless'&&<div className="guide-item"><div className="guide-dot" style={{background:'var(--purple)'}}/><span>無痛分娩：麻酔科予約・事前説明会の日程を確認</span></div>}{profile?.pattern==='second'&&<div className="guide-item"><div className="guide-dot" style={{background:'var(--amber)'}}/><span>上の子：入院中の預け先・緊急時の対応を確認</span></div>}</div>
+      <div className="card">
+        <div className="card-title">✅ {gw}週にやること</div>
+        {guide.todo.map((t,i)=><div key={i} className="guide-item"><div className="guide-dot" style={{background:'var(--teal)'}}/><span>{t}</span></div>)}
+        {profile?.birthType==='planned'&&<div className="guide-item"><div className="guide-dot" style={{background:'var(--purple)'}}/><span>計画分娩：入院・手術日の最終確認を産院と行う</span></div>}
+        {profile?.pattern==='second'&&<div className="guide-item"><div className="guide-dot" style={{background:'var(--amber)'}}/><span>上の子：入院中の預け先・緊急時の対応を確認</span></div>}
+      </div>
       <div className="card"><div className="card-title">⚠️ 注意点</div>{guide.caution.map((c,i)=><div key={i} className="guide-item"><div className="guide-dot" style={{background:'#F87171'}}/><span>{c}</span></div>)}</div>
-      <div className="card"><div className="card-title">🧹 今週の家事ライフハック</div>{[gw<=35?'クローゼットの断捨離週間。着ない服を手放してベビー服スペースを確保':'',gw===36?'エアコン・加湿器のフィルター清掃。業者に頼むと1万円で完全清潔に':'',gw>=37?'冷凍作り置きを始めよう。産後1週間分の食事を今のうちに':'','重曹スプレーで換気扇の油汚れをラクに落とせます','ワゴン1つにオムツ・おしりふき・着替えをセット。どの部屋でも使える便利収納に'].filter(Boolean).slice(0,3).map((h,i)=><div key={i} className="guide-item"><span style={{fontSize:14}}>💡</span><span style={{fontSize:13}}>{h}</span></div>)}</div>
+      <div className="card">
+        <div className="card-title">🧹 今週の家事ライフハック</div>
+        {[gw<=35?'クローゼットの断捨離週間。着ない服を手放してベビー服スペースを確保':'',gw===36?'エアコン・加湿器のフィルター清掃。業者に頼むと1万円前後で完全清潔に':'',gw>=37?'冷凍作り置きを始めよう。産後1週間分の食事を今のうちに':'','重曹スプレーで換気扇の油汚れをラクに落とせます','ワゴン1つにオムツ・おしりふき・着替えをセット。どの部屋でも使える便利収納に'].filter(Boolean).slice(0,3).map((h,i)=>(
+          <div key={i} className="guide-item"><span style={{fontSize:14}}>💡</span><span style={{fontSize:13}}>{h}</span></div>
+        ))}
+      </div>
     </>
   );
 }
 
-function CheckTab({profile,checks,toggleCheck,checkCat,setCheckCat,makeLink}){
+function CheckTab({profile,checks,toggleCheck,toggleNA,checkCat,setCheckCat,makeLink}){
   const cats=Object.keys(CHECKLIST_DATA);
   const items=CHECKLIST_DATA[checkCat]||[];
   const isSecond=profile?.pattern==='second';
-  const doneCount=items.filter((_,i)=>checks[`${checkCat}_${i}`]).length;
+  const isProcedure=checkCat==='手続き・書類';
+  const doneCount=items.filter((_,i)=>checks[`${checkCat}_${i}`]||checks[`${checkCat}_${i}_na`]).length;
   return(
     <>
       <div className="cat-tabs">{cats.map(c=><button key={c} className={`cat-btn${checkCat===c?' active':''}`} onClick={()=>setCheckCat(c)}>{c}</button>)}</div>
-      <div style={{display:'flex',justifyContent:'space-between',alignItems:'center',marginBottom:12}}><div style={{fontSize:13,color:'var(--text-sub)'}}>{checkCat}</div><div style={{fontSize:12,color:'var(--pink-dark)',fontWeight:700}}>{doneCount}/{items.length} 完了</div></div>
-      <div className="card">{items.map((item,i)=>{const done=!!checks[`${checkCat}_${i}`];return(<div key={i} className="check-item"><div className={`check-box${done?' done':''}`} onClick={()=>toggleCheck(checkCat,i)}/><div className="check-info"><div className="check-name" style={done?{textDecoration:'line-through',color:'var(--text-hint)'}:{}}>{item.name}</div>{!done&&<div className="check-hint">{item.hint}</div>}{!done&&item.avg>0&&(<><div className="price-range">💰 最安 ¥{item.min.toLocaleString()}　平均 ¥{item.avg.toLocaleString()}　高機能 ¥{item.high.toLocaleString()}</div><div className="check-price-row"><a href={makeLink(item.name,'amazon')} target="_blank" className="price-btn cospa">Amazon</a><a href={makeLink(item.name,'rakuten')} target="_blank" className="price-btn kuchikomi">楽天</a><a href={makeLink(item.name,'room')} target="_blank" className="price-btn room">楽天ルーム</a></div></>)}{isSecond&&!done&&(<button style={{fontSize:11,padding:'2px 8px',borderRadius:8,border:'1px solid #DDD6FE',background:'#F3E8FF',color:'var(--purple)',cursor:'pointer',marginTop:4}} onClick={()=>toggleCheck(checkCat,i)}>✓ すでに持っている</button>)}</div></div>);})}</div>
+      <div style={{display:'flex',justifyContent:'space-between',alignItems:'center',marginBottom:12}}>
+        <div style={{fontSize:13,color:'var(--text-sub)'}}>{checkCat}</div>
+        <div style={{fontSize:12,color:'var(--pink-dark)',fontWeight:700}}>{doneCount}/{items.length} 完了</div>
+      </div>
+      <div className="card">
+        {items.map((item,i)=>{
+          const done=!!checks[`${checkCat}_${i}`];
+          const na=!!checks[`${checkCat}_${i}_na`];
+          return(
+            <div key={i} className="check-item" style={na?{opacity:0.4}:{}}>
+              <div className={`check-box${done?' done':''}`} onClick={()=>!na&&toggleCheck(checkCat,i)}/>
+              <div className="check-info">
+                <div className="check-name" style={(done||na)?{textDecoration:'line-through',color:'var(--text-hint)'}:{}}>{item.name}</div>
+                {!done&&!na&&<div className="check-hint">{item.hint}</div>}
+                {!done&&!na&&item.avg>0&&(
+                  <>
+                    <div className="price-range">💰 最安 ¥{item.min.toLocaleString()}　平均 ¥{item.avg.toLocaleString()}　高機能 ¥{item.high.toLocaleString()}</div>
+                    <div className="check-price-row">
+                      <a href={makeLink(item.name,'amazon')} target="_blank" className="price-btn cospa">Amazon</a>
+                      <a href={makeLink(item.name,'rakuten')} target="_blank" className="price-btn kuchikomi">楽天</a>
+                      <a href={makeLink(item.name,'room')} target="_blank" className="price-btn room">楽天ルーム</a>
+                    </div>
+                  </>
+                )}
+                {!done&&!na&&(
+                  <div style={{display:'flex',gap:6,marginTop:6,flexWrap:'wrap'}}>
+                    {isSecond&&!isProcedure&&(
+                      <button style={{fontSize:11,padding:'2px 8px',borderRadius:8,border:'1px solid #DDD6FE',background:'#F3E8FF',color:'var(--purple)',cursor:'pointer'}} onClick={()=>toggleCheck(checkCat,i)}>✓ すでに持っている</button>
+                    )}
+                    <button style={{fontSize:11,padding:'2px 8px',borderRadius:8,border:'1px solid #E5E7EB',background:'#F9FAFB',color:'var(--text-hint)',cursor:'pointer'}} onClick={()=>toggleNA(checkCat,i)}>— 不要</button>
+                  </div>
+                )}
+                {na&&<button style={{fontSize:11,padding:'2px 8px',borderRadius:8,border:'1px solid var(--pink-mid)',background:'white',color:'var(--text-sub)',cursor:'pointer',marginTop:4}} onClick={()=>toggleNA(checkCat,i)}>元に戻す</button>}
+              </div>
+            </div>
+          );
+        })}
+      </div>
       <div className="affiliate-note">※リンクにはアフィリエイトが含まれます</div>
       <div className="premium-lock"><div className="premium-text">✨ プレミアムプランで商品の詳細口コミ・価格比較が使えます</div><button className="premium-btn">プレミアムを見る</button></div>
     </>
@@ -428,27 +637,93 @@ function ScheduleTab({profile,week}){
   const [appts,setAppts]=useState(()=>{try{const s=localStorage.getItem('pregnancy_appts');return s?JSON.parse(s):[]}catch{return[]}});
   const [showAdd,setShowAdd]=useState(false);
   const [newAppt,setNewAppt]=useState({date:'',name:'',place:'',memo:''});
+  const [viewMode,setViewMode]=useState('week');
   useEffect(()=>{localStorage.setItem('pregnancy_appts',JSON.stringify(appts))},[appts]);
-  const addAppt=()=>{if(!newAppt.date||!newAppt.name)return;setAppts(p=>[...p,{...newAppt,id:Date.now()}].sort((a,b)=>a.date.localeCompare(b.date)));setNewAppt({date:'',name:'',place:'',memo:''});setShowAdd(false);};
+  const addAppt=()=>{
+    if(!newAppt.date||!newAppt.name)return;
+    setAppts(p=>[...p,{...newAppt,id:Date.now()}].sort((a,b)=>a.date.localeCompare(b.date)));
+    setNewAppt({date:'',name:'',place:'',memo:''});setShowAdd(false);
+  };
+  const today=new Date();
+  const todayStr=today.toISOString().split('T')[0];
+  const filteredAppts=appts.filter(a=>{
+    const d=new Date(a.date);
+    const diff=(d-today)/(24*60*60*1000);
+    if(viewMode==='today')return a.date===todayStr;
+    if(viewMode==='week')return diff>=-1&&diff<=7;
+    if(viewMode==='month')return diff>=-1&&diff<=31;
+    return true;
+  });
   const scheduleItems=[
     {time:'07:00',name:'起床・体重測定',sub:'毎朝同じ時間に測ると記録しやすい'},
     {time:'08:00',name:'朝ごはん',sub:'鉄分・葉酸を意識した食事を'},
     {time:'10:00',name:'準備タスク',sub:'今日のミッション1つ目に取り組む'},
-    ...(profile?.selfcare?[{time:'11:00',name:'妊婦ヨガ・ストレッチ',sub:'10〜15分、骨盤周りをほぐして'}]:[]),
-    {time:'12:00',name:'昼ごはん・休憩',sub:'食後は30分横になると消化が楽に'},
+    ...(profile?.selfcare?.includes('stretch')?[{time:'11:00',name:'ストレッチ・妊婦ヨガ',sub:'10〜15分、骨盤周りをほぐして'}]:[]),
+    {time:'12:00',name:'昼ごはん・休憩',sub:'食後すぐ横になるのはNG。ゆったりと座って過ごすことで消化が楽に'},
     ...(profile?.workEnabled?[{time:'14:00',name:'在宅ワーク',sub:'集中できる時間帯に。1時間ごとに休憩を'}]:[]),
-    ...(profile?.selfcare?[{time:'16:00',name:'散歩',sub:'15〜20分、ゆっくりペースで'}]:[]),
-    {time:'17:00',name:'夕ごはん準備',sub:'作り置きがあれば温めるだけでOK'},
+    ...(profile?.selfcare?.includes('walk')?[{time:'16:00',name:'散歩',sub:'15〜20分、ゆっくりペースで'}]:[]),
+    ...(profile?.selfcare?.includes('beauty')?[{time:'17:00',name:'美容タイム',sub:'スキンケア・ヘアケアなど自分を整える時間に'}]:[]),
+    {time:'18:00',name:'夕ごはん準備',sub:'作り置きがあれば温めるだけでOK'},
     {time:'21:00',name:'入浴・リラックス',sub:'38〜40度のぬるめのお湯でゆっくり'},
     {time:'22:30',name:'就寝',sub:'左側を下にして横向きで眠ると楽'},
   ];
   return(
     <>
       <div className="card"><div className="card-title">🕐 今日のスケジュール目安</div>{scheduleItems.map((s,i)=>(<div key={i} className="schedule-item"><div className="schedule-time">{s.time}</div><div className="schedule-content"><div className="schedule-name">{s.name}</div><div className="schedule-sub">{s.sub}</div></div></div>))}</div>
-      {profile?.pattern==='second'&&profile?.children?.length>0&&(<div className="card"><div className="card-title">👨‍👩‍👧 上の子のスケジュール</div>{profile.children.map((c,i)=>(<div key={i} className="schedule-item"><div className="schedule-time">----</div><div className="schedule-content"><div className="schedule-name">{c.name||`お子さん${i+1}`}（{c.age}歳）</div><div className="schedule-sub">{parseInt(c.age)<=2?'保育園：送り迎えの時間を記入してください':parseInt(c.age)<=5?'幼稚園：バス時間・お迎え時間を記入してください':'学校：下校時間・習い事を記入してください'}</div></div></div>))}</div>)}
-      <div className="card"><div className="card-title">🏥 健診・予約</div>{appts.length===0&&<div style={{fontSize:13,color:'var(--text-hint)',padding:'8px 0'}}>まだ予約がありません</div>}{appts.map((a)=>(<div key={a.id} className="schedule-item"><div className="schedule-time" style={{fontSize:12}}>{a.date}</div><div className="schedule-content"><div className="schedule-name">{a.name}</div>{a.place&&<div className="schedule-sub">📍 {a.place}</div>}{a.memo&&<div className="schedule-sub">📝 {a.memo}</div>}</div><button style={{fontSize:12,color:'#EF4444',background:'none',border:'none',cursor:'pointer'}} onClick={()=>setAppts(p=>p.filter(x=>x.id!==a.id))}>削除</button></div>))}{showAdd?(<div style={{marginTop:12,padding:12,background:'var(--rose)',borderRadius:14}}><input className="form-input" type="date" value={newAppt.date} onChange={e=>setNewAppt(p=>({...p,date:e.target.value}))} style={{marginBottom:8}}/><input className="form-input" placeholder="内容（例：産婦人科健診）" value={newAppt.name} onChange={e=>setNewAppt(p=>({...p,name:e.target.value}))} style={{marginBottom:8}}/><input className="form-input" placeholder="場所・病院名" value={newAppt.place} onChange={e=>setNewAppt(p=>({...p,place:e.target.value}))} style={{marginBottom:8}}/><input className="form-input" placeholder="メモ" value={newAppt.memo} onChange={e=>setNewAppt(p=>({...p,memo:e.target.value}))} style={{marginBottom:8}}/><div style={{display:'flex',gap:8}}><button className="setup-submit" style={{fontSize:13,padding:'8px'}} onClick={addAppt}>追加</button><button className="add-btn" style={{marginTop:0}} onClick={()=>setShowAdd(false)}>キャンセル</button></div></div>):<button className="add-btn" onClick={()=>setShowAdd(true)}>＋ 健診・予約を追加</button>}</div>
+      {profile?.pattern==='second'&&(profile?.children||[]).length>0&&(
+        <div className="card">
+          <div className="card-title">👨‍👩‍👧 上の子の週間スケジュール</div>
+          {(profile.children||[]).map((c,i)=>(
+            <div key={i} style={{marginBottom:12}}>
+              <div style={{fontSize:13,fontWeight:700,color:'var(--pink-dark)',marginBottom:6}}>{c.name||`お子さん${i+1}`}（{c.age}歳）</div>
+              {WEEKDAYS.map(day=>{
+                const routine=(c.routines||{})[day];
+                const pickup=(c.pickups||{})[day];
+                if(!routine&&!pickup)return null;
+                return(
+                  <div key={day} style={{display:'flex',gap:8,padding:'4px 0',borderBottom:'1px solid var(--rose)',fontSize:12}}>
+                    <span style={{minWidth:24,color:'var(--pink-dark)',fontWeight:700}}>{day}</span>
+                    <div>{routine&&<div>📚 {routine}</div>}{pickup&&<div style={{color:'var(--teal)'}}>🚗 {pickup}</div>}</div>
+                  </div>
+                );
+              })}
+            </div>
+          ))}
+        </div>
+      )}
+      <div className="card">
+        <div className="card-title">🏥 健診・予約スケジュール</div>
+        <div style={{display:'flex',gap:6,marginBottom:12,flexWrap:'wrap'}}>
+          {[['today','今日'],['week','今週'],['month','今月'],['all','すべて']].map(([v,l])=>(
+            <button key={v} className={`cat-btn${viewMode===v?' active':''}`} onClick={()=>setViewMode(v)}>{l}</button>
+          ))}
+        </div>
+        {filteredAppts.length===0&&<div style={{fontSize:13,color:'var(--text-hint)',padding:'8px 0'}}>この期間の予約はありません</div>}
+        {filteredAppts.map((a)=>(
+          <div key={a.id} className="schedule-item">
+            <div className="schedule-time" style={{fontSize:11}}>{a.date}</div>
+            <div className="schedule-content"><div className="schedule-name">{a.name}</div>{a.place&&<div className="schedule-sub">📍 {a.place}</div>}{a.memo&&<div className="schedule-sub">📝 {a.memo}</div>}</div>
+            <button style={{fontSize:12,color:'#EF4444',background:'none',border:'none',cursor:'pointer'}} onClick={()=>setAppts(p=>p.filter(x=>x.id!==a.id))}>削除</button>
+          </div>
+        ))}
+        {showAdd?(
+          <div style={{marginTop:12,padding:12,background:'var(--rose)',borderRadius:14}}>
+            <input className="form-input" type="date" value={newAppt.date} onChange={e=>setNewAppt(p=>({...p,date:e.target.value}))} style={{marginBottom:8}}/>
+            <input className="form-input" placeholder="内容（例：産婦人科健診）" value={newAppt.name} onChange={e=>setNewAppt(p=>({...p,name:e.target.value}))} style={{marginBottom:8}}/>
+            <input className="form-input" placeholder="場所・病院名" value={newAppt.place} onChange={e=>setNewAppt(p=>({...p,place:e.target.value}))} style={{marginBottom:8}}/>
+            <input className="form-input" placeholder="メモ" value={newAppt.memo} onChange={e=>setNewAppt(p=>({...p,memo:e.target.value}))} style={{marginBottom:8}}/>
+            <div style={{display:'flex',gap:8}}>
+              <button className="setup-submit" style={{fontSize:13,padding:'8px'}} onClick={addAppt}>追加</button>
+              <button className="add-btn" style={{marginTop:0}} onClick={()=>setShowAdd(false)}>キャンセル</button>
+            </div>
+          </div>
+        ):<button className="add-btn" onClick={()=>setShowAdd(true)}>＋ 健診・予約を追加</button>}
+      </div>
       <div style={{textAlign:'center',padding:'12px 0 4px'}}><a href="https://note.com/" target="_blank" style={{fontSize:12,color:'var(--text-sub)',textDecoration:'none'}}>📝 noteでもっと詳しい妊娠情報を読む →</a></div>
-      <div style={{textAlign:'center',padding:'4px 0 12px'}}><a href="https://www.instagram.com/" target="_blank" style={{fontSize:12,color:'var(--text-sub)',textDecoration:'none',marginRight:16}}>📸 Instagram</a><a href="https://twitter.com/" target="_blank" style={{fontSize:12,color:'var(--text-sub)',textDecoration:'none'}}>🐦 X（Twitter）</a></div>
+      <div style={{textAlign:'center',padding:'4px 0 12px'}}>
+        <a href="https://www.instagram.com/" target="_blank" style={{fontSize:12,color:'var(--text-sub)',textDecoration:'none',marginRight:16}}>📸 Instagram</a>
+        <a href="https://twitter.com/" target="_blank" style={{fontSize:12,color:'var(--text-sub)',textDecoration:'none'}}>🐦 X（Twitter）</a>
+      </div>
     </>
   );
 }
