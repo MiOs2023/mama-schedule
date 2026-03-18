@@ -1,217 +1,351 @@
-
 <!DOCTYPE html>
 <html lang="ja">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ままスケ｜バリキャリママの産前休暇管理</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>ままスケ｜AI妊婦サポート</title>
 <script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
 <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
 <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
-<link href="https://fonts.googleapis.com/css2?family=Zen+Maru+Gothic:wght@400;500;700&family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=Playfair+Display:wght@500;600;700&display=swap" rel="stylesheet">
 <style>
-*{box-sizing:border-box;margin:0;padding:0}
-body{font-family:'Noto Sans JP',sans-serif;background:#FFF5F7;min-height:100vh;color:#333}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
 :root{
-  --pink:#F472B6;--pink-light:#FCE7F3;--pink-mid:#FBCFE8;--pink-dark:#BE185D;
-  --rose:#FFF1F5;--purple:#A855F7;--purple-light:#F3E8FF;
-  --teal:#14B8A6;--amber:#F59E0B;--amber-light:#FEF3C7;
-  --green:#22C55E;--green-light:#DCFCE7;
-  --text:#1F2937;--text-sub:#6B7280;--text-hint:#9CA3AF;
-  --border:#FCE7F3;--shadow:0 2px 12px rgba(244,114,182,0.15);
+  --bg:#0F0A1E;
+  --bg2:#160E2A;
+  --bg3:#1E1434;
+  --card:#1A1030;
+  --card2:#221640;
+  --border:rgba(180,100,255,0.15);
+  --border2:rgba(255,120,180,0.2);
+  --pink:#FF6BB5;
+  --pink2:#FF9DD5;
+  --pink3:rgba(255,107,181,0.12);
+  --purple:#B56EFF;
+  --purple2:#D4A8FF;
+  --purple3:rgba(181,110,255,0.12);
+  --grad:linear-gradient(135deg,#FF6BB5,#B56EFF);
+  --grad2:linear-gradient(135deg,#B56EFF,#6B8EFF);
+  --grad3:linear-gradient(135deg,#FF6BB5 0%,#B56EFF 50%,#6B8EFF 100%);
+  --teal:#2DD4BF;
+  --amber:#FBBF24;
+  --green:#34D399;
+  --red:#F87171;
+  --text:#F0E8FF;
+  --text2:#C4A8E8;
+  --text3:#8870AA;
+  --glow:0 0 20px rgba(181,110,255,0.3);
+  --glow2:0 0 20px rgba(255,107,181,0.25);
+  --shadow:0 8px 32px rgba(0,0,0,0.4);
+  --r:18px;--r2:12px;--r3:8px;
 }
-.app{max-width:480px;margin:0 auto;min-height:100vh;background:#FFF5F7;position:relative}
-.header{background:linear-gradient(135deg,#FCE7F3 0%,#FFF5F7 100%);padding:16px 20px 12px;border-bottom:1px solid var(--pink-mid);position:sticky;top:0;z-index:100}
-.header-top{display:flex;align-items:center;justify-content:space-between}
-.app-title{font-family:'Zen Maru Gothic',sans-serif;font-size:18px;font-weight:700;color:var(--pink-dark);display:flex;align-items:center;gap:6px}
-.settings-btn{width:32px;height:32px;border-radius:50%;background:white;border:1px solid var(--pink-mid);display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:16px}
-.week-info{display:flex;align-items:center;gap:8px;margin-top:8px}
-.week-badge{background:var(--pink-dark);color:white;font-size:12px;font-weight:700;padding:3px 10px;border-radius:12px;font-family:'Zen Maru Gothic',sans-serif}
-.days-left{font-size:12px;color:var(--text-sub)}
-.progress-wrap{margin-top:8px}
-.progress-bar{height:6px;background:var(--pink-mid);border-radius:3px;overflow:hidden}
-.progress-fill{height:100%;background:linear-gradient(90deg,var(--pink),var(--pink-dark));border-radius:3px;transition:width 0.5s ease}
-.tabs{display:flex;background:white;border-top:1px solid var(--pink-mid);position:sticky;bottom:0;z-index:100;box-shadow:0 -2px 12px rgba(244,114,182,0.1)}
-.tab{flex:1;padding:8px 2px 10px;display:flex;flex-direction:column;align-items:center;gap:2px;cursor:pointer;border:none;background:transparent;transition:all 0.2s;font-family:'Noto Sans JP',sans-serif}
-.tab-icon{font-size:20px;line-height:1}
-.tab-label{font-size:9px;color:var(--text-hint);font-weight:500}
-.tab.active .tab-label{color:var(--pink-dark);font-weight:700}
-.tab.active{background:var(--rose)}
-.content{padding:16px;padding-bottom:80px;min-height:calc(100vh - 120px)}
-.card{background:white;border-radius:20px;padding:16px;margin-bottom:12px;box-shadow:var(--shadow);border:1px solid var(--border)}
-.card-title{font-family:'Zen Maru Gothic',sans-serif;font-size:14px;font-weight:700;color:var(--pink-dark);margin-bottom:12px;display:flex;align-items:center;gap:6px}
-.mission-item{display:flex;align-items:center;gap:10px;padding:10px 0;border-bottom:1px solid var(--rose)}
-.mission-item:last-child{border-bottom:none}
-.mission-check{width:22px;height:22px;border-radius:50%;border:2px solid var(--pink);display:flex;align-items:center;justify-content:center;cursor:pointer;flex-shrink:0;transition:all 0.2s}
-.mission-check.done{background:var(--pink);border-color:var(--pink)}
-.mission-check.done::after{content:'✓';color:white;font-size:12px;font-weight:700}
-.mission-text{font-size:13px;color:var(--text);flex:1;line-height:1.4}
-.mission-text.done{text-decoration:line-through;color:var(--text-hint)}
-.work-input-row{display:flex;align-items:center;gap:8px;background:var(--amber-light);border-radius:14px;padding:10px 14px}
-.work-input{width:50px;padding:4px 6px;border:1.5px solid var(--amber);border-radius:8px;font-size:14px;font-weight:700;text-align:center;background:white;color:var(--text)}
-.stats-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
-.stat-card{background:var(--rose);border-radius:14px;padding:10px 12px}
-.stat-label{font-size:11px;color:var(--text-sub);margin-bottom:2px}
-.stat-value{font-size:20px;font-weight:700;color:var(--pink-dark);font-family:'Zen Maru Gothic',sans-serif}
-.stat-unit{font-size:11px;color:var(--text-sub)}
-.budget-bar{height:8px;background:var(--pink-mid);border-radius:4px;overflow:hidden}
-.budget-fill{height:100%;background:linear-gradient(90deg,#F472B6,#EC4899);border-radius:4px}
-.cat-tabs{display:flex;gap:6px;overflow-x:auto;padding-bottom:4px;margin-bottom:12px;-webkit-overflow-scrolling:touch}
-.cat-btn{padding:5px 12px;border-radius:16px;border:1.5px solid var(--pink-mid);background:white;font-size:11px;cursor:pointer;white-space:nowrap;font-family:'Noto Sans JP',sans-serif;transition:all 0.2s}
-.cat-btn.active{background:var(--pink-dark);color:white;border-color:var(--pink-dark)}
-.guide-week-btn{padding:6px 14px;border-radius:20px;border:1.5px solid var(--pink-mid);background:white;font-size:12px;cursor:pointer;white-space:nowrap;font-family:'Noto Sans JP',sans-serif;transition:all 0.2s}
-.guide-week-btn.active{background:var(--pink-dark);color:white;border-color:var(--pink-dark)}
-.guide-item{display:flex;gap:8px;padding:6px 0;border-bottom:1px solid var(--rose);font-size:13px;line-height:1.5}
-.guide-item:last-child{border-bottom:none}
-.guide-dot{width:6px;height:6px;border-radius:50%;background:var(--pink);margin-top:6px;flex-shrink:0}
-.check-item{display:flex;align-items:flex-start;gap:10px;padding:10px 0;border-bottom:1px solid var(--rose)}
-.check-item:last-child{border-bottom:none}
-.check-box{width:20px;height:20px;border-radius:6px;border:2px solid var(--pink);display:flex;align-items:center;justify-content:center;cursor:pointer;flex-shrink:0;margin-top:1px;transition:all 0.2s}
-.check-box.done{background:var(--pink);border-color:var(--pink)}
-.check-box.done::after{content:'✓';color:white;font-size:11px;font-weight:700}
-.check-info{flex:1}
-.check-name{font-size:13px;color:var(--text);font-weight:500}
-.check-hint{font-size:11px;color:var(--text-sub);margin-top:2px;line-height:1.4}
-.check-price-row{display:flex;gap:6px;margin-top:6px;flex-wrap:wrap}
-.price-btn{font-size:10px;padding:3px 8px;border-radius:10px;border:1px solid;cursor:pointer;background:white;transition:all 0.2s;text-decoration:none;display:inline-block}
-.price-btn.cospa{border-color:#22C55E;color:#15803D}
-.price-btn.kuchikomi{border-color:var(--amber);color:#92400E}
-.price-btn.room{border-color:#F43F5E;color:#BE123C}
-.price-range{font-size:10px;color:var(--text-hint);margin-top:4px}
-.mood-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin-bottom:12px}
-.mood-btn{padding:8px 4px;border-radius:12px;border:1.5px solid var(--pink-mid);background:white;cursor:pointer;text-align:center;transition:all 0.2s}
-.mood-btn.sel{background:var(--pink-light);border-color:var(--pink)}
-.mood-emoji{font-size:20px;display:block;line-height:1}
-.mood-label{font-size:10px;color:var(--text-sub);display:block;margin-top:2px}
-.symptom-grid{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:12px}
-.symptom-btn{padding:5px 10px;border-radius:12px;border:1.5px solid var(--pink-mid);background:white;font-size:11px;cursor:pointer;transition:all 0.2s;font-family:'Noto Sans JP',sans-serif}
-.symptom-btn.sel{background:var(--pink-light);border-color:var(--pink);color:var(--pink-dark)}
-.fridge-grid{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:12px}
-.fridge-btn{padding:5px 10px;border-radius:12px;border:1.5px solid #BBF7D0;background:white;font-size:11px;cursor:pointer;transition:all 0.2s;font-family:'Noto Sans JP',sans-serif}
-.fridge-btn.sel{background:var(--green-light);border-color:var(--green);color:#15803D}
-.ai-result{background:linear-gradient(135deg,var(--purple-light),var(--rose));border-radius:16px;padding:14px;margin-top:12px;border:1px solid #DDD6FE}
-.ai-result-title{font-size:12px;font-weight:700;color:var(--purple);margin-bottom:8px}
-.ai-content{font-size:13px;color:var(--text);line-height:1.7;white-space:pre-wrap}
-.ai-loading{display:flex;align-items:center;gap:8px;color:var(--purple);font-size:13px}
-.dot-anim span{display:inline-block;animation:bounce 1.2s infinite}
-.dot-anim span:nth-child(2){animation-delay:0.2s}
-.dot-anim span:nth-child(3){animation-delay:0.4s}
-@keyframes bounce{0%,80%,100%{transform:translateY(0)}40%{transform:translateY(-6px)}}
-.schedule-item{display:flex;gap:12px;padding:10px 0;border-bottom:1px solid var(--rose)}
-.schedule-item:last-child{border-bottom:none}
-.schedule-time{font-size:11px;font-weight:700;color:var(--pink-dark);min-width:40px;padding-top:2px}
-.schedule-content{flex:1}
-.schedule-name{font-size:13px;font-weight:500;color:var(--text)}
-.schedule-sub{font-size:11px;color:var(--text-sub);margin-top:2px}
-.add-btn{width:100%;padding:10px;border:2px dashed var(--pink-mid);border-radius:14px;background:transparent;color:var(--pink-dark);font-size:13px;cursor:pointer;font-family:'Noto Sans JP',sans-serif;margin-top:8px;transition:all 0.2s}
-.add-btn:hover{background:var(--rose)}
-.setup-overlay{position:fixed;inset:0;background:white;z-index:999;overflow-y:auto;max-width:480px;margin:0 auto}
-.setup-header{background:linear-gradient(135deg,#FCE7F3,#FFF5F7);padding:24px 20px 20px;text-align:center}
-.setup-title{font-family:'Zen Maru Gothic',sans-serif;font-size:22px;font-weight:700;color:var(--pink-dark)}
-.setup-sub{font-size:13px;color:var(--text-sub);margin-top:4px}
-.setup-body{padding:20px}
-.form-group{margin-bottom:20px}
-.form-label{font-size:13px;font-weight:700;color:var(--text);margin-bottom:8px;display:block}
-.form-label span{font-size:11px;font-weight:400;color:var(--text-hint);margin-left:4px}
-.form-input{width:100%;padding:10px 14px;border:1.5px solid var(--pink-mid);border-radius:12px;font-size:14px;font-family:'Noto Sans JP',sans-serif;background:white;color:var(--text);outline:none;transition:border 0.2s}
-.form-input:focus{border-color:var(--pink)}
-.form-select{width:100%;padding:10px 14px;border:1.5px solid var(--pink-mid);border-radius:12px;font-size:14px;font-family:'Noto Sans JP',sans-serif;background:white;color:var(--text);outline:none}
-.radio-group{display:flex;flex-wrap:wrap;gap:8px}
-.radio-btn{padding:8px 14px;border-radius:14px;border:1.5px solid var(--pink-mid);background:white;font-size:12px;cursor:pointer;transition:all 0.2s;font-family:'Noto Sans JP',sans-serif}
-.radio-btn.sel{background:var(--pink-dark);color:white;border-color:var(--pink-dark)}
-.toggle-row{display:flex;align-items:center;justify-content:space-between;padding:10px 0}
-.toggle{width:44px;height:24px;border-radius:12px;background:var(--pink-mid);position:relative;cursor:pointer;transition:background 0.2s}
-.toggle.on{background:var(--pink)}
-.toggle-knob{width:20px;height:20px;border-radius:50%;background:white;position:absolute;top:2px;left:2px;transition:transform 0.2s;box-shadow:0 1px 4px rgba(0,0,0,0.2)}
-.toggle.on .toggle-knob{transform:translateX(20px)}
-.child-row{display:flex;gap:8px;align-items:center;margin-bottom:8px;flex-wrap:wrap}
-.remove-btn{width:32px;height:32px;border-radius:50%;border:1.5px solid #FCA5A5;background:white;color:#EF4444;cursor:pointer;font-size:16px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
-.setup-submit{width:100%;padding:14px;background:linear-gradient(135deg,var(--pink),var(--pink-dark));color:white;border:none;border-radius:16px;font-size:16px;font-weight:700;cursor:pointer;font-family:'Zen Maru Gothic',sans-serif;margin-top:8px;box-shadow:0 4px 16px rgba(244,114,182,0.4);transition:transform 0.2s}
-.setup-submit:hover{transform:translateY(-1px)}
-.alert-banner{background:linear-gradient(135deg,#FEF3C7,#FDE68A);border:1px solid var(--amber);border-radius:14px;padding:10px 14px;margin-bottom:10px;display:flex;gap:8px;align-items:flex-start}
-.alert-icon{font-size:16px;flex-shrink:0}
-.alert-text{font-size:12px;color:#92400E;line-height:1.5}
-.premium-lock{background:linear-gradient(135deg,#F3E8FF,#EDE9FE);border:1px solid #DDD6FE;border-radius:14px;padding:12px;text-align:center;margin-top:8px}
-.premium-text{font-size:12px;color:var(--purple);margin-bottom:6px}
-.premium-btn{padding:6px 16px;background:var(--purple);color:white;border:none;border-radius:10px;font-size:12px;cursor:pointer;font-family:'Noto Sans JP',sans-serif}
-.affiliate-note{font-size:10px;color:var(--text-hint);text-align:center;padding:8px 0;border-top:1px solid var(--border)}
-.day-label{font-size:11px;color:var(--text-sub);min-width:20px;padding-top:8px}
-.child-schedule-input{flex:1;padding:6px 10px;border:1.5px solid var(--pink-mid);border-radius:8px;font-size:12px;font-family:'Noto Sans JP',sans-serif;background:white;color:var(--text);outline:none}
-::-webkit-scrollbar{width:4px;height:4px}
+html,body{height:100%;background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif}
+.serif{font-family:'Playfair Display',serif}
+
+/* scrollbar */
+::-webkit-scrollbar{width:3px;height:3px}
 ::-webkit-scrollbar-track{background:transparent}
-::-webkit-scrollbar-thumb{background:var(--pink-mid);border-radius:2px}
+::-webkit-scrollbar-thumb{background:var(--purple);border-radius:2px;opacity:.4}
+
+/* layout */
+.app{max-width:430px;margin:0 auto;min-height:100vh;display:flex;flex-direction:column;position:relative;overflow:hidden}
+.bg-orb{position:fixed;border-radius:50%;filter:blur(60px);pointer-events:none;z-index:0}
+.orb1{width:280px;height:280px;background:rgba(181,110,255,0.12);top:-80px;left:-80px}
+.orb2{width:220px;height:220px;background:rgba(255,107,181,0.1);bottom:80px;right:-60px}
+.orb3{width:160px;height:160px;background:rgba(107,142,255,0.08);top:40%;left:50%;transform:translateX(-50%)}
+
+.header{position:sticky;top:0;z-index:50;background:rgba(15,10,30,0.85);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);padding:12px 16px 10px}
+.header-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px}
+.logo{display:flex;align-items:center;gap:8px}
+.logo-icon{width:32px;height:32px;background:var(--grad);border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:16px;box-shadow:var(--glow2)}
+.logo-text{font-size:16px;font-weight:700;background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.settings-btn{width:32px;height:32px;border-radius:50%;background:var(--card2);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:15px;transition:all .2s}
+.settings-btn:hover{border-color:var(--purple);box-shadow:var(--glow)}
+
+/* week bar */
+.week-strip{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.week-chip{background:var(--grad);color:white;font-size:10px;font-weight:700;padding:3px 10px;border-radius:20px;letter-spacing:.3px}
+.planned-chip{background:var(--grad2);color:white;font-size:10px;font-weight:700;padding:3px 10px;border-radius:20px;letter-spacing:.3px}
+.days-text{font-size:11px;color:var(--text3)}
+.days-text strong{color:var(--pink2)}
+.pbar{height:4px;background:var(--card2);border-radius:2px;overflow:hidden;margin-top:6px}
+.pbar-fill{height:100%;background:var(--grad3);border-radius:2px;transition:width .6s ease}
+
+/* bottom nav */
+.nav{position:fixed;bottom:0;left:50%;transform:translateX(-50%);width:100%;max-width:430px;background:rgba(15,10,30,0.92);backdrop-filter:blur(20px);border-top:1px solid var(--border);display:flex;z-index:50;padding:4px 0 calc(4px + env(safe-area-inset-bottom))}
+.nav-btn{flex:1;display:flex;flex-direction:column;align-items:center;gap:2px;padding:7px 2px 5px;cursor:pointer;border:none;background:transparent;position:relative}
+.nav-icon{font-size:19px;line-height:1;transition:transform .2s}
+.nav-label{font-size:8px;color:var(--text3);font-weight:600;letter-spacing:.2px;transition:color .2s}
+.nav-btn.active .nav-label{color:var(--pink)}
+.nav-btn.active .nav-icon{transform:translateY(-1px)}
+.nav-btn.active::after{content:'';position:absolute;bottom:0;left:50%;transform:translateX(-50%);width:20px;height:2px;background:var(--grad);border-radius:1px}
+
+/* content */
+.content{flex:1;overflow-y:auto;padding:14px 14px calc(80px + env(safe-area-inset-bottom));position:relative;z-index:1}
+
+/* cards */
+.card{background:var(--card);border:1px solid var(--border);border-radius:var(--r);padding:16px;margin-bottom:10px;position:relative;overflow:hidden}
+.card::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,rgba(181,110,255,0.4),transparent)}
+.card-title{font-size:12px;font-weight:700;color:var(--text2);margin-bottom:12px;display:flex;align-items:center;gap:6px;letter-spacing:.3px;text-transform:uppercase}
+.card-accent{width:3px;height:14px;background:var(--grad);border-radius:2px}
+
+/* hero card */
+.hero-card{background:var(--grad);border-radius:var(--r);padding:18px;margin-bottom:10px;position:relative;overflow:hidden;box-shadow:0 8px 32px rgba(181,110,255,0.3)}
+.hero-card::after{content:'';position:absolute;right:-20px;bottom:-20px;width:100px;height:100px;background:rgba(255,255,255,0.08);border-radius:50%}
+.hero-week{font-size:36px;font-weight:700;font-family:'Playfair Display',serif;color:white;line-height:1}
+.hero-sub{font-size:12px;color:rgba(255,255,255,0.8);margin-top:2px}
+.hero-days{font-size:13px;color:rgba(255,255,255,0.9);margin-top:8px;font-weight:500}
+
+/* stat grid */
+.stat-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:10px}
+.stat-card{background:var(--card);border:1px solid var(--border);border-radius:var(--r2);padding:12px;position:relative;overflow:hidden}
+.stat-card::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,rgba(181,110,255,0.3),transparent)}
+.stat-label{font-size:10px;color:var(--text3);font-weight:600;letter-spacing:.3px;margin-bottom:4px}
+.stat-val{font-size:22px;font-weight:700;font-family:'Playfair Display',serif;background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;line-height:1}
+.stat-unit{font-size:10px;color:var(--text3);display:inline;-webkit-text-fill-color:var(--text3)}
+.mini-bar{height:3px;background:var(--bg3);border-radius:2px;overflow:hidden;margin-top:6px}
+.mini-bar-fill{height:100%;background:var(--grad);border-radius:2px}
+
+/* mission */
+.mission-item{display:flex;align-items:center;gap:10px;padding:10px 0;border-bottom:1px solid rgba(180,100,255,0.08)}
+.mission-item:last-child{border-bottom:none}
+.m-check{width:20px;height:20px;border-radius:6px;border:1.5px solid var(--purple);display:flex;align-items:center;justify-content:center;cursor:pointer;flex-shrink:0;transition:all .2s}
+.m-check.done{background:var(--grad);border-color:transparent;box-shadow:var(--glow)}
+.m-check.done::after{content:'✓';color:white;font-size:11px;font-weight:700}
+.m-text{font-size:13px;color:var(--text);line-height:1.4}
+.m-text.done{text-decoration:line-through;color:var(--text3)}
+
+/* alert */
+.alert{background:rgba(251,191,36,0.08);border:1px solid rgba(251,191,36,0.25);border-radius:var(--r2);padding:10px 12px;margin-bottom:8px;display:flex;gap:8px;align-items:flex-start}
+.alert-icon{font-size:14px;flex-shrink:0;margin-top:1px}
+.alert-text{font-size:11px;color:#FDE68A;line-height:1.5}
+.alert.pink{background:rgba(255,107,181,0.08);border-color:rgba(255,107,181,0.25)}
+.alert.pink .alert-text{color:var(--pink2)}
+
+/* guide */
+.guide-nav{display:flex;gap:5px;overflow-x:auto;padding-bottom:6px;margin-bottom:10px;-webkit-overflow-scrolling:touch}
+.g-btn{padding:5px 12px;border-radius:20px;border:1px solid var(--border);background:var(--card2);font-size:11px;cursor:pointer;color:var(--text3);white-space:nowrap;font-family:'DM Sans',sans-serif;font-weight:600;transition:all .2s}
+.g-btn.active{background:var(--grad);border-color:transparent;color:white;box-shadow:var(--glow2)}
+.guide-item{display:flex;gap:8px;padding:7px 0;border-bottom:1px solid rgba(180,100,255,0.07);font-size:12px;color:var(--text2);line-height:1.5}
+.guide-item:last-child{border-bottom:none}
+.g-dot{width:5px;height:5px;border-radius:50%;flex-shrink:0;margin-top:5px}
+
+/* checklist */
+.cat-row{display:flex;gap:5px;overflow-x:auto;padding-bottom:6px;margin-bottom:10px;-webkit-overflow-scrolling:touch}
+.cat-btn{padding:4px 11px;border-radius:16px;border:1px solid var(--border);background:var(--card2);font-size:10px;cursor:pointer;color:var(--text3);white-space:nowrap;font-family:'DM Sans',sans-serif;font-weight:600;transition:all .2s}
+.cat-btn.active{background:var(--grad);border-color:transparent;color:white}
+.check-item{display:flex;align-items:flex-start;gap:9px;padding:9px 0;border-bottom:1px solid rgba(180,100,255,0.07)}
+.check-item:last-child{border-bottom:none}
+.c-box{width:18px;height:18px;border-radius:5px;border:1.5px solid var(--purple);display:flex;align-items:center;justify-content:center;cursor:pointer;flex-shrink:0;margin-top:1px;transition:all .2s}
+.c-box.done{background:var(--grad);border-color:transparent}
+.c-box.done::after{content:'✓';color:white;font-size:10px;font-weight:700}
+.c-name{font-size:12px;color:var(--text);font-weight:500}
+.c-hint{font-size:10px;color:var(--text3);margin-top:2px;line-height:1.4}
+.c-price{font-size:9px;color:var(--text3);margin-top:3px}
+.c-links{display:flex;gap:5px;margin-top:5px;flex-wrap:wrap}
+.c-link{font-size:9px;padding:2px 8px;border-radius:8px;border:1px solid;cursor:pointer;background:transparent;text-decoration:none;display:inline-block;font-weight:600;transition:all .2s}
+.c-link.az{border-color:rgba(52,211,153,.4);color:var(--green)}
+.c-link.rk{border-color:rgba(251,191,36,.4);color:var(--amber)}
+.c-link.rm{border-color:rgba(255,107,181,.4);color:var(--pink)}
+.c-action{display:flex;gap:5px;margin-top:5px;flex-wrap:wrap}
+.c-btn{font-size:9px;padding:2px 8px;border-radius:8px;border:1px solid;cursor:pointer;background:transparent;font-family:'DM Sans',sans-serif;font-weight:600;transition:all .2s}
+.c-btn.have{border-color:rgba(181,110,255,.35);color:var(--purple2)}
+.c-btn.na{border-color:rgba(136,112,170,.25);color:var(--text3)}
+.c-btn.undo{border-color:var(--border);color:var(--text3)}
+
+/* health */
+.mood-row{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin-bottom:10px}
+.mood-btn{padding:8px 4px;border-radius:10px;border:1px solid var(--border);background:var(--card2);cursor:pointer;text-align:center;transition:all .2s}
+.mood-btn.sel{border-color:var(--pink);background:var(--pink3);box-shadow:var(--glow2)}
+.mood-e{font-size:20px;display:block}
+.mood-l{font-size:9px;color:var(--text3);display:block;margin-top:2px;font-weight:600}
+.tag-wrap{display:flex;flex-wrap:wrap;gap:5px;margin-bottom:10px}
+.tag{padding:4px 10px;border-radius:10px;border:1px solid var(--border);background:var(--card2);font-size:10px;cursor:pointer;color:var(--text3);font-family:'DM Sans',sans-serif;font-weight:600;transition:all .2s}
+.tag.sel{border-color:var(--purple);background:var(--purple3);color:var(--purple2)}
+.tag.green{border:1px solid rgba(45,212,191,.2);color:var(--text3)}
+.tag.green.sel{border-color:var(--teal);background:rgba(45,212,191,.1);color:var(--teal)}
+.form-inp{width:100%;padding:10px 12px;border:1px solid var(--border);border-radius:var(--r3);font-size:13px;font-family:'DM Sans',sans-serif;background:var(--card2);color:var(--text);outline:none;transition:border .2s}
+.form-inp:focus{border-color:var(--purple);box-shadow:0 0 0 3px rgba(181,110,255,.1)}
+.form-sel{width:100%;padding:9px 12px;border:1px solid var(--border);border-radius:var(--r3);font-size:12px;font-family:'DM Sans',sans-serif;background:var(--card2);color:var(--text);outline:none}
+.form-label{font-size:11px;font-weight:700;color:var(--text2);margin-bottom:6px;display:block;letter-spacing:.3px}
+
+/* AI chat */
+.chat-wrap{display:flex;flex-direction:column;gap:8px;margin-bottom:10px;max-height:320px;overflow-y:auto;padding-right:2px}
+.chat-msg{max-width:88%;padding:10px 12px;border-radius:14px;font-size:12px;line-height:1.6}
+.chat-msg.user{align-self:flex-end;background:var(--grad);color:white;border-radius:14px 14px 4px 14px}
+.chat-msg.ai{align-self:flex-start;background:var(--card2);color:var(--text2);border:1px solid var(--border);border-radius:14px 14px 14px 4px;white-space:pre-wrap}
+.chat-input-row{display:flex;gap:7px;align-items:flex-end}
+.chat-input{flex:1;padding:9px 12px;border:1px solid var(--border);border-radius:12px;font-size:12px;font-family:'DM Sans',sans-serif;background:var(--card2);color:var(--text);outline:none;resize:none;max-height:80px}
+.chat-input:focus{border-color:var(--purple)}
+.chat-send{width:36px;height:36px;border-radius:12px;background:var(--grad);border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:15px;flex-shrink:0;box-shadow:var(--glow2);transition:transform .15s}
+.chat-send:hover{transform:scale(1.05)}
+.chat-quick{display:flex;flex-wrap:wrap;gap:5px;margin-bottom:8px}
+.q-chip{padding:4px 10px;border-radius:10px;border:1px solid var(--border2);background:var(--card2);font-size:10px;cursor:pointer;color:var(--pink2);font-weight:600;font-family:'DM Sans',sans-serif;transition:all .2s}
+.q-chip:hover{background:var(--pink3)}
+.typing{display:flex;gap:4px;align-items:center;padding:2px 0}
+.typing span{width:6px;height:6px;border-radius:50%;background:var(--purple2);animation:bounce 1.2s infinite}
+.typing span:nth-child(2){animation-delay:.2s}
+.typing span:nth-child(3){animation-delay:.4s}
+@keyframes bounce{0%,80%,100%{transform:translateY(0)}40%{transform:translateY(-5px)}}
+
+/* schedule */
+.sch-item{display:flex;gap:10px;padding:9px 0;border-bottom:1px solid rgba(180,100,255,0.07)}
+.sch-item:last-child{border-bottom:none}
+.sch-time{font-size:10px;font-weight:700;color:var(--purple2);min-width:38px;padding-top:2px}
+.sch-name{font-size:12px;font-weight:500;color:var(--text)}
+.sch-sub{font-size:10px;color:var(--text3);margin-top:1px}
+.appt-item{display:flex;gap:10px;padding:9px 0;border-bottom:1px solid rgba(180,100,255,0.07)}
+.appt-item:last-child{border-bottom:none}
+.appt-date{font-size:10px;font-weight:700;color:var(--pink);min-width:50px;padding-top:2px}
+.appt-del{font-size:10px;color:var(--red);background:none;border:none;cursor:pointer;padding:0 4px}
+.add-btn{width:100%;padding:9px;border:1.5px dashed var(--border);border-radius:var(--r2);background:transparent;color:var(--purple2);font-size:12px;cursor:pointer;font-family:'DM Sans',sans-serif;font-weight:600;margin-top:7px;transition:all .2s}
+.add-btn:hover{background:var(--purple3)}
+.filter-row{display:flex;gap:5px;margin-bottom:10px;flex-wrap:wrap}
+.f-btn{padding:4px 10px;border-radius:14px;border:1px solid var(--border);background:var(--card2);font-size:10px;cursor:pointer;color:var(--text3);font-family:'DM Sans',sans-serif;font-weight:600}
+.f-btn.active{background:var(--grad);border-color:transparent;color:white}
+
+/* calendar */
+.cal-nav{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px}
+.cal-nav-btn{padding:5px 12px;border:1px solid var(--border);border-radius:var(--r3);background:var(--card2);font-size:11px;cursor:pointer;color:var(--text2);font-family:'DM Sans',sans-serif;font-weight:600}
+.cal-title{font-size:14px;font-weight:700;color:var(--text)}
+.cal-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:2px}
+.cal-head{font-size:9px;text-align:center;padding:4px 0;color:var(--text3);font-weight:700;letter-spacing:.3px}
+.cal-cell{min-height:34px;border-radius:8px;padding:3px 2px;cursor:pointer;transition:background .15s;position:relative}
+.cal-cell:hover{background:var(--card2)}
+.cal-cell.today{background:var(--purple3);border:1px solid rgba(181,110,255,.4)}
+.cal-cell.sel{background:var(--pink3);border:1px solid rgba(255,107,181,.4)}
+.cal-cell.other{opacity:.25}
+.cal-dn{font-size:10px;text-align:center;font-weight:600;color:var(--text2)}
+.cal-dots{display:flex;justify-content:center;gap:2px;margin-top:2px}
+.cal-dot{width:4px;height:4px;border-radius:50%}
+.detail-box{background:var(--card2);border:1px solid var(--border);border-radius:var(--r2);padding:12px;margin-top:10px}
+.detail-title{font-size:11px;font-weight:700;color:var(--text2);margin-bottom:8px;letter-spacing:.3px}
+.detail-row{font-size:11px;color:var(--text2);padding:4px 0;border-bottom:1px solid rgba(180,100,255,0.08);line-height:1.5}
+.detail-row:last-child{border-bottom:none}
+
+/* weight chart */
+.chart-wrap{width:100%;overflow:hidden;margin-top:4px}
+
+/* resources */
+.resource-item{display:flex;gap:10px;padding:10px 0;border-bottom:1px solid rgba(180,100,255,0.07);align-items:flex-start;cursor:pointer}
+.resource-item:last-child{border-bottom:none}
+.resource-icon{width:38px;height:38px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0}
+.resource-title{font-size:12px;font-weight:600;color:var(--text);line-height:1.3}
+.resource-meta{font-size:10px;color:var(--text3);margin-top:2px}
+.resource-tag{display:inline-block;font-size:9px;padding:1px 6px;border-radius:6px;font-weight:700;margin-top:3px}
+
+/* week visual bar */
+.wk-bar{position:relative;height:16px;background:var(--card2);border-radius:8px;overflow:hidden;margin:8px 0;border:1px solid var(--border)}
+.wk-fill{height:100%;background:var(--grad3);border-radius:8px;transition:width .6s ease}
+.wk-planned{position:absolute;top:0;height:100%;background:rgba(107,142,255,.3);border-left:2px solid rgba(107,142,255,.7)}
+.wk-markers{display:flex;justify-content:space-between;font-size:8px;color:var(--text3);letter-spacing:.2px}
+
+/* setup overlay */
+.setup-ov{position:fixed;inset:0;background:var(--bg);z-index:999;overflow-y:auto;max-width:430px;margin:0 auto}
+.setup-hero{background:var(--grad3);padding:28px 18px 22px;position:relative;overflow:hidden}
+.setup-hero::after{content:'🌸';font-size:80px;position:absolute;right:-10px;bottom:-15px;opacity:.2}
+.setup-htitle{font-family:'Playfair Display',serif;font-size:24px;font-weight:700;color:white}
+.setup-hsub{font-size:12px;color:rgba(255,255,255,.8);margin-top:4px}
+.setup-body{padding:18px}
+.form-group{margin-bottom:18px}
+.radio-wrap{display:flex;flex-wrap:wrap;gap:6px}
+.r-btn{padding:7px 13px;border-radius:12px;border:1px solid var(--border);background:var(--card2);font-size:11px;cursor:pointer;color:var(--text3);font-family:'DM Sans',sans-serif;font-weight:600;transition:all .2s}
+.r-btn.sel{background:var(--grad);border-color:transparent;color:white;box-shadow:var(--glow2)}
+.toggle-row{display:flex;align-items:center;justify-content:space-between;padding:8px 0}
+.toggle{width:38px;height:21px;border-radius:11px;background:var(--card2);border:1px solid var(--border);position:relative;cursor:pointer;transition:all .2s}
+.toggle.on{background:var(--grad);border-color:transparent;box-shadow:var(--glow2)}
+.toggle-k{width:17px;height:17px;border-radius:50%;background:white;position:absolute;top:1px;left:1px;transition:transform .2s;box-shadow:0 1px 4px rgba(0,0,0,.3)}
+.toggle.on .toggle-k{transform:translateX(17px)}
+.child-box{background:var(--card2);border:1px solid var(--border);border-radius:var(--r2);padding:12px;margin-bottom:8px}
+.child-head{display:flex;gap:6px;align-items:center;margin-bottom:10px}
+.remove-btn{width:26px;height:26px;border-radius:50%;border:1px solid rgba(248,113,113,.3);background:transparent;color:var(--red);cursor:pointer;font-size:13px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.day-row{display:flex;gap:5px;align-items:center;margin-bottom:5px}
+.day-lbl{font-size:10px;font-weight:700;color:var(--purple2);min-width:16px}
+.t-sel{padding:4px 5px;border:1px solid var(--border);border-radius:6px;font-size:11px;font-family:'DM Sans',sans-serif;background:var(--bg3);color:var(--text);outline:none;min-width:44px}
+.copy-btn{padding:2px 6px;border:1px solid rgba(45,212,191,.3);border-radius:5px;background:transparent;color:var(--teal);font-size:8px;cursor:pointer;font-family:'DM Sans',sans-serif;font-weight:700;white-space:nowrap}
+.rest-btn{padding:2px 6px;border:1px solid rgba(248,113,113,.3);border-radius:5px;background:transparent;color:var(--red);font-size:8px;cursor:pointer;font-family:'DM Sans',sans-serif;font-weight:700}
+.submit-btn{width:100%;padding:13px;background:var(--grad);color:white;border:none;border-radius:var(--r2);font-size:15px;font-weight:700;cursor:pointer;font-family:'Playfair Display',serif;box-shadow:0 8px 24px rgba(181,110,255,.35);letter-spacing:.3px;transition:transform .15s}
+.submit-btn:hover{transform:translateY(-1px)}
+.cancel-btn{width:100%;padding:11px;background:transparent;border:1px solid var(--border);border-radius:var(--r2);color:var(--text3);font-size:13px;cursor:pointer;font-family:'DM Sans',sans-serif;font-weight:600;margin-top:7px}
+.affiliate-note{font-size:9px;color:var(--text3);text-align:center;padding:6px 0;border-top:1px solid var(--border)}
+.premium-box{background:var(--purple3);border:1px solid rgba(181,110,255,.25);border-radius:var(--r2);padding:10px;text-align:center;margin-top:8px}
+.prem-text{font-size:11px;color:var(--purple2);margin-bottom:6px}
+.prem-btn{padding:5px 14px;background:var(--grad);color:white;border:none;border-radius:8px;font-size:11px;cursor:pointer;font-family:'DM Sans',sans-serif;font-weight:700;box-shadow:var(--glow)}
+.divider{height:1px;background:var(--border);margin:12px 0}
 </style>
 </head>
 <body>
 <div id="root"></div>
 <script type="text/babel">
-const {useState,useEffect,useCallback}=React;
-const AFFILIATE={amazon:"mamaschedule-22",rakuten:"091e72cb.e2dd584d.091e72cc.2c9b6a81"};
-const WEEKDAYS=['月','火','水','木','金','土','日'];
-const BUDGET_OPTIONS=[
-  {label:'3万円以内',value:30000},{label:'3万〜5万円',value:50000},
-  {label:'5万〜7万円',value:70000},{label:'7万〜9万円',value:90000},
-  {label:'9万〜11万円',value:110000},{label:'11万〜13万円',value:130000},
-  {label:'13万〜15万円',value:150000},{label:'15万円以上',value:200000},
+const {useState,useEffect,useCallback,useMemo,useRef}=React;
+const AF={az:"mamaschedule-22",rk:"091e72cb.e2dd584d.091e72cc.2c9b6a81"};
+const WD=['月','火','水','木','金','土','日'];
+const HRS=Array.from({length:24},(_,i)=>String(i).padStart(2,'0'));
+const MNS=['00','15','30','45'];
+const BUDGET_OPTS=[
+  {l:'3万円以内',v:30000},{l:'3〜5万円',v:50000},{l:'5〜7万円',v:70000},
+  {l:'7〜9万円',v:90000},{l:'9〜11万円',v:110000},{l:'11〜13万円',v:130000},
+  {l:'13〜15万円',v:150000},{l:'15万円以上',v:200000}
 ];
-const WEEKLY_GUIDE={
-  34:{body:["子宮底長が大きくなり胃への圧迫感が増す","赤ちゃんの体重は約2kg","頻尿・動悸が出やすい時期"],todo:["産院への緊急連絡先を確認","入院バッグの中身リストアップ","産前休暇の生活リズムを整える"],caution:["長時間の立ち仕事は避ける","1時間ごとに休憩をとる","むくみがひどい場合は受診"]},
-  35:{body:["赤ちゃんの肺がほぼ完成","胎動がやや落ち着く場合も","恥骨痛・腰痛が出やすい"],todo:["入院バッグを揃え始める","美容室・サロン予約を入れる","家の断捨離を始める"],caution:["急な破水に備えて外出時は準備を","無理な運動は控える"]},
+const GUIDE={
+  34:{body:["子宮底長が大きくなり胃への圧迫感が増す","赤ちゃんの体重は約2kg","頻尿・動悸が出やすい時期"],todo:["産院への緊急連絡先を確認","入院バッグのリストアップ","産前休暇の生活リズムを整える"],caution:["長時間の立ち仕事は避ける","1時間ごとに休憩をとる","むくみがひどい場合は受診"]},
+  35:{body:["赤ちゃんの肺がほぼ完成","胎動がやや落ち着く場合も","恥骨痛・腰痛が出やすい"],todo:["入院バッグを揃え始める","美容室・サロン予約","家の断捨離を始める"],caution:["急な破水に備えて外出時は準備を","無理な運動は控える"]},
   36:{body:["赤ちゃんの頭が骨盤に入り始める","おりものが増える","前駆陣痛が来る場合も"],todo:["入院バッグ完成","ネイル・まつ毛・眉毛を整える","沐浴グッズをそろえる"],caution:["いつ陣痛が来ても対応できる準備を","前駆陣痛と本陣痛の違いを確認"]},
-  37:{body:["正期産に入る（37〜41週）","いつ陣痛が来てもOKな時期","体重増加がゆるやかに"],todo:["全準備の最終確認","冷凍作り置きを始める","産後のサポート体制を確認する"],caution:["一人での遠出は控える","常に携帯の充電を満タンに"]},
+  37:{body:["正期産に入る（37〜41週）","いつ陣痛が来てもOKな時期","体重増加がゆるやかに"],todo:["全準備の最終確認","冷凍作り置きを始める","産後サポート体制を確認"],caution:["一人での遠出は控える","常に携帯の充電を満タンに"]},
   38:{body:["赤ちゃんの体重約3kg","子宮口が少しずつ開き始める","おなかが下がってくる感覚"],todo:["産院への連絡タイミングを再確認","家族への緊急連絡網を作る","産後の食材ストックを確認"],caution:["10分間隔の規則的な陣痛で産院へ","破水したら即座に産院へ連絡"]},
   39:{body:["出産直前の準備が整う","胎動の変化に注意","睡眠が取りにくくなる場合も"],todo:["最終的な部屋の片付け","産後の家事代行・サポートを確認","リラックス法の練習"],caution:["毎日の胎動カウントを続ける","強い頭痛・視野異常は即受診"]},
   40:{body:["予定日！でも±2週間は正常","子宮収縮が増える","いつでも準備OK"],todo:["産院との最終連絡","パートナーに常にそばにいてもらう","リラックスして過ごす"],caution:["予定日を過ぎても焦らない","何か異変を感じたらすぐ受診"]},
 };
-const CHECKLIST_DATA={
+const BABY_SIZE={34:"ズッキーニくらい",35:"パイナップルくらい",36:"レタスくらい",37:"スイスチャードくらい",38:"ニラくらい",39:"西瓜くらい",40:"かぼちゃくらい"};
+const CHECKLIST={
   "入院グッズ":[
-    {name:"パジャマ（前開き）",hint:"授乳しやすい前開きが必須。2〜3枚あると安心",min:1500,avg:3500,high:8000},
-    {name:"授乳ブラ",hint:"産後すぐに必要。伸縮性のあるものを",min:800,avg:2500,high:6000},
-    {name:"産褥ショーツ",hint:"マジックテープ式が便利。3〜5枚",min:500,avg:1500,high:3000},
-    {name:"ペットボトルストロー",hint:"陣痛中に寝たまま飲める必需品",min:200,avg:500,high:1200},
-    {name:"充電器・モバイルバッテリー",hint:"入院中のスマホ充電に",min:1000,avg:3000,high:8000},
-    {name:"リップクリーム・保湿クリーム",hint:"乾燥する産院環境に対応",min:500,avg:1500,high:5000},
-    {name:"ドライシャンプー",hint:"出産直後は洗髪できない場合も",min:500,avg:1200,high:3000},
+    {n:"パジャマ（前開き）",h:"授乳しやすい前開きが必須。2〜3枚",min:1500,avg:3500,high:8000},
+    {n:"授乳ブラ",h:"産後すぐに必要。伸縮性のあるものを",min:800,avg:2500,high:6000},
+    {n:"産褥ショーツ",h:"マジックテープ式が便利。3〜5枚",min:500,avg:1500,high:3000},
+    {n:"ペットボトルストロー",h:"陣痛中に寝たまま飲める必需品",min:200,avg:500,high:1200},
+    {n:"充電器・モバイルバッテリー",h:"入院中のスマホ充電に",min:1000,avg:3000,high:8000},
+    {n:"リップ・保湿クリーム",h:"乾燥する産院環境に対応",min:500,avg:1500,high:5000},
+    {n:"ドライシャンプー",h:"出産直後は洗髪できない場合も",min:500,avg:1200,high:3000},
   ],
   "ベビー用品":[
-    {name:"短肌着（5〜6枚）",hint:"サイズ50〜60。最初は白が洗いやすい",min:500,avg:1500,high:4000},
-    {name:"コンビ肌着（5〜6枚）",hint:"短肌着の上に。股スナップが便利",min:600,avg:1800,high:4500},
-    {name:"おくるみ",hint:"赤ちゃんを包む多目的布。2〜3枚",min:800,avg:2500,high:8000},
-    {name:"ベビーベッド",hint:"腰への負担軽減に。レンタルも◎",min:15000,avg:35000,high:80000},
-    {name:"チャイルドシート",hint:"退院時から必要。必ず事前設置を",min:8000,avg:35000,high:80000},
-    {name:"抱っこ紐",hint:"新生児から使えるものを確認",min:5000,avg:20000,high:50000},
-    {name:"ベビーカー",hint:"A型は新生児から使用可",min:8000,avg:40000,high:120000},
+    {n:"短肌着（5〜6枚）",h:"サイズ50〜60。白が洗いやすい",min:500,avg:1500,high:4000},
+    {n:"コンビ肌着（5〜6枚）",h:"股スナップが便利",min:600,avg:1800,high:4500},
+    {n:"おくるみ",h:"赤ちゃんを包む多目的布。2〜3枚",min:800,avg:2500,high:8000},
+    {n:"ベビーベッド",h:"腰への負担軽減に。レンタルも◎",min:15000,avg:35000,high:80000},
+    {n:"チャイルドシート",h:"退院時から必要。必ず事前設置を",min:8000,avg:35000,high:80000},
+    {n:"抱っこ紐",h:"新生児から使えるものを確認",min:5000,avg:20000,high:50000},
+    {n:"ベビーカー",h:"A型は新生児から使用可",min:8000,avg:40000,high:120000},
   ],
   "授乳・お風呂":[
-    {name:"授乳クッション",hint:"長時間の授乳で腕が疲れる。必需品",min:2000,avg:5000,high:12000},
-    {name:"哺乳瓶（2〜3本）",hint:"ガラス・プラスチック両方試してみても",min:800,avg:2000,high:5000},
-    {name:"消毒グッズ",hint:"電子レンジ消毒が最も手軽",min:1500,avg:3000,high:6000},
-    {name:"ベビーバス",hint:"1ヶ月健診まで大人と別に入浴",min:1000,avg:3000,high:8000},
-    {name:"沐浴用ガーゼ（5〜6枚）",hint:"やわらかい素材で顔・体を拭く",min:300,avg:800,high:2000},
+    {n:"授乳クッション",h:"長時間の授乳で腕が疲れる。必需品",min:2000,avg:5000,high:12000},
+    {n:"哺乳瓶（2〜3本）",h:"ガラス・プラスチック両方試してみても",min:800,avg:2000,high:5000},
+    {n:"消毒グッズ",h:"電子レンジ消毒が最も手軽",min:1500,avg:3000,high:6000},
+    {n:"ベビーバス",h:"1ヶ月健診まで大人と別に入浴",min:1000,avg:3000,high:8000},
+    {n:"沐浴用ガーゼ（5〜6枚）",h:"やわらかい素材で顔・体を拭く",min:300,avg:800,high:2000},
   ],
   "部屋の準備":[
-    {name:"エアコンフィルター清掃",hint:"業者クリーニングが理想。1万円前後の投資価値あり",min:0,avg:10000,high:20000},
-    {name:"加湿器の清掃",hint:"重曹水でフィルターを洗浄。カビ予防に",min:0,avg:0,high:0},
-    {name:"コンセントガード",hint:"赤ちゃんが触れないようにカバーを",min:300,avg:800,high:2000},
-    {name:"家具の角カバー",hint:"ウレタン製のコーナーガードを設置",min:500,avg:1500,high:3000},
-    {name:"断捨離・収納整理",hint:"赤ちゃんのものを置くスペースを作る",min:0,avg:0,high:0},
+    {n:"エアコンフィルター清掃",h:"業者クリーニングが理想",min:0,avg:10000,high:20000},
+    {n:"加湿器の清掃",h:"重曹水でフィルター洗浄",min:0,avg:0,high:0},
+    {n:"コンセントガード",h:"赤ちゃんが触れないようにカバーを",min:300,avg:800,high:2000},
+    {n:"家具の角カバー",h:"コーナーガードを設置",min:500,avg:1500,high:3000},
+    {n:"断捨離・収納整理",h:"ベビーグッズを置くスペースを確保",min:0,avg:0,high:0},
   ],
   "美容・身だしなみ":[
-    {name:"美容室",hint:"産後3〜4ヶ月は行けなくなるかも。35週までに",min:3000,avg:7000,high:15000},
-    {name:"ネイル除去、爪は短くカット",hint:"ネイルオフ必須。新生児のお世話のために爪を短く切る。35週までに",min:3000,avg:5000,high:10000},
-    {name:"まつげサロン",hint:"入院中は化粧不可の場合も",min:3000,avg:6000,high:15000},
-    {name:"眉毛サロン",hint:"写真写りが格段とよくなる",min:2000,avg:4000,high:8000},
+    {n:"美容室（カット）",h:"産後3〜4ヶ月は行けない。37週までに",min:3000,avg:7000,high:15000},
+    {n:"ネイル除去",h:"手術時は必須。36週までに",min:3000,avg:5000,high:10000},
+    {n:"まつげサロン",h:"入院中は化粧不可の場合も",min:3000,avg:6000,high:15000},
+    {n:"眉毛サロン",h:"産後しばらく通えない。今のうちに",min:2000,avg:4000,high:8000},
   ],
   "手続き・書類":[
-    {name:"出生届の準備",hint:"出生後14日以内に提出。書類を事前確認",min:0,avg:0,high:0},
-    {name:"児童手当の申請準備",hint:"出生後15日以内に申請",min:0,avg:0,high:0},
-    {name:"育休申請書類",hint:"勤務先への提出期限を確認",min:0,avg:0,high:0},
+    {n:"出生届の準備",h:"出生後14日以内に提出",min:0,avg:0,high:0},
+    {n:"児童手当の申請準備",h:"出生後15日以内に申請",min:0,avg:0,high:0},
+    {n:"育休申請書類",h:"勤務先への提出期限を確認",min:0,avg:0,high:0},
   ],
 };
-const FRIDGE_ITEMS=["卵","豆腐","鶏肉","牛肉","豚肉","ほうれん草","小松菜","ブロッコリー","トマト","玉ねぎ","にんじん","じゃがいも","納豆","牛乳","ヨーグルト","チーズ","鮭","ツナ缶","豆類","きのこ"];
+const FRIDGE=["卵","豆腐","鶏肉","牛肉","豚肉","ほうれん草","小松菜","ブロッコリー","トマト","玉ねぎ","にんじん","じゃがいも","納豆","牛乳","ヨーグルト","チーズ","鮭","ツナ缶","豆類","きのこ"];
 const SYMPTOMS=["むくみ","腰痛","恥骨痛","頻尿","胸やけ","息切れ","便秘","不眠","頭痛","気分の落ち込み","だるさ","食欲不振"];
 const MOODS=[{e:"😊",l:"元気"},{e:"😐",l:"普通"},{e:"😴",l:"眠い"},{e:"😣",l:"つらい"}];
-const WEEKLY_TASKS={
+const TASKS={
   34:["入院バッグリストを作る","産院の緊急連絡先を保存","美容室・サロン予約"],
   35:["入院バッグを揃え始める","断捨離：クローゼット","ベビースペースを確保"],
   36:["入院バッグ完成","ネイル・まつ毛を整える","エアコン清掃手配"],
@@ -220,116 +354,142 @@ const WEEKLY_TASKS={
   39:["最終部屋の片付け","緊急連絡網の確認","ゆっくり過ごす"],
   40:["産院と最終確認","パートナーと過ごす","好きなことをして待つ"],
 };
-const DEFAULT_PROFILE={name:'',dueDate:'',birthType:'natural',pattern:'first',children:[],workEnabled:false,food:'both',budgetOption:150000,budgetCustom:'',defaultAxis:['avg'],selfcare:[],garbage:[]};
+const RESOURCES=[
+  {icon:"🤱",title:"母乳育児の基本と準備",meta:"授乳・栄養",tag:"授乳",tagColor:"rgba(255,107,181,.15)",tagText:"#FF6BB5",url:"https://www.mhlw.go.jp/topics/2010/01/tp0119-1.html"},
+  {icon:"🏥",title:"産後うつ：知っておきたいこと",meta:"メンタルヘルス",tag:"健康",tagColor:"rgba(181,110,255,.15)",tagText:"#B56EFF",url:"https://www.ncchd.go.jp/hospital/pregnancy/"},
+  {icon:"🛁",title:"新生児の沐浴・スキンケア完全ガイド",meta:"育児の基本",tag:"新生児",tagColor:"rgba(45,212,191,.1)",tagText:"#2DD4BF",url:"https://www.nhk.or.jp/kenko/atc_1213.html"},
+  {icon:"🍼",title:"離乳食の始め方・進め方",meta:"栄養・食事",tag:"離乳食",tagColor:"rgba(251,191,36,.1)",tagText:"#FBBF24",url:"https://www.mhlw.go.jp/content/000945422.pdf"},
+  {icon:"🧘",title:"産前・産後のヨガとストレッチ",meta:"セルフケア",tag:"運動",tagColor:"rgba(52,211,153,.1)",tagText:"#34D399",url:"https://www.nhk.or.jp/kenko/"},
+  {icon:"📋",title:"産後に必要な行政手続きチェックリスト",meta:"手続き・制度",tag:"手続き",tagColor:"rgba(107,142,255,.15)",tagText:"#6B8EFF",url:"https://www.city.tokyo.lg.jp/"},
+  {icon:"💊",title:"妊娠中に摂りたい栄養素ガイド",meta:"栄養・健康",tag:"栄養",tagColor:"rgba(255,107,181,.15)",tagText:"#FF6BB5",url:"https://www.mhlw.go.jp/"},
+  {icon:"🚗",title:"チャイルドシートの選び方・取り付け方",meta:"育児グッズ",tag:"安全",tagColor:"rgba(248,113,113,.1)",tagText:"#F87171",url:"https://www.caa.go.jp/"},
+];
+const DFLT_CHILD={name:'',age:'',routines:{},pickupFrom:{},pickupTo:{}};
+const DFLT_PROFILE={name:'',dueDate:'',plannedDate:'',birthType:'natural',pattern:'first',children:[],workEnabled:false,food:'both',budgetOption:150000,budgetCustom:'',defaultAxis:['avg'],selfcare:[],garbage:[]};
 
+function ds(d){return d.toISOString().split('T')[0]}
+function getWeek(due){
+  if(!due)return 34;
+  const d=new Date(due),t=new Date();
+  return Math.max(1,Math.min(42,40-Math.round((d-t)/(7*24*60*60*1000))));
+}
+function getDays(due){
+  if(!due)return'—';
+  const diff=Math.ceil((new Date(due)-new Date())/(24*60*60*1000));
+  return diff>0?diff:0;
+}
+
+function TimeSelect({value,onChange}){
+  const [h,m]=(value||':').split(':');
+  return(
+    <div style={{display:'flex',gap:3,alignItems:'center'}}>
+      <select className="t-sel" value={h||''} onChange={e=>onChange(`${e.target.value}:${m||'00'}`)}>
+        <option value=''>--</option>
+        {HRS.map(hh=><option key={hh} value={hh}>{hh}</option>)}
+      </select>
+      <span style={{fontSize:10,color:'var(--text3)'}}>:</span>
+      <select className="t-sel" value={m||'00'} onChange={e=>onChange(`${h||'00'}:${e.target.value}`)}>
+        {MNS.map(mm=><option key={mm} value={mm}>{mm}</option>)}
+      </select>
+    </div>
+  );
+}
+
+// ─── App ────────────────────────────────────────────────────────
 function App(){
-  const [profile,setProfile]=useState(()=>{try{const s=localStorage.getItem('pregnancy_profile');return s?JSON.parse(s):null}catch{return null}});
+  const [profile,setProfile]=useState(()=>{try{const s=localStorage.getItem('ms2_profile');return s?JSON.parse(s):null}catch{return null}});
   const [tab,setTab]=useState(0);
-  const [checks,setChecks]=useState(()=>{try{const s=localStorage.getItem('pregnancy_checks');return s?JSON.parse(s):{}}catch{return{}}});
-  const [missions,setMissions]=useState(()=>{try{const s=localStorage.getItem('pregnancy_missions');return s?JSON.parse(s):{}}catch{return{}}});
-  const [health,setHealth]=useState(()=>{try{const s=localStorage.getItem('pregnancy_health');return s?JSON.parse(s):{weight:'',mood:'',symptoms:[],fridge:[],memo:''}}catch{return{weight:'',mood:'',symptoms:[],fridge:[],memo:''}}});
-  const [workHours,setWorkHours]=useState(()=>{try{return parseFloat(localStorage.getItem('pregnancy_work')||'0')}catch{return 0}});
-  const [aiResult,setAiResult]=useState('');
-  const [aiLoading,setAiLoading]=useState(false);
-  const [guideWeek,setGuideWeek]=useState(null);
-  const [checkCat,setCheckCat]=useState(Object.keys(CHECKLIST_DATA)[0]);
+  const [checks,setChecks]=useState(()=>{try{return JSON.parse(localStorage.getItem('ms2_checks')||'{}')}catch{return{}}});
+  const [missions,setMissions]=useState(()=>{try{return JSON.parse(localStorage.getItem('ms2_missions')||'{}')}catch{return{}}});
+  const [hlog,setHlog]=useState(()=>{try{return JSON.parse(localStorage.getItem('ms2_hlog')||'{}')}catch{return{}}});
+  const [appts,setAppts]=useState(()=>{try{return JSON.parse(localStorage.getItem('ms2_appts')||'[]')}catch{return[]}});
+  const [workH,setWorkH]=useState(()=>{try{return parseFloat(localStorage.getItem('ms2_work')||'0')}catch{return 0}});
   const [showSetup,setShowSetup]=useState(false);
+  const [guideWeek,setGuideWeek]=useState(null);
+  const [checkCat,setCheckCat]=useState(Object.keys(CHECKLIST)[0]);
 
-  useEffect(()=>{if(profile)localStorage.setItem('pregnancy_profile',JSON.stringify(profile))},[profile]);
-  useEffect(()=>{localStorage.setItem('pregnancy_checks',JSON.stringify(checks))},[checks]);
-  useEffect(()=>{localStorage.setItem('pregnancy_missions',JSON.stringify(missions))},[missions]);
-  useEffect(()=>{localStorage.setItem('pregnancy_health',JSON.stringify(health))},[health]);
-  useEffect(()=>{localStorage.setItem('pregnancy_work',workHours.toString())},[workHours]);
+  useEffect(()=>{if(profile)localStorage.setItem('ms2_profile',JSON.stringify(profile))},[profile]);
+  useEffect(()=>{localStorage.setItem('ms2_checks',JSON.stringify(checks))},[checks]);
+  useEffect(()=>{localStorage.setItem('ms2_missions',JSON.stringify(missions))},[missions]);
+  useEffect(()=>{localStorage.setItem('ms2_hlog',JSON.stringify(hlog))},[hlog]);
+  useEffect(()=>{localStorage.setItem('ms2_appts',JSON.stringify(appts))},[appts]);
+  useEffect(()=>{localStorage.setItem('ms2_work',String(workH))},[workH]);
 
-  const getWeek=useCallback(()=>{
-    if(!profile?.dueDate)return 34;
-    const due=new Date(profile.dueDate);
-    const today=new Date();
-    const diff=Math.round((due-today)/(7*24*60*60*1000));
-    return Math.max(34,Math.min(40,40-diff));
-  },[profile]);
-  const getDaysLeft=useCallback(()=>{
-    if(!profile?.dueDate)return'—';
-    const due=new Date(profile.dueDate);
-    const today=new Date();
-    const diff=Math.ceil((due-today)/(24*60*60*1000));
-    return diff>0?diff:0;
-  },[profile]);
-
-  const week=profile?getWeek():34;
-  const daysLeft=profile?getDaysLeft():56;
+  const week=profile?Math.max(34,Math.min(40,getWeek(profile.dueDate))):34;
+  const daysLeft=profile?getDays(profile.dueDate):56;
   const progress=Math.min(100,Math.round(((week-34)/6)*100));
   useEffect(()=>{if(profile&&!guideWeek)setGuideWeek(week)},[profile,week]);
 
-  const toggleCheck=(cat,idx)=>{const key=`${cat}_${idx}`;setChecks(p=>({...p,[key]:!p[key],[`${cat}_${idx}_na`]:false}));};
-  const toggleNA=(cat,idx)=>{const key=`${cat}_${idx}_na`;setChecks(p=>({...p,[key]:!p[key],[`${cat}_${idx}`]:false}));};
-  const toggleMission=(idx)=>{const today=new Date().toDateString();const key=`${today}_${idx}`;setMissions(p=>({...p,[key]:!p[key]}));};
-  const isMissionDone=(idx)=>{const today=new Date().toDateString();return!!missions[`${today}_${idx}`];};
-  const todayMissions=(WEEKLY_TASKS[week]||WEEKLY_TASKS[34]).slice(0,3);
+  const todayKey=ds(new Date());
+  const todayH=hlog[todayKey]||{weight:'',mood:'',symptoms:[],fridge:[],memo:''};
+  const setTodayH=(upd)=>setHlog(p=>({...p,[todayKey]:typeof upd==='function'?upd(p[todayKey]||{weight:'',mood:'',symptoms:[],fridge:[],memo:''}):upd}));
+
+  const toggleCheck=(cat,i)=>setChecks(p=>({...p,[`${cat}_${i}`]:!p[`${cat}_${i}`],[`${cat}_${i}_na`]:false}));
+  const toggleNA=(cat,i)=>setChecks(p=>({...p,[`${cat}_${i}_na`]:!p[`${cat}_${i}_na`],[`${cat}_${i}`]:false}));
+  const toggleMission=(i)=>{const k=`${todayKey}_${i}`;setMissions(p=>({...p,[k]:!p[k]}))};
+  const isMDone=(i)=>!!missions[`${todayKey}_${i}`];
+  const todayMs=(TASKS[week]||TASKS[34]).slice(0,3);
+
   const getBudget=()=>profile?.budgetOption==='custom'?parseInt(profile?.budgetCustom||0):parseInt(profile?.budgetOption||150000);
   const getBudgetPct=()=>{
-    const budget=getBudget();if(!budget)return 0;
-    let spent=0;
-    Object.entries(checks).forEach(([k,v])=>{
+    const b=getBudget();if(!b)return 0;
+    let s=0;Object.entries(checks).forEach(([k,v])=>{
       if(!v||k.includes('_na'))return;
-      const parts=k.split('_');if(parts.length<2)return;
-      const idx=parseInt(parts[parts.length-1]);
-      const cat=parts.slice(0,-1).join('_');
-      const items=CHECKLIST_DATA[cat];
-      if(items&&items[idx])spent+=items[idx].avg||0;
+      const parts=k.split('_');const idx=parseInt(parts[parts.length-1]);
+      const cat=parts.slice(0,-1).join('_');const items=CHECKLIST[cat];
+      if(items&&items[idx])s+=items[idx].avg||0;
     });
-    return Math.min(100,Math.round((spent/budget)*100));
+    return Math.min(100,Math.round((s/b)*100));
   };
-  const makeLink=(name,type)=>{
+  const totalItems=Object.values(CHECKLIST).reduce((a,b)=>a+b.length,0);
+  const doneItems=Object.keys(checks).filter(k=>checks[k]).length;
+  const checkPct=Math.round((doneItems/totalItems)*100);
+
+  const mkLink=(name,type)=>{
     const q=encodeURIComponent(name+' 妊婦');
-    if(type==='amazon')return`https://www.amazon.co.jp/s?k=${q}&tag=${AFFILIATE.amazon}`;
-    if(type==='rakuten')return`https://search.rakuten.co.jp/search/mall/${q}/?af_id=${AFFILIATE.rakuten}`;
-    return`https://room.rakuten.co.jp/`;
-  };
-  const callAI=async()=>{
-    if(aiLoading)return;setAiLoading(true);setAiResult('');
-    const pattern=profile?.pattern==='second'?'上の子あり（家族向けレシピ希望）':'初めての妊娠';
-    const prompt=`妊娠${week}週の妊婦です。${pattern}。体重:${health.weight||'未入力'}kg、気分:${health.mood||'普通'}、症状:${health.symptoms.join('・')||'特になし'}。冷蔵庫にある食材:${health.fridge.join('・')||'特になし'}。以下を簡潔に提案してください（日本語・改行あり・温かみのある口調）：1.今日の栄養アドバイス（2〜3行）2.朝ごはんレシピ（食材・作り方3行以内）3.昼ごはんレシピ（食材・作り方3行以内）4.夕ごはんレシピ（食材・作り方3行以内）5.嗜好品を楽しむヒント（コーヒー→ディカフェなどアレンジ）6.買い物が必要な食材リスト（箇条書き）`;
-    try{
-      const res=await fetch('https://api.anthropic.com/v1/messages',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:1000,messages:[{role:'user',content:prompt}]})});
-      const data=await res.json();
-      const text=data.content?.find(b=>b.type==='text')?.text||'取得できませんでした';
-      setAiResult(text);
-    }catch(e){setAiResult('通信エラーが発生しました。');}
-    setAiLoading(false);
+    if(type==='az')return`https://www.amazon.co.jp/s?k=${q}&tag=${AF.az}`;
+    if(type==='rk')return`https://search.rakuten.co.jp/search/mall/${q}/?af_id=${AF.rk}`;
+    return'https://room.rakuten.co.jp/';
   };
 
-  // 設定更新：既存データを保持しつつ変更箇所だけ上書き
-  const handleProfileUpdate=(updates)=>{setProfile(p=>({...p,...updates}));setShowSetup(false);};
+  const handleUpdate=(upd)=>{setProfile(p=>({...DFLT_PROFILE,...p,...upd}));setShowSetup(false)};
 
-  if(!profile)return<SetupScreen onDone={(p)=>setProfile({...DEFAULT_PROFILE,...p})} isFirst={true}/>;
-  if(showSetup)return<SetupScreen onDone={handleProfileUpdate} initialData={profile} isFirst={false} onCancel={()=>setShowSetup(false)}/>;
+  if(!profile)return<SetupScreen onDone={p=>setProfile({...DFLT_PROFILE,...p})} isFirst={true}/>;
+  if(showSetup)return<SetupScreen onDone={handleUpdate} initialData={profile} isFirst={false} onCancel={()=>setShowSetup(false)}/>;
+
+  const TABS=[['🏠','ホーム'],['📖','ガイド'],['📋','準備'],['✨','AI相談'],['📅','予定'],['📆','記録'],['📚','情報']];
 
   return(
     <div className="app">
+      <div className="bg-orb orb1"/><div className="bg-orb orb2"/><div className="bg-orb orb3"/>
       <div className="header">
         <div className="header-top">
-          <div className="app-title">🌸 ままスケ</div>
+          <div className="logo"><div className="logo-icon">🌸</div><span className="logo-text serif">ままスケ</span></div>
           <button className="settings-btn" onClick={()=>setShowSetup(true)}>⚙️</button>
         </div>
-        <div className="week-info">
-          <div className="week-badge">{week}週</div>
-          <div className="days-left">出産まであと <strong>{daysLeft}日</strong>　{profile.name&&`${profile.name}さん`}</div>
+        <div className="week-strip">
+          <span className="week-chip">{week}週</span>
+          {profile.birthType==='planned'&&profile.plannedDate&&<span className="planned-chip">計画日まで{getDays(profile.plannedDate)}日</span>}
+          <span className="days-text">出産まで <strong>{daysLeft}日</strong>{profile.name&&` ・ ${profile.name}さん`}</span>
         </div>
-        <div className="progress-wrap"><div className="progress-bar"><div className="progress-fill" style={{width:`${progress}%`}}/></div></div>
+        <div className="pbar"><div className="pbar-fill" style={{width:`${progress}%`}}/></div>
       </div>
+
       <div className="content">
-        {tab===0&&<HomeTab week={week} profile={profile} workHours={workHours} setWorkHours={setWorkHours} todayMissions={todayMissions} isMissionDone={isMissionDone} toggleMission={toggleMission} budgetPct={getBudgetPct()} checks={checks}/>}
+        {tab===0&&<HomeTab week={week} profile={profile} workH={workH} setWorkH={setWorkH} todayMs={todayMs} isMDone={isMDone} toggleMission={toggleMission} budgetPct={getBudgetPct()} checkPct={checkPct} hlog={hlog} appts={appts}/>}
         {tab===1&&<GuideTab week={week} guideWeek={guideWeek} setGuideWeek={setGuideWeek} profile={profile}/>}
-        {tab===2&&<CheckTab profile={profile} checks={checks} toggleCheck={toggleCheck} toggleNA={toggleNA} checkCat={checkCat} setCheckCat={setCheckCat} makeLink={makeLink}/>}
-        {tab===3&&<HealthTab health={health} setHealth={setHealth} aiResult={aiResult} aiLoading={aiLoading} callAI={callAI}/>}
-        {tab===4&&<ScheduleTab profile={profile} week={week}/>}
+        {tab===2&&<CheckTab profile={profile} checks={checks} toggleCheck={toggleCheck} toggleNA={toggleNA} checkCat={checkCat} setCheckCat={setCheckCat} mkLink={mkLink}/>}
+        {tab===3&&<AITab week={week} profile={profile} todayH={todayH}/>}
+        {tab===4&&<ScheduleTab profile={profile} week={week} appts={appts} setAppts={setAppts}/>}
+        {tab===5&&<CalendarTab hlog={hlog} appts={appts}/>}
+        {tab===6&&<ResourcesTab health={todayH} setHealth={setTodayH}/>}
       </div>
-      <div className="tabs">
-        {[['🏠','ホーム'],['📖','ガイド'],['📋','準備'],['🥗','体調'],['📅','予定']].map(([icon,label],i)=>(
-          <button key={i} className={`tab${tab===i?' active':''}`} onClick={()=>setTab(i)}>
-            <span className="tab-icon">{icon}</span>
-            <span className="tab-label">{label}</span>
+
+      <div className="nav">
+        {TABS.map(([icon,label],i)=>(
+          <button key={i} className={`nav-btn${tab===i?' active':''}`} onClick={()=>setTab(i)}>
+            <span className="nav-icon">{icon}</span>
+            <span className="nav-label">{label}</span>
           </button>
         ))}
       </div>
@@ -337,395 +497,635 @@ function App(){
   );
 }
 
-function SetupScreen({onDone,initialData,isFirst,onCancel}){
-  const [form,setForm]=useState(()=>initialData?{...DEFAULT_PROFILE,...initialData}:{...DEFAULT_PROFILE});
-  const [budgetMode,setBudgetMode]=useState(()=>initialData?.budgetOption==='custom'?'custom':'select');
-  const toggleArr=(key,v)=>setForm(p=>({...p,[key]:(p[key]||[]).includes(v)?(p[key]||[]).filter(x=>x!==v):[...(p[key]||[]),v]}));
-  const addChild=()=>setForm(p=>({...p,children:[...(p.children||[]),{name:'',age:'',routines:{},pickups:{}}]}));
-  const updateChild=(i,k,v)=>setForm(p=>({...p,children:p.children.map((c,j)=>j===i?{...c,[k]:v}:c)}));
-  const updateChildDay=(i,field,day,v)=>setForm(p=>({...p,children:p.children.map((c,j)=>j===i?{...c,[field]:{...(c[field]||{}),[day]:v}}:c)}));
-  const removeChild=(i)=>setForm(p=>({...p,children:p.children.filter((_,j)=>j!==i)}));
-
+// ─── WeekVisual ───────────────────────────────────────────────
+function WeekVisual({profile}){
+  const due=profile?.dueDate;if(!due)return null;
+  const dueD=new Date(due);const conceived=new Date(dueD.getTime()-280*24*60*60*1000);
+  const today=new Date();const elapsed=Math.floor((today-conceived)/(24*60*60*1000));
+  const pct=Math.min(100,Math.max(0,(elapsed/280)*100));
+  const wk=Math.floor(elapsed/7);const dy=elapsed%7;
+  let plannedPct=null;
+  if(profile.birthType==='planned'&&profile.plannedDate){
+    const pl=new Date(profile.plannedDate);
+    plannedPct=Math.min(100,Math.max(0,((Math.floor((pl-conceived)/(24*60*60*1000)))/280)*100));
+  }
   return(
-    <div className="setup-overlay">
-      <div className="setup-header">
-        <div className="setup-title">🌸 {isFirst?'ままスケへようこそ':'設定を変更する'}</div>
-        <div className="setup-sub">{isFirst?'あなたに合わせたスケジュールを作成します':'変更したい項目だけ更新できます'}</div>
+    <div style={{marginBottom:10}}>
+      <div style={{display:'flex',justifyContent:'space-between',alignItems:'baseline',marginBottom:4}}>
+        <span style={{fontFamily:"'Playfair Display',serif",fontSize:14,fontWeight:700,background:'var(--grad)',WebkitBackgroundClip:'text',WebkitTextFillColor:'transparent'}}>妊娠 {wk}週 {dy}日</span>
+        <span style={{fontSize:10,color:'var(--text3)'}}>赤ちゃんのサイズ：{BABY_SIZE[wk]||BABY_SIZE[40]}</span>
       </div>
-      <div className="setup-body">
-        <div className="form-group">
-          <label className="form-label">お名前 <span>任意</span></label>
-          <input className="form-input" placeholder="例：さくら" value={form.name||''} onChange={e=>setForm(p=>({...p,name:e.target.value}))}/>
-        </div>
-        <div className="form-group">
-          <label className="form-label">出産予定日</label>
-          <input className="form-input" type="date" value={form.dueDate||''} onChange={e=>setForm(p=>({...p,dueDate:e.target.value}))}/>
-        </div>
-        <div className="form-group">
-          <label className="form-label">出産方法</label>
-          <div className="radio-group">
-            {[['natural','自然分娩'],['planned','計画分娩（誘発・帝王切開など）']].map(([v,l])=>(
-              <button key={v} className={`radio-btn${form.birthType===v?' sel':''}`} onClick={()=>setForm(p=>({...p,birthType:v}))}>{l}</button>
-            ))}
-          </div>
-        </div>
-        <div className="form-group">
-          <label className="form-label">パターン</label>
-          <div className="radio-group">
-            <button className={`radio-btn${form.pattern==='first'?' sel':''}`} onClick={()=>setForm(p=>({...p,pattern:'first'}))}>🌱 初めて・久しぶり</button>
-            <button className={`radio-btn${form.pattern==='second'?' sel':''}`} onClick={()=>setForm(p=>({...p,pattern:'second'}))}>👨‍👩‍👧 上の子あり</button>
-          </div>
-        </div>
-        {form.pattern==='second'&&(
-          <div className="form-group">
-            <label className="form-label">上の子の情報</label>
-            {(form.children||[]).map((c,i)=>(
-              <div key={i} style={{background:'var(--rose)',borderRadius:14,padding:12,marginBottom:10}}>
-                <div className="child-row">
-                  <input className="form-input" placeholder="名前" value={c.name||''} onChange={e=>updateChild(i,'name',e.target.value)} style={{flex:1}}/>
-                  <input className="form-input" placeholder="年齢" type="number" min="0" max="15" value={c.age||''} onChange={e=>updateChild(i,'age',e.target.value)} style={{width:70}}/>
-                  <button className="remove-btn" onClick={()=>removeChild(i)}>×</button>
-                </div>
-                <div style={{marginTop:8}}>
-                  <div style={{fontSize:12,fontWeight:700,color:'var(--text-sub)',marginBottom:6}}>📅 曜日ごとの習い事・予定</div>
-                  {WEEKDAYS.map(day=>(
-                    <div key={day} style={{display:'flex',gap:6,marginBottom:4,alignItems:'center'}}>
-                      <span className="day-label">{day}</span>
-                      <input className="child-schedule-input" placeholder={`習い事・予定`} value={(c.routines||{})[day]||''} onChange={e=>updateChildDay(i,'routines',day,e.target.value)}/>
-                    </div>
-                  ))}
-                  <div style={{fontSize:12,fontWeight:700,color:'var(--text-sub)',margin:'8px 0 6px'}}>🚗 送迎時間</div>
-                  {WEEKDAYS.map(day=>(
-                    <div key={day} style={{display:'flex',gap:6,marginBottom:4,alignItems:'center'}}>
-                      <span className="day-label">{day}</span>
-                      <input className="child-schedule-input" placeholder={`送迎時間（例：15:30）`} value={(c.pickups||{})[day]||''} onChange={e=>updateChildDay(i,'pickups',day,e.target.value)}/>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            ))}
-            <button className="add-btn" onClick={addChild}>＋ 子供を追加</button>
-          </div>
-        )}
-        <div className="form-group">
-          <label className="form-label">在宅ワーク</label>
-          <div className="toggle-row">
-            <span style={{fontSize:13,color:'var(--text)'}}>在宅ワークがある</span>
-            <div className={`toggle${form.workEnabled?' on':''}`} onClick={()=>setForm(p=>({...p,workEnabled:!p.workEnabled}))}><div className="toggle-knob"/></div>
-          </div>
-        </div>
-        <div className="form-group">
-          <label className="form-label">食材調達方法</label>
-          <div className="radio-group">
-            {[['super','スーパー'],['delivery','宅配'],['both','両方']].map(([v,l])=>(
-              <button key={v} className={`radio-btn${form.food===v?' sel':''}`} onClick={()=>setForm(p=>({...p,food:v}))}>{l}</button>
-            ))}
-          </div>
-        </div>
-        <div className="form-group">
-          <label className="form-label">準備品の総予算</label>
-          <div className="radio-group" style={{marginBottom:8}}>
-            <button className={`radio-btn${budgetMode==='select'?' sel':''}`} onClick={()=>{setBudgetMode('select');setForm(p=>({...p,budgetOption:150000}))}}>選択式</button>
-            <button className={`radio-btn${budgetMode==='custom'?' sel':''}`} onClick={()=>{setBudgetMode('custom');setForm(p=>({...p,budgetOption:'custom'}))}}>手入力</button>
-          </div>
-          {budgetMode==='select'?(
-            <select className="form-select" value={form.budgetOption||150000} onChange={e=>setForm(p=>({...p,budgetOption:parseInt(e.target.value)}))}>
-              {BUDGET_OPTIONS.map(b=>(<option key={b.value} value={b.value}>{b.label}</option>))}
-            </select>
-          ):(
-            <input className="form-input" type="number" placeholder="例：180000" value={form.budgetCustom||''} onChange={e=>setForm(p=>({...p,budgetCustom:e.target.value}))}/>
-          )}
-        </div>
-        <div className="form-group">
-          <label className="form-label">準備品選択の基準 <span>複数選択可</span></label>
-          <div className="radio-group">
-            {[['min','💰 コスパ重視'],['avg','⭐ 口コミ重視'],['high','✨ デザイン・利便性重視']].map(([v,l])=>(
-              <button key={v} className={`radio-btn${(form.defaultAxis||[]).includes(v)?' sel':''}`} onClick={()=>toggleArr('defaultAxis',v)}>{l}</button>
-            ))}
-          </div>
-        </div>
-        <div className="form-group">
-          <label className="form-label">セルフケア <span>複数選択可</span></label>
-          <div className="radio-group">
-            {[['beauty','💄 美容タイム'],['stretch','🧘 ストレッチ'],['walk','🚶 散歩']].map(([v,l])=>(
-              <button key={v} className={`radio-btn${(form.selfcare||[]).includes(v)?' sel':''}`} onClick={()=>toggleArr('selfcare',v)}>{l}</button>
-            ))}
-          </div>
-        </div>
-        <div className="form-group">
-          <label className="form-label">ゴミ出し日 <span>複数選択可</span></label>
-          <div className="radio-group">
-            {WEEKDAYS.map(d=>(
-              <button key={d} className={`radio-btn${(form.garbage||[]).includes(d)?' sel':''}`} onClick={()=>toggleArr('garbage',d)}>{d}曜</button>
-            ))}
-          </div>
-        </div>
-        <button className="setup-submit" onClick={()=>form.dueDate&&onDone(form)}>🌸 {isFirst?'スタート！':'変更を保存する'}</button>
-        {!isFirst&&<button style={{width:'100%',padding:12,background:'transparent',border:'1.5px solid var(--pink-mid)',borderRadius:16,color:'var(--text-sub)',fontSize:14,cursor:'pointer',marginTop:8,fontFamily:"'Noto Sans JP',sans-serif"}} onClick={onCancel}>キャンセル</button>}
+      <div className="wk-bar">
+        <div className="wk-fill" style={{width:`${pct}%`}}/>
+        {plannedPct!==null&&<div className="wk-planned" style={{left:`${plannedPct}%`,width:`${100-plannedPct}%`}}/>}
       </div>
+      <div className="wk-markers"><span>妊娠0週</span><span>10週</span><span>20週</span><span>30週</span><span>40週</span></div>
     </div>
   );
 }
 
-function HomeTab({week,profile,workHours,setWorkHours,todayMissions,isMissionDone,toggleMission,budgetPct,checks}){
-  const today=new Date();
-  const weekday=['日','月','火','水','木','金','土'][today.getDay()];
-  const isGarbage=(profile?.garbage||[]).includes(weekday+'曜');
-  const tmr=new Date(today);tmr.setDate(tmr.getDate()+1);
-  const tmrWeekday=['日','月','火','水','木','金','土'][tmr.getDay()];
-  const isGarbageTmr=(profile?.garbage||[]).includes(tmrWeekday+'曜');
-  const totalItems=Object.values(CHECKLIST_DATA).reduce((a,b)=>a+b.length,0);
-  const doneItems=Object.values(checks).filter((v,_,arr)=>v).length;
-  const checkPct=Math.round((doneItems/totalItems)*100);
-  const todayWeekday=WEEKDAYS[today.getDay()===0?6:today.getDay()-1];
+// ─── HomeTab ──────────────────────────────────────────────────
+function HomeTab({week,profile,workH,setWorkH,todayMs,isMDone,toggleMission,budgetPct,checkPct,hlog,appts}){
+  const t=new Date();const wd=['日','月','火','水','木','金','土'][t.getDay()];
+  const isGarb=(profile?.garbage||[]).includes(wd+'曜');
+  const tmr=new Date(t);tmr.setDate(tmr.getDate()+1);
+  const tmrWd=['日','月','火','水','木','金','土'][tmr.getDay()];
+  const isGarbTmr=(profile?.garbage||[]).includes(tmrWd+'曜');
+  const todayWD=WD[t.getDay()===0?6:t.getDay()-1];
+  const daysLeft=getDays(profile?.dueDate);
+  const todayH=hlog[ds(t)]||{};
+  const nextAppt=appts.filter(a=>a.date>=ds(t)).sort((a,b)=>a.date.localeCompare(b.date))[0];
 
   return(
     <>
-      {isGarbage&&<div className="alert-banner"><span className="alert-icon">🗑️</span><span className="alert-text"><strong>今日はゴミの日です！</strong><br/>出し忘れに注意してください</span></div>}
-      {isGarbageTmr&&!isGarbage&&<div className="alert-banner"><span className="alert-icon">🗑️</span><span className="alert-text"><strong>明日はゴミの日です</strong>。夜のうちに準備しておきましょう</span></div>}
-      {week>=37&&<div className="alert-banner"><span className="alert-icon">⚠️</span><span className="alert-text"><strong>正期産に入りました（{week}週）</strong><br/>いつ陣痛が来てもOK！携帯を常に充電しておきましょう</span></div>}
+      {/* Hero */}
+      <div className="hero-card">
+        <div style={{display:'flex',justifyContent:'space-between',alignItems:'flex-start'}}>
+          <div>
+            <div className="hero-week serif">{week}週</div>
+            <div className="hero-sub">今日も一緒に頑張りましょう 🌸</div>
+            <div className="hero-days">出産まであと <strong>{daysLeft}日</strong></div>
+          </div>
+          <div style={{textAlign:'right'}}>
+            <div style={{fontSize:28,opacity:.8}}>🤰</div>
+            <div style={{fontSize:10,color:'rgba(255,255,255,.7)',marginTop:2}}>赤ちゃん</div>
+            <div style={{fontSize:9,color:'rgba(255,255,255,.6)'}}>{BABY_SIZE[week]||BABY_SIZE[40]}</div>
+          </div>
+        </div>
+        {nextAppt&&<div style={{marginTop:10,padding:'6px 10px',background:'rgba(255,255,255,.15)',borderRadius:8,fontSize:11,color:'white'}}>📅 次の予定：{nextAppt.date} {nextAppt.name}</div>}
+      </div>
+
+      <WeekVisual profile={profile}/>
+
+      {isGarb&&<div className="alert"><span className="alert-icon">🗑️</span><span className="alert-text"><strong>今日はゴミの日です！</strong>　出し忘れに注意</span></div>}
+      {isGarbTmr&&!isGarb&&<div className="alert"><span className="alert-icon">🗑️</span><span className="alert-text">明日はゴミの日です。夜のうちに準備を</span></div>}
+      {week>=37&&<div className="alert pink"><span className="alert-icon">⚠️</span><span className="alert-text"><strong>正期産（{week}週）</strong>　いつ陣痛が来てもOK！携帯を充電しておきましょう</span></div>}
+
+      {/* Stat grid */}
+      <div className="stat-grid">
+        <div className="stat-card">
+          <div className="stat-label">準備の進捗</div>
+          <div className="stat-val">{checkPct}<span className="stat-unit"> %</span></div>
+          <div className="mini-bar"><div className="mini-bar-fill" style={{width:`${checkPct}%`}}/></div>
+        </div>
+        <div className="stat-card">
+          <div className="stat-label">予算消化</div>
+          <div className="stat-val">{budgetPct}<span className="stat-unit"> %</span></div>
+          <div className="mini-bar"><div className="mini-bar-fill" style={{width:`${budgetPct}%`}}/></div>
+        </div>
+        {todayH.weight&&<div className="stat-card">
+          <div className="stat-label">今日の体重</div>
+          <div className="stat-val">{todayH.weight}<span className="stat-unit"> kg</span></div>
+        </div>}
+        <div className="stat-card">
+          <div className="stat-label">気分</div>
+          <div className="stat-val" style={{fontSize:26}}>{MOODS.find(m=>m.l===todayH.mood)?.e||'—'}</div>
+          <div style={{fontSize:10,color:'var(--text3)'}}>{todayH.mood||'未記録'}</div>
+        </div>
+      </div>
+
+      {/* Missions */}
       <div className="card">
-        <div className="card-title">📋 今日のミッション</div>
-        {todayMissions.map((m,i)=>(
+        <div className="card-title"><div className="card-accent"/>今日のミッション</div>
+        {todayMs.map((m,i)=>(
           <div key={i} className="mission-item">
-            <div className={`mission-check${isMissionDone(i)?' done':''}`} onClick={()=>toggleMission(i)}/>
-            <span className={`mission-text${isMissionDone(i)?' done':''}`}>{m}</span>
+            <div className={`m-check${isMDone(i)?' done':''}`} onClick={()=>toggleMission(i)}/>
+            <span className={`m-text${isMDone(i)?' done':''}`}>{m}</span>
           </div>
         ))}
       </div>
+
       {profile.workEnabled&&(
         <div className="card">
-          <div className="card-title">💻 今日の在宅ワーク時間</div>
-          <div className="work-input-row">
-            <span style={{fontSize:13,color:'#92400E'}}>今日の作業予定：</span>
-            <input className="work-input" type="number" min="0" max="8" step="0.5" value={workHours} onChange={e=>setWorkHours(parseFloat(e.target.value)||0)}/>
-            <span style={{fontSize:13,color:'#92400E'}}>時間</span>
+          <div className="card-title"><div className="card-accent"/>在宅ワーク時間</div>
+          <div style={{display:'flex',alignItems:'center',gap:8,background:'rgba(251,191,36,.06)',borderRadius:10,padding:'9px 12px',border:'1px solid rgba(251,191,36,.15)'}}>
+            <span style={{fontSize:12,color:'var(--amber)'}}>今日の作業：</span>
+            <input style={{width:46,padding:'3px 6px',border:'1px solid rgba(251,191,36,.3)',borderRadius:7,fontSize:14,fontWeight:700,textAlign:'center',background:'var(--card2)',color:'var(--text)'}} type="number" min="0" max="8" step="0.5" value={workH} onChange={e=>setWorkH(parseFloat(e.target.value)||0)}/>
+            <span style={{fontSize:12,color:'var(--amber)'}}>時間</span>
           </div>
-          {workHours>4&&<div style={{fontSize:12,color:'#BE185D',marginTop:8,padding:'6px 10px',background:'#FCE7F3',borderRadius:10}}>💗 {workHours}時間は少し多め。体をいたわって休憩を忘れずに</div>}
+          {workH>4&&<div style={{fontSize:11,color:'var(--pink2)',marginTop:7,padding:'5px 10px',background:'var(--pink3)',borderRadius:8,border:'1px solid var(--border2)'}}>💗 {workH}時間は少し多め。体を大切に</div>}
         </div>
       )}
-      <div className="stats-grid" style={{marginBottom:12}}>
-        <div className="stat-card"><div className="stat-label">準備の進捗</div><div className="stat-value">{checkPct}<span className="stat-unit">%</span></div><div className="progress-bar" style={{marginTop:6}}><div className="progress-fill" style={{width:`${checkPct}%`}}/></div></div>
-        <div className="stat-card"><div className="stat-label">予算消化率</div><div className="stat-value">{budgetPct}<span className="stat-unit">%</span></div><div className="budget-bar" style={{marginTop:6}}><div className="budget-fill" style={{width:`${budgetPct}%`}}/></div></div>
-      </div>
+
       {(profile.selfcare||[]).length>0&&(
         <div className="card">
-          <div className="card-title">✨ 今日のセルフケア</div>
-          {(profile.selfcare||[]).includes('beauty')&&<div className="schedule-item"><div className="schedule-content"><div className="schedule-name">💄 美容タイム</div><div className="schedule-sub">スキンケア・ヘアケアなど自分を整える時間。産前の今だからこそ丁寧に</div></div></div>}
-          {(profile.selfcare||[]).includes('stretch')&&<div className="schedule-item"><div className="schedule-content"><div className="schedule-name">🧘 ストレッチ・妊婦ヨガ</div><div className="schedule-sub">お昼前後に10〜15分。骨盤周りをほぐして体を整えて</div></div></div>}
-          {(profile.selfcare||[]).includes('walk')&&<div className="schedule-item"><div className="schedule-content"><div className="schedule-name">🚶 散歩</div><div className="schedule-sub">10〜20分、ゆっくりペースで。気分転換にもなります</div></div></div>}
+          <div className="card-title"><div className="card-accent"/>今日のセルフケア</div>
+          {(profile.selfcare||[]).includes('beauty')&&<div className="mission-item"><span style={{fontSize:16}}>💄</span><div><div style={{fontSize:12,fontWeight:600,color:'var(--text)'}}>美容タイム</div><div style={{fontSize:10,color:'var(--text3)'}}>スキンケア・ヘアケアで自分を整える時間</div></div></div>}
+          {(profile.selfcare||[]).includes('stretch')&&<div className="mission-item"><span style={{fontSize:16}}>🧘</span><div><div style={{fontSize:12,fontWeight:600,color:'var(--text)'}}>ストレッチ・妊婦ヨガ</div><div style={{fontSize:10,color:'var(--text3)'}}>10〜15分、骨盤周りをほぐして</div></div></div>}
+          {(profile.selfcare||[]).includes('walk')&&<div className="mission-item"><span style={{fontSize:16}}>🚶</span><div><div style={{fontSize:12,fontWeight:600,color:'var(--text)'}}>散歩</div><div style={{fontSize:10,color:'var(--text3)'}}>10〜20分、ゆっくりペースで</div></div></div>}
         </div>
       )}
+
       {profile.pattern==='second'&&(profile.children||[]).length>0&&(
         <div className="card">
-          <div className="card-title">👨‍👩‍👧 今日の上の子スケジュール（{todayWeekday}曜日）</div>
+          <div className="card-title"><div className="card-accent"/>上の子の今日（{todayWD}曜日）</div>
           {(profile.children||[]).map((c,i)=>{
-            const routine=(c.routines||{})[todayWeekday]||'';
-            const pickup=(c.pickups||{})[todayWeekday]||'';
+            const r=(c.routines||{})[todayWD]||'';
+            const from=(c.pickupFrom||{})[todayWD]||'';
+            const to=(c.pickupTo||{})[todayWD]||'';
             return(
               <div key={i} className="mission-item">
                 <span style={{fontSize:16}}>👶</span>
-                <div style={{flex:1}}>
-                  <div style={{fontSize:13,fontWeight:500}}>{c.name||`お子さん${i+1}`}（{c.age}歳）</div>
-                  {routine&&<div style={{fontSize:12,color:'var(--pink-dark)',marginTop:2}}>📚 {routine}</div>}
-                  {pickup&&<div style={{fontSize:12,color:'var(--teal)',marginTop:2}}>🚗 送迎：{pickup}</div>}
-                  {!routine&&!pickup&&<div style={{fontSize:11,color:'var(--text-hint)',marginTop:2}}>⚙️設定から曜日ごとの予定を入力できます</div>}
+                <div>
+                  <div style={{fontSize:12,fontWeight:600,color:'var(--text)'}}>{c.name||`お子さん${i+1}`}（{c.age}歳）</div>
+                  {r&&<div style={{fontSize:11,color:'var(--pink2)'}}>📚 {r}</div>}
+                  {(from||to)&&<div style={{fontSize:11,color:'var(--teal)'}}>🚗 {from&&`送り${from}`}{from&&to&&' ／ '}{to&&`迎え${to}`}</div>}
+                  {!r&&!from&&!to&&<div style={{fontSize:10,color:'var(--text3)'}}>⚙️ 設定から予定を入力できます</div>}
                 </div>
               </div>
             );
           })}
         </div>
       )}
-      <div style={{textAlign:'center',padding:'12px 0'}}><a href="https://room.rakuten.co.jp/" target="_blank" style={{fontSize:12,color:'var(--pink-dark)',textDecoration:'none',background:'var(--pink-light)',padding:'6px 16px',borderRadius:12,border:'1px solid var(--pink-mid)'}}>🛍️ おすすめベビー用品を楽天ルームで見る →</a></div>
+
+      <div style={{textAlign:'center',padding:'10px 0'}}>
+        <a href="https://room.rakuten.co.jp/" target="_blank" style={{fontSize:11,display:'inline-block',padding:'7px 18px',background:'var(--grad)',color:'white',borderRadius:20,textDecoration:'none',fontWeight:700,boxShadow:'var(--glow2)'}}>🛍️ 楽天ルームでベビー用品を見る</a>
+      </div>
       <div className="affiliate-note">※商品リンクにはアフィリエイトが含まれます</div>
     </>
   );
 }
 
+// ─── GuideTab ─────────────────────────────────────────────────
 function GuideTab({week,guideWeek,setGuideWeek,profile}){
-  const gw=guideWeek||week;
-  const guide=WEEKLY_GUIDE[gw]||WEEKLY_GUIDE[34];
+  const gw=guideWeek||week;const g=GUIDE[gw]||GUIDE[34];
   return(
     <>
-      <div className="cat-tabs">{[34,35,36,37,38,39,40].map(w=>(<button key={w} className={`guide-week-btn${gw===w?' active':''}`} onClick={()=>setGuideWeek(w)}>{w}週</button>))}</div>
-      <div className="card"><div className="card-title">🤰 {gw}週の体の変化</div>{guide.body.map((b,i)=><div key={i} className="guide-item"><div className="guide-dot"/><span>{b}</span></div>)}</div>
+      <div className="guide-nav">{[34,35,36,37,38,39,40].map(w=><button key={w} className={`g-btn${gw===w?' active':''}`} onClick={()=>setGuideWeek(w)}>{w}週</button>)}</div>
+      <div className="card"><div className="card-title"><div className="card-accent"/>🤰 {gw}週の体の変化</div>{g.body.map((b,i)=><div key={i} className="guide-item"><div className="g-dot" style={{background:'var(--pink)'}}/><span>{b}</span></div>)}</div>
       <div className="card">
-        <div className="card-title">✅ {gw}週にやること</div>
-        {guide.todo.map((t,i)=><div key={i} className="guide-item"><div className="guide-dot" style={{background:'var(--teal)'}}/><span>{t}</span></div>)}
-        {profile?.birthType==='planned'&&<div className="guide-item"><div className="guide-dot" style={{background:'var(--purple)'}}/><span>計画分娩：入院・手術日の最終確認を産院と行う</span></div>}
-        {profile?.pattern==='second'&&<div className="guide-item"><div className="guide-dot" style={{background:'var(--amber)'}}/><span>上の子：入院中の預け先・緊急時の対応を確認</span></div>}
+        <div className="card-title"><div className="card-accent"/>✅ {gw}週にやること</div>
+        {g.todo.map((t,i)=><div key={i} className="guide-item"><div className="g-dot" style={{background:'var(--teal)'}}/><span>{t}</span></div>)}
+        {profile?.birthType==='planned'&&<div className="guide-item"><div className="g-dot" style={{background:'var(--purple2)'}}/><span>計画分娩：入院・手術日の最終確認を産院と行う</span></div>}
+        {profile?.pattern==='second'&&<div className="guide-item"><div className="g-dot" style={{background:'var(--amber)'}}/><span>上の子：入院中の預け先・緊急時の対応を確認</span></div>}
       </div>
-      <div className="card"><div className="card-title">⚠️ 注意点</div>{guide.caution.map((c,i)=><div key={i} className="guide-item"><div className="guide-dot" style={{background:'#F87171'}}/><span>{c}</span></div>)}</div>
+      <div className="card"><div className="card-title"><div className="card-accent"/>⚠️ 注意点</div>{g.caution.map((c,i)=><div key={i} className="guide-item"><div className="g-dot" style={{background:'var(--red)'}}/><span>{c}</span></div>)}</div>
       <div className="card">
-        <div className="card-title">🧹 今週の家事ライフハック</div>
-        {[gw<=35?'クローゼットの断捨離週間。着ない服を手放してベビー服スペースを確保':'',gw===36?'エアコン・加湿器のフィルター清掃。業者に頼むと1万円前後で完全清潔に':'',gw>=37?'冷凍作り置きを始めよう。産後1週間分の食事を今のうちに':'','重曹スプレーで換気扇の油汚れをラクに落とせます','ワゴン1つにオムツ・おしりふき・着替えをセット。どの部屋でも使える便利収納に'].filter(Boolean).slice(0,3).map((h,i)=>(
-          <div key={i} className="guide-item"><span style={{fontSize:14}}>💡</span><span style={{fontSize:13}}>{h}</span></div>
+        <div className="card-title"><div className="card-accent"/>💡 今週の家事ライフハック</div>
+        {[gw<=35?'クローゼットの断捨離週間。着ない服を手放してベビー服スペースを確保':'',gw===36?'エアコン・加湿器フィルター清掃。業者に頼むと1万円で完全清潔に':'',gw>=37?'冷凍作り置きを始めよう。産後1週間分の食事を今のうちに':'','重曹スプレーで換気扇の油汚れをラクに落とせます','ワゴン1つにオムツ・おしりふき・着替えをセット。どの部屋でも使える便利収納に'].filter(Boolean).slice(0,3).map((h,i)=>(
+          <div key={i} className="guide-item"><div className="g-dot" style={{background:'var(--purple2)'}}/><span style={{fontSize:11}}>{h}</span></div>
         ))}
       </div>
     </>
   );
 }
 
-function CheckTab({profile,checks,toggleCheck,toggleNA,checkCat,setCheckCat,makeLink}){
-  const cats=Object.keys(CHECKLIST_DATA);
-  const items=CHECKLIST_DATA[checkCat]||[];
-  const isSecond=profile?.pattern==='second';
-  const isProcedure=checkCat==='手続き・書類';
-  const doneCount=items.filter((_,i)=>checks[`${checkCat}_${i}`]||checks[`${checkCat}_${i}_na`]).length;
+// ─── CheckTab ────────────────────────────────────────────────
+function CheckTab({profile,checks,toggleCheck,toggleNA,checkCat,setCheckCat,mkLink}){
+  const cats=Object.keys(CHECKLIST);const items=CHECKLIST[checkCat]||[];
+  const isSecond=profile?.pattern==='second';const isProc=checkCat==='手続き・書類';
+  const done=items.filter((_,i)=>checks[`${checkCat}_${i}`]||checks[`${checkCat}_${i}_na`]).length;
   return(
     <>
-      <div className="cat-tabs">{cats.map(c=><button key={c} className={`cat-btn${checkCat===c?' active':''}`} onClick={()=>setCheckCat(c)}>{c}</button>)}</div>
-      <div style={{display:'flex',justifyContent:'space-between',alignItems:'center',marginBottom:12}}>
-        <div style={{fontSize:13,color:'var(--text-sub)'}}>{checkCat}</div>
-        <div style={{fontSize:12,color:'var(--pink-dark)',fontWeight:700}}>{doneCount}/{items.length} 完了</div>
+      <div className="cat-row">{cats.map(c=><button key={c} className={`cat-btn${checkCat===c?' active':''}`} onClick={()=>setCheckCat(c)}>{c}</button>)}</div>
+      <div style={{display:'flex',justifyContent:'space-between',marginBottom:10}}>
+        <span style={{fontSize:11,color:'var(--text3)'}}>{checkCat}</span>
+        <span style={{fontSize:11,color:'var(--pink)',fontWeight:700}}>{done}/{items.length} 完了</span>
       </div>
       <div className="card">
         {items.map((item,i)=>{
-          const done=!!checks[`${checkCat}_${i}`];
-          const na=!!checks[`${checkCat}_${i}_na`];
+          const d=!!checks[`${checkCat}_${i}`];const na=!!checks[`${checkCat}_${i}_na`];
           return(
-            <div key={i} className="check-item" style={na?{opacity:0.4}:{}}>
-              <div className={`check-box${done?' done':''}`} onClick={()=>!na&&toggleCheck(checkCat,i)}/>
-              <div className="check-info">
-                <div className="check-name" style={(done||na)?{textDecoration:'line-through',color:'var(--text-hint)'}:{}}>{item.name}</div>
-                {!done&&!na&&<div className="check-hint">{item.hint}</div>}
-                {!done&&!na&&item.avg>0&&(
+            <div key={i} className="check-item" style={na?{opacity:.3}:{}}>
+              <div className={`c-box${d?' done':''}`} onClick={()=>!na&&toggleCheck(checkCat,i)}/>
+              <div style={{flex:1}}>
+                <div className="c-name" style={(d||na)?{textDecoration:'line-through',color:'var(--text3)'}:{}}>{item.n}</div>
+                {!d&&!na&&<div className="c-hint">{item.h}</div>}
+                {!d&&!na&&item.avg>0&&(
                   <>
-                    <div className="price-range">💰 最安 ¥{item.min.toLocaleString()}　平均 ¥{item.avg.toLocaleString()}　高機能 ¥{item.high.toLocaleString()}</div>
-                    <div className="check-price-row">
-                      <a href={makeLink(item.name,'amazon')} target="_blank" className="price-btn cospa">Amazon</a>
-                      <a href={makeLink(item.name,'rakuten')} target="_blank" className="price-btn kuchikomi">楽天</a>
-                      <a href={makeLink(item.name,'room')} target="_blank" className="price-btn room">楽天ルーム</a>
+                    <div className="c-price">💰 最安¥{item.min.toLocaleString()} ／ 平均¥{item.avg.toLocaleString()} ／ 高機能¥{item.high.toLocaleString()}</div>
+                    <div className="c-links">
+                      <a href={mkLink(item.n,'az')} target="_blank" className="c-link az">Amazon</a>
+                      <a href={mkLink(item.n,'rk')} target="_blank" className="c-link rk">楽天</a>
+                      <a href={mkLink(item.n,'rm')} target="_blank" className="c-link rm">楽天ルーム</a>
                     </div>
                   </>
                 )}
-                {!done&&!na&&(
-                  <div style={{display:'flex',gap:6,marginTop:6,flexWrap:'wrap'}}>
-                    {isSecond&&!isProcedure&&(
-                      <button style={{fontSize:11,padding:'2px 8px',borderRadius:8,border:'1px solid #DDD6FE',background:'#F3E8FF',color:'var(--purple)',cursor:'pointer'}} onClick={()=>toggleCheck(checkCat,i)}>✓ すでに持っている</button>
-                    )}
-                    <button style={{fontSize:11,padding:'2px 8px',borderRadius:8,border:'1px solid #E5E7EB',background:'#F9FAFB',color:'var(--text-hint)',cursor:'pointer'}} onClick={()=>toggleNA(checkCat,i)}>— 不要</button>
+                {!d&&!na&&(
+                  <div className="c-action">
+                    {isSecond&&!isProc&&<button className="c-btn have" onClick={()=>toggleCheck(checkCat,i)}>✓ すでに持っている</button>}
+                    <button className="c-btn na" onClick={()=>toggleNA(checkCat,i)}>不要</button>
                   </div>
                 )}
-                {na&&<button style={{fontSize:11,padding:'2px 8px',borderRadius:8,border:'1px solid var(--pink-mid)',background:'white',color:'var(--text-sub)',cursor:'pointer',marginTop:4}} onClick={()=>toggleNA(checkCat,i)}>元に戻す</button>}
+                {na&&<button className="c-btn undo" onClick={()=>toggleNA(checkCat,i)}>元に戻す</button>}
               </div>
             </div>
           );
         })}
       </div>
       <div className="affiliate-note">※リンクにはアフィリエイトが含まれます</div>
-      <div className="premium-lock"><div className="premium-text">✨ プレミアムプランで商品の詳細口コミ・価格比較が使えます</div><button className="premium-btn">プレミアムを見る</button></div>
+      <div className="premium-box"><div className="prem-text">✨ プレミアムで詳細口コミ・価格比較が使えます</div><button className="prem-btn">プレミアムを見る</button></div>
     </>
   );
 }
 
-function HealthTab({health,setHealth,aiResult,aiLoading,callAI}){
-  const toggle=(key,val)=>setHealth(p=>({...p,[key]:p[key].includes(val)?p[key].filter(x=>x!==val):[...p[key],val]}));
+// ─── AITab ─────────────────────────────────────────────────
+function AITab({week,profile,todayH}){
+  const [messages,setMessages]=useState([{role:'ai',text:`こんにちは！妊娠${week}週のあなたをサポートするAIアシスタントです🌸\n\n体調の相談、今日のレシピ提案、妊娠中の疑問など、なんでも気軽に聞いてください。`}]);
+  const [input,setInput]=useState('');
+  const [loading,setLoading]=useState(false);
+  const chatRef=useRef(null);
+  const QUICK=['今日のレシピを提案して','体調について相談したい','むくみを楽にする方法','今週の赤ちゃんの成長は？','産後の準備で大切なことは？','安産のために今できること'];
+
+  useEffect(()=>{if(chatRef.current)chatRef.current.scrollTop=chatRef.current.scrollHeight},[messages]);
+
+  const send=async(text)=>{
+    const q=text||input.trim();if(!q||loading)return;
+    setInput('');setMessages(p=>[...p,{role:'user',text:q}]);setLoading(true);
+    const ctx=`あなたは妊娠${week}週のママをサポートする優しいAIアシスタントです。出産方法：${profile?.birthType==='planned'?'計画分娩':'自然分娩'}、${profile?.pattern==='second'?'上の子あり':'初めての妊娠'}。今日の体重:${todayH?.weight||'未記録'}kg、気分:${todayH?.mood||'不明'}、症状:${(todayH?.symptoms||[]).join('・')||'特になし'}。冷蔵庫:${(todayH?.fridge||[]).join('・')||'未登録'}。日本語で温かみのある口調で答えてください。レシピの場合は具体的な食材と手順を。200字以内で簡潔に。`;
+    try{
+      const res=await fetch('https://api.anthropic.com/v1/messages',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:600,system:ctx,messages:[...messages.filter(m=>m.role!=='ai'||messages.indexOf(m)>0).map(m=>({role:m.role==='user'?'user':'assistant',content:m.text})),{role:'user',content:q}]})});
+      const data=await res.json();
+      const reply=data.content?.find(b=>b.type==='text')?.text||'うまく取得できませんでした。もう一度お試しください。';
+      setMessages(p=>[...p,{role:'ai',text:reply}]);
+    }catch{setMessages(p=>[...p,{role:'ai',text:'通信エラーが発生しました。しばらくしてからもう一度お試しください。'}]);}
+    setLoading(false);
+  };
+
   return(
     <>
-      <div className="card"><div className="card-title">⚖️ 今日の体重</div><div style={{display:'flex',alignItems:'center',gap:8}}><input className="form-input" type="number" placeholder="56.5" value={health.weight} onChange={e=>setHealth(p=>({...p,weight:e.target.value}))} style={{width:100}}/><span style={{fontSize:14,color:'var(--text-sub)'}}>kg</span></div></div>
-      <div className="card"><div className="card-title">😊 今日の気分</div><div className="mood-grid">{MOODS.map(m=>(<button key={m.l} className={`mood-btn${health.mood===m.l?' sel':''}`} onClick={()=>setHealth(p=>({...p,mood:m.l}))}><span className="mood-emoji">{m.e}</span><span className="mood-label">{m.l}</span></button>))}</div></div>
-      <div className="card"><div className="card-title">🤒 今日の症状</div><div className="symptom-grid">{SYMPTOMS.map(s=>(<button key={s} className={`symptom-btn${health.symptoms.includes(s)?' sel':''}`} onClick={()=>toggle('symptoms',s)}>{s}</button>))}</div></div>
-      <div className="card"><div className="card-title">🥦 冷蔵庫にある食材</div><div className="fridge-grid">{FRIDGE_ITEMS.map(f=>(<button key={f} className={`fridge-btn${health.fridge.includes(f)?' sel':''}`} onClick={()=>toggle('fridge',f)}>{f}</button>))}</div></div>
-      <div className="card"><div className="card-title">📝 メモ・日記</div><textarea className="form-input" rows={3} placeholder="今日の気持ちや出来事を記録..." value={health.memo} onChange={e=>setHealth(p=>({...p,memo:e.target.value}))} style={{resize:'none'}}/></div>
-      <button style={{width:'100%',padding:14,background:'linear-gradient(135deg,#A855F7,#7C3AED)',color:'white',border:'none',borderRadius:16,fontSize:15,fontWeight:700,cursor:'pointer',fontFamily:"'Zen Maru Gothic',sans-serif",boxShadow:'0 4px 16px rgba(168,85,247,0.3)',marginBottom:12}} onClick={callAI}>✨ AIに今日のレシピ・栄養を提案してもらう</button>
-      {(aiLoading||aiResult)&&(<div className="ai-result"><div className="ai-result-title">🤖 AIからの提案</div>{aiLoading?<div className="ai-loading">考え中<span className="dot-anim"><span>.</span><span>.</span><span>.</span></span></div>:<div className="ai-content">{aiResult}</div>}</div>)}
+      <div className="card" style={{marginBottom:10}}>
+        <div className="card-title"><div className="card-accent"/>✨ AIアシスタントに相談する</div>
+        <div className="chat-quick">
+          {QUICK.map((q,i)=><button key={i} className="q-chip" onClick={()=>send(q)}>{q}</button>)}
+        </div>
+        <div className="chat-wrap" ref={chatRef}>
+          {messages.map((m,i)=>(
+            <div key={i} className={`chat-msg ${m.role}`}>{m.text}</div>
+          ))}
+          {loading&&<div className="chat-msg ai"><div className="typing"><span/><span/><span/></div></div>}
+        </div>
+        <div className="chat-input-row">
+          <textarea className="chat-input" rows={1} placeholder="メッセージを入力..." value={input} onChange={e=>setInput(e.target.value)} onKeyDown={e=>{if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();send()}}}/>
+          <button className="chat-send" onClick={()=>send()}>➤</button>
+        </div>
+      </div>
+
+      {/* 体調記録（AIタブ内にも簡易版） */}
+      <div className="card">
+        <div className="card-title"><div className="card-accent"/>📊 今日の体調を入力するとAIがより精確に</div>
+        <div style={{fontSize:11,color:'var(--text3)'}}>「記録」タブで体調・食材を入力すると、AIがあなたに合わせた提案をします</div>
+      </div>
     </>
   );
 }
 
-function ScheduleTab({profile,week}){
-  const [appts,setAppts]=useState(()=>{try{const s=localStorage.getItem('pregnancy_appts');return s?JSON.parse(s):[]}catch{return[]}});
-  const [showAdd,setShowAdd]=useState(false);
-  const [newAppt,setNewAppt]=useState({date:'',name:'',place:'',memo:''});
-  const [viewMode,setViewMode]=useState('week');
-  useEffect(()=>{localStorage.setItem('pregnancy_appts',JSON.stringify(appts))},[appts]);
-  const addAppt=()=>{
-    if(!newAppt.date||!newAppt.name)return;
-    setAppts(p=>[...p,{...newAppt,id:Date.now()}].sort((a,b)=>a.date.localeCompare(b.date)));
-    setNewAppt({date:'',name:'',place:'',memo:''});setShowAdd(false);
-  };
-  const today=new Date();
-  const todayStr=today.toISOString().split('T')[0];
-  const filteredAppts=appts.filter(a=>{
-    const d=new Date(a.date);
-    const diff=(d-today)/(24*60*60*1000);
-    if(viewMode==='today')return a.date===todayStr;
-    if(viewMode==='week')return diff>=-1&&diff<=7;
-    if(viewMode==='month')return diff>=-1&&diff<=31;
-    return true;
-  });
-  const scheduleItems=[
-    {time:'07:00',name:'起床・体重測定',sub:'毎朝同じ時間に測ると記録しやすい'},
-    {time:'08:00',name:'朝ごはん',sub:'鉄分・葉酸を意識した食事を'},
-    {time:'10:00',name:'準備タスク',sub:'今日のミッション1つ目に取り組む'},
-    ...(profile?.selfcare?.includes('stretch')?[{time:'11:00',name:'ストレッチ・妊婦ヨガ',sub:'10〜15分、骨盤周りをほぐして'}]:[]),
-    {time:'12:00',name:'昼ごはん・休憩',sub:'食後すぐ横になるのはNG。ゆったりと座って過ごすことで消化が楽に'},
-    ...(profile?.workEnabled?[{time:'14:00',name:'在宅ワーク',sub:'集中できる時間帯に。1時間ごとに休憩を'}]:[]),
-    ...(profile?.selfcare?.includes('walk')?[{time:'16:00',name:'散歩',sub:'15〜20分、ゆっくりペースで'}]:[]),
-    ...(profile?.selfcare?.includes('beauty')?[{time:'17:00',name:'美容タイム',sub:'スキンケア・ヘアケアなど自分を整える時間に'}]:[]),
-    {time:'18:00',name:'夕ごはん準備',sub:'作り置きがあれば温めるだけでOK'},
-    {time:'21:00',name:'入浴・リラックス',sub:'38〜40度のぬるめのお湯でゆっくり'},
-    {time:'22:30',name:'就寝',sub:'左側を下にして横向きで眠ると楽'},
+// ─── ScheduleTab ──────────────────────────────────────────────
+function ScheduleTab({profile,week,appts,setAppts}){
+  const [showAdd,setShowAdd]=useState(false);const [na,setNa]=useState({date:'',name:'',place:'',memo:''});
+  const [view,setView]=useState('week');
+  const today=new Date();const ts=ds(today);
+  const filtered=appts.filter(a=>{const diff=(new Date(a.date)-today)/(24*60*60*1000);if(view==='today')return a.date===ts;if(view==='week')return diff>=-1&&diff<=7;if(view==='month')return diff>=-1&&diff<=31;return true;});
+  const addAppt=()=>{if(!na.date||!na.name)return;setAppts(p=>[...p,{...na,id:Date.now()}].sort((a,b)=>a.date.localeCompare(b.date)));setNa({date:'',name:'',place:'',memo:''});setShowAdd(false)};
+  const items=[
+    {t:'07:00',n:'起床・体重測定',s:'毎朝同じ時間に。記録が続けやすい'},
+    {t:'08:00',n:'朝ごはん',s:'鉄分・葉酸を意識した食事を'},
+    {t:'10:00',n:'準備タスク',s:'今日のミッション1つ目に取り組む'},
+    ...(profile?.selfcare?.includes('stretch')?[{t:'11:00',n:'ストレッチ・妊婦ヨガ',s:'骨盤周りをほぐして'}]:[]),
+    {t:'12:00',n:'昼ごはん・休憩',s:'食後すぐ横になるのはNG。ゆったりと座って過ごすことで消化が楽に'},
+    ...(profile?.workEnabled?[{t:'14:00',n:'在宅ワーク',s:'1時間ごとに休憩を'}]:[]),
+    ...(profile?.selfcare?.includes('walk')?[{t:'16:00',n:'散歩',s:'15〜20分、ゆっくりペースで'}]:[]),
+    ...(profile?.selfcare?.includes('beauty')?[{t:'17:00',n:'美容タイム',s:'スキンケア・ヘアケアで自分を整えて'}]:[]),
+    {t:'18:00',n:'夕ごはん準備',s:'作り置きがあれば温めるだけでOK'},
+    {t:'21:00',n:'入浴',s:'38〜40度のぬるめで10〜15分'},
+    {t:'22:30',n:'就寝',s:'左側を下にして横向きで眠ると楽'},
   ];
   return(
     <>
-      <div className="card"><div className="card-title">🕐 今日のスケジュール目安</div>{scheduleItems.map((s,i)=>(<div key={i} className="schedule-item"><div className="schedule-time">{s.time}</div><div className="schedule-content"><div className="schedule-name">{s.name}</div><div className="schedule-sub">{s.sub}</div></div></div>))}</div>
+      <div className="card"><div className="card-title"><div className="card-accent"/>🕐 今日の目安スケジュール</div>{items.map((s,i)=><div key={i} className="sch-item"><div className="sch-time">{s.t}</div><div className="schedule-content"><div className="sch-name">{s.n}</div><div className="sch-sub">{s.s}</div></div></div>)}</div>
       {profile?.pattern==='second'&&(profile?.children||[]).length>0&&(
         <div className="card">
-          <div className="card-title">👨‍👩‍👧 上の子の週間スケジュール</div>
+          <div className="card-title"><div className="card-accent"/>👨‍👩‍👧 上の子の週間スケジュール</div>
           {(profile.children||[]).map((c,i)=>(
-            <div key={i} style={{marginBottom:12}}>
-              <div style={{fontSize:13,fontWeight:700,color:'var(--pink-dark)',marginBottom:6}}>{c.name||`お子さん${i+1}`}（{c.age}歳）</div>
-              {WEEKDAYS.map(day=>{
-                const routine=(c.routines||{})[day];
-                const pickup=(c.pickups||{})[day];
-                if(!routine&&!pickup)return null;
-                return(
-                  <div key={day} style={{display:'flex',gap:8,padding:'4px 0',borderBottom:'1px solid var(--rose)',fontSize:12}}>
-                    <span style={{minWidth:24,color:'var(--pink-dark)',fontWeight:700}}>{day}</span>
-                    <div>{routine&&<div>📚 {routine}</div>}{pickup&&<div style={{color:'var(--teal)'}}>🚗 {pickup}</div>}</div>
-                  </div>
-                );
+            <div key={i} style={{marginBottom:10}}>
+              <div style={{fontSize:12,fontWeight:700,color:'var(--pink2)',marginBottom:5}}>{c.name||`お子さん${i+1}`}（{c.age}歳）</div>
+              {WD.map(day=>{
+                const r=(c.routines||{})[day];const f=(c.pickupFrom||{})[day];const t=(c.pickupTo||{})[day];
+                if(!r&&!f&&!t)return null;
+                return<div key={day} style={{display:'flex',gap:8,padding:'3px 0',borderBottom:'1px solid rgba(180,100,255,.07)',fontSize:11}}><span style={{minWidth:20,color:'var(--purple2)',fontWeight:700}}>{day}</span><div>{r&&<div style={{color:'var(--text2)'}}>📚 {r}</div>}{(f||t)&&<div style={{color:'var(--teal)'}}>🚗 {f&&`送り${f}`}{f&&t&&' ／ '}{t&&`迎え${t}`}</div>}</div></div>;
               })}
             </div>
           ))}
         </div>
       )}
       <div className="card">
-        <div className="card-title">🏥 健診・予約スケジュール</div>
-        <div style={{display:'flex',gap:6,marginBottom:12,flexWrap:'wrap'}}>
-          {[['today','今日'],['week','今週'],['month','今月'],['all','すべて']].map(([v,l])=>(
-            <button key={v} className={`cat-btn${viewMode===v?' active':''}`} onClick={()=>setViewMode(v)}>{l}</button>
-          ))}
-        </div>
-        {filteredAppts.length===0&&<div style={{fontSize:13,color:'var(--text-hint)',padding:'8px 0'}}>この期間の予約はありません</div>}
-        {filteredAppts.map((a)=>(
-          <div key={a.id} className="schedule-item">
-            <div className="schedule-time" style={{fontSize:11}}>{a.date}</div>
-            <div className="schedule-content"><div className="schedule-name">{a.name}</div>{a.place&&<div className="schedule-sub">📍 {a.place}</div>}{a.memo&&<div className="schedule-sub">📝 {a.memo}</div>}</div>
-            <button style={{fontSize:12,color:'#EF4444',background:'none',border:'none',cursor:'pointer'}} onClick={()=>setAppts(p=>p.filter(x=>x.id!==a.id))}>削除</button>
-          </div>
-        ))}
+        <div className="card-title"><div className="card-accent"/>🏥 健診・予約</div>
+        <div className="filter-row">{[['today','今日'],['week','今週'],['month','今月'],['all','すべて']].map(([v,l])=><button key={v} className={`f-btn${view===v?' active':''}`} onClick={()=>setView(v)}>{l}</button>)}</div>
+        {filtered.length===0&&<div style={{fontSize:11,color:'var(--text3)',padding:'6px 0'}}>この期間の予約はありません</div>}
+        {filtered.map(a=><div key={a.id} className="appt-item"><div className="appt-date">{a.date}</div><div style={{flex:1}}><div style={{fontSize:12,fontWeight:500,color:'var(--text)'}}>{a.name}</div>{a.place&&<div style={{fontSize:10,color:'var(--text3)'}}>📍 {a.place}</div>}{a.memo&&<div style={{fontSize:10,color:'var(--text3)'}}>📝 {a.memo}</div>}</div><button className="appt-del" onClick={()=>setAppts(p=>p.filter(x=>x.id!==a.id))}>✕</button></div>)}
         {showAdd?(
-          <div style={{marginTop:12,padding:12,background:'var(--rose)',borderRadius:14}}>
-            <input className="form-input" type="date" value={newAppt.date} onChange={e=>setNewAppt(p=>({...p,date:e.target.value}))} style={{marginBottom:8}}/>
-            <input className="form-input" placeholder="内容（例：産婦人科健診）" value={newAppt.name} onChange={e=>setNewAppt(p=>({...p,name:e.target.value}))} style={{marginBottom:8}}/>
-            <input className="form-input" placeholder="場所・病院名" value={newAppt.place} onChange={e=>setNewAppt(p=>({...p,place:e.target.value}))} style={{marginBottom:8}}/>
-            <input className="form-input" placeholder="メモ" value={newAppt.memo} onChange={e=>setNewAppt(p=>({...p,memo:e.target.value}))} style={{marginBottom:8}}/>
-            <div style={{display:'flex',gap:8}}>
-              <button className="setup-submit" style={{fontSize:13,padding:'8px'}} onClick={addAppt}>追加</button>
-              <button className="add-btn" style={{marginTop:0}} onClick={()=>setShowAdd(false)}>キャンセル</button>
-            </div>
+          <div style={{marginTop:10,padding:10,background:'var(--card2)',borderRadius:var(--r2),border:'1px solid var(--border)'}}>
+            <input className="form-inp" type="date" value={na.date} onChange={e=>setNa(p=>({...p,date:e.target.value}))} style={{marginBottom:6}}/>
+            <input className="form-inp" placeholder="内容（例：産婦人科健診）" value={na.name} onChange={e=>setNa(p=>({...p,name:e.target.value}))} style={{marginBottom:6}}/>
+            <input className="form-inp" placeholder="場所・病院名" value={na.place} onChange={e=>setNa(p=>({...p,place:e.target.value}))} style={{marginBottom:6}}/>
+            <input className="form-inp" placeholder="メモ" value={na.memo} onChange={e=>setNa(p=>({...p,memo:e.target.value}))} style={{marginBottom:8}}/>
+            <div style={{display:'flex',gap:6}}><button className="submit-btn" style={{fontSize:12,padding:'7px'}} onClick={addAppt}>追加</button><button className="cancel-btn" style={{padding:'7px',marginTop:0}} onClick={()=>setShowAdd(false)}>キャンセル</button></div>
           </div>
         ):<button className="add-btn" onClick={()=>setShowAdd(true)}>＋ 健診・予約を追加</button>}
       </div>
-      <div style={{textAlign:'center',padding:'12px 0 4px'}}><a href="https://note.com/" target="_blank" style={{fontSize:12,color:'var(--text-sub)',textDecoration:'none'}}>📝 noteでもっと詳しい妊娠情報を読む →</a></div>
-      <div style={{textAlign:'center',padding:'4px 0 12px'}}>
-        <a href="https://www.instagram.com/" target="_blank" style={{fontSize:12,color:'var(--text-sub)',textDecoration:'none',marginRight:16}}>📸 Instagram</a>
-        <a href="https://twitter.com/" target="_blank" style={{fontSize:12,color:'var(--text-sub)',textDecoration:'none'}}>🐦 X（Twitter）</a>
-      </div>
     </>
+  );
+}
+
+// ─── CalendarTab ─────────────────────────────────────────────
+function CalendarTab({hlog,appts}){
+  const today=new Date();
+  const [yr,setYr]=useState(today.getFullYear());const [mo,setMo]=useState(today.getMonth());const [sel,setSel]=useState(ds(today));
+  const prevM=()=>{if(mo===0){setYr(y=>y-1);setMo(11)}else setMo(m=>m-1)};
+  const nextM=()=>{if(mo===11){setYr(y=>y+1);setMo(0)}else setMo(m=>m+1)};
+  const cells=useMemo(()=>{
+    const fd=new Date(yr,mo,1).getDay();const dim=new Date(yr,mo+1,0).getDate();const dip=new Date(yr,mo,0).getDate();
+    const r=[];
+    for(let i=fd-1;i>=0;i--)r.push({d:dip-i,m:'p',date:ds(new Date(yr,mo-1,dip-i))});
+    for(let d=1;d<=dim;d++)r.push({d,m:'c',date:ds(new Date(yr,mo,d))});
+    const rem=42-r.length;for(let d=1;d<=rem;d++)r.push({d,m:'n',date:ds(new Date(yr,mo+1,d))});
+    return r;
+  },[yr,mo]);
+  const ts=ds(today);const mn=['1月','2月','3月','4月','5月','6月','7月','8月','9月','10月','11月','12月'];
+  const selH=hlog[sel];const selA=appts.filter(a=>a.date===sel);
+  const wts=Object.entries(hlog).filter(([,v])=>v.weight).sort(([a],[b])=>a.localeCompare(b)).slice(-14);
+  return(
+    <>
+      <div className="card">
+        <div className="cal-nav">
+          <button className="cal-nav-btn" onClick={prevM}>← 前月</button>
+          <span className="cal-title">{yr}年 {mn[mo]}</span>
+          <button className="cal-nav-btn" onClick={nextM}>次月 →</button>
+        </div>
+        <div className="cal-grid" style={{marginBottom:4}}>
+          {['日','月','火','水','木','金','土'].map((d,i)=><div key={d} className="cal-head" style={{color:i===0?'var(--red)':i===6?'#60A5FA':undefined}}>{d}</div>)}
+        </div>
+        <div className="cal-grid">
+          {cells.map((cell,idx)=>{
+            const hasH=!!hlog[cell.date];const hasA=appts.some(a=>a.date===cell.date);
+            const dow=idx%7;
+            return(
+              <div key={idx} className={`cal-cell${cell.date===ts?' today':''}${cell.date===sel?' sel':''}${cell.m!=='c'?' other':''}`} onClick={()=>setSel(cell.date)}>
+                <div className="cal-dn" style={{color:dow===0?'var(--red)':dow===6?'#60A5FA':undefined}}>{cell.d}</div>
+                <div className="cal-dots">
+                  {hasH&&<div className="cal-dot" style={{background:'var(--pink)'}}/>}
+                  {hasA&&<div className="cal-dot" style={{background:'var(--teal)'}}/>}
+                </div>
+              </div>
+            );
+          })}
+        </div>
+        <div style={{display:'flex',gap:10,marginTop:8,fontSize:9,color:'var(--text3)'}}>
+          <span style={{display:'flex',alignItems:'center',gap:3}}><span style={{width:7,height:7,borderRadius:'50%',background:'var(--pink)',display:'inline-block'}}/> 体調記録</span>
+          <span style={{display:'flex',alignItems:'center',gap:3}}><span style={{width:7,height:7,borderRadius:'50%',background:'var(--teal)',display:'inline-block'}}/> 予定あり</span>
+        </div>
+      </div>
+      <div className="detail-box">
+        <div className="detail-title">📅 {sel} の記録</div>
+        {!selH&&selA.length===0&&<div style={{fontSize:11,color:'var(--text3)'}}>この日の記録はありません</div>}
+        {selH&&<>
+          {selH.weight&&<div className="detail-row">⚖️ 体重：<strong style={{color:'var(--pink2)'}}>{selH.weight} kg</strong></div>}
+          {selH.mood&&<div className="detail-row">😊 気分：{MOODS.find(m=>m.l===selH.mood)?.e} {selH.mood}</div>}
+          {(selH.symptoms||[]).length>0&&<div className="detail-row">🤒 症状：{selH.symptoms.join(' ・ ')}</div>}
+          {selH.memo&&<div className="detail-row">📝 {selH.memo}</div>}
+        </>}
+        {selA.map(a=><div key={a.id} className="detail-row">🏥 {a.name}{a.place&&` @ ${a.place}`}</div>)}
+      </div>
+      {wts.length>=2&&(
+        <div className="card" style={{marginTop:10}}>
+          <div className="card-title"><div className="card-accent"/>⚖️ 体重の推移（直近{wts.length}日）</div>
+          <WeightChart entries={wts}/>
+        </div>
+      )}
+      {/* 体調入力もカレンダータブに */}
+      <HealthInputCard hlog={hlog} sel={sel}/>
+    </>
+  );
+}
+
+function HealthInputCard({hlog,sel}){
+  const [hlogState,setHlogState]=useState(hlog);
+  const h=hlogState[sel]||{weight:'',mood:'',symptoms:[],fridge:[],memo:''};
+  const set=(upd)=>setHlogState(p=>({...p,[sel]:typeof upd==='function'?upd(p[sel]||{weight:'',mood:'',symptoms:[],fridge:[],memo:''}):upd}));
+  useEffect(()=>{localStorage.setItem('ms2_hlog',JSON.stringify(hlogState))},[hlogState]);
+  const tog=(k,v)=>set(p=>({...p,[k]:(p[k]||[]).includes(v)?(p[k]||[]).filter(x=>x!==v):[...(p[k]||[]),v]}));
+  return(
+    <div className="card" style={{marginTop:10}}>
+      <div className="card-title"><div className="card-accent"/>📝 {sel} の体調を記録</div>
+      <div style={{display:'flex',alignItems:'center',gap:8,marginBottom:10}}>
+        <input className="form-inp" type="number" placeholder="体重 kg" value={h.weight||''} onChange={e=>set(p=>({...p,weight:e.target.value}))} style={{width:100}}/>
+        <span style={{fontSize:12,color:'var(--text3)'}}>kg</span>
+      </div>
+      <label className="form-label">気分</label>
+      <div className="mood-row">{MOODS.map(m=><button key={m.l} className={`mood-btn${h.mood===m.l?' sel':''}`} onClick={()=>set(p=>({...p,mood:m.l}))}><span className="mood-e">{m.e}</span><span className="mood-l">{m.l}</span></button>)}</div>
+      <label className="form-label">症状</label>
+      <div className="tag-wrap">{SYMPTOMS.map(s=><button key={s} className={`tag${(h.symptoms||[]).includes(s)?' sel':''}`} onClick={()=>tog('symptoms',s)}>{s}</button>)}</div>
+      <label className="form-label">冷蔵庫の食材</label>
+      <div className="tag-wrap">{FRIDGE.map(f=><button key={f} className={`tag green${(h.fridge||[]).includes(f)?' sel':''}`} onClick={()=>tog('fridge',f)}>{f}</button>)}</div>
+      <label className="form-label">メモ・日記</label>
+      <textarea className="form-inp" rows={3} placeholder="今日の気持ちや出来事を記録..." value={h.memo||''} onChange={e=>set(p=>({...p,memo:e.target.value}))} style={{resize:'none'}}/>
+    </div>
+  );
+}
+
+function WeightChart({entries}){
+  const ws=entries.map(([,v])=>parseFloat(v.weight));
+  const mn=Math.min(...ws)-.5;const mx=Math.max(...ws)+.5;const rng=mx-mn||1;
+  const W=300,H=72;
+  const pts=entries.map(([,v],i)=>{const x=12+(i/(entries.length-1))*(W-24);const y=H-10-((parseFloat(v.weight)-mn)/rng)*(H-20);return`${x},${y}`;});
+  return(
+    <svg viewBox={`0 0 ${W} ${H}`} style={{width:'100%'}}>
+      <polyline points={pts.join(' ')} fill="none" stroke="url(#lg)" strokeWidth="2" strokeLinejoin="round"/>
+      <defs><linearGradient id="lg" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" stopColor="#FF6BB5"/><stop offset="100%" stopColor="#B56EFF"/></linearGradient></defs>
+      {pts.map((pt,i)=>{const[x,y]=pt.split(',');return<circle key={i} cx={x} cy={y} r="3" fill="#FF6BB5"/>})}
+      <text x="10" y={H} fontSize="8" fill="#8870AA">{entries[0][0].slice(5)}</text>
+      <text x={W-10} y={H} fontSize="8" fill="#8870AA" textAnchor="end">{entries[entries.length-1][0].slice(5)}</text>
+    </svg>
+  );
+}
+
+// ─── ResourcesTab ─────────────────────────────────────────────
+function ResourcesTab(){
+  return(
+    <>
+      <div style={{marginBottom:14}}>
+        <div className="serif" style={{fontSize:20,fontWeight:700,background:'var(--grad)',WebkitBackgroundClip:'text',WebkitTextFillColor:'transparent',marginBottom:4}}>リソース & ブログ</div>
+        <div style={{fontSize:11,color:'var(--text3)'}}>妊娠・育児に役立つ信頼できる情報をまとめました</div>
+      </div>
+      <div className="card">
+        <div className="card-title"><div className="card-accent"/>📚 おすすめ記事・情報</div>
+        {RESOURCES.map((r,i)=>(
+          <a key={i} href={r.url} target="_blank" rel="noopener noreferrer" style={{textDecoration:'none',display:'block'}}>
+            <div className="resource-item">
+              <div className="resource-icon" style={{background:r.tagColor}}>{r.icon}</div>
+              <div style={{flex:1}}>
+                <div className="resource-title">{r.title}</div>
+                <div className="resource-meta">{r.meta}</div>
+                <span className="resource-tag" style={{background:r.tagColor,color:r.tagText}}>{r.tag}</span>
+              </div>
+              <span style={{fontSize:14,color:'var(--text3)',alignSelf:'center'}}>›</span>
+            </div>
+          </a>
+        ))}
+      </div>
+      <div className="card">
+        <div className="card-title"><div className="card-accent"/>🔗 おすすめサービス・リンク</div>
+        {[
+          {icon:'📝',name:'note',desc:'妊娠・育児の体験記事が豊富',url:'https://note.com/hashtag/妊娠',color:'rgba(52,211,153,.1)',tc:'var(--green)'},
+          {icon:'📸',name:'Instagram',desc:'リアルな妊婦ライフをチェック',url:'https://www.instagram.com/explore/tags/妊婦/',color:'rgba(255,107,181,.1)',tc:'var(--pink)'},
+          {icon:'🛍️',name:'楽天ルーム',desc:'先輩ママのベビー用品コレクション',url:'https://room.rakuten.co.jp/',color:'rgba(251,191,36,.08)',tc:'var(--amber)'},
+          {icon:'🏥',name:'こどもの城（NCCHD）',desc:'国立成育医療研究センター公式情報',url:'https://www.ncchd.go.jp/hospital/pregnancy/',color:'rgba(181,110,255,.1)',tc:'var(--purple2)'},
+        ].map((l,i)=>(
+          <a key={i} href={l.url} target="_blank" rel="noopener noreferrer" style={{textDecoration:'none',display:'block'}}>
+            <div className="resource-item">
+              <div className="resource-icon" style={{background:l.color,fontSize:22}}>{l.icon}</div>
+              <div style={{flex:1}}>
+                <div className="resource-title" style={{color:l.tc}}>{l.name}</div>
+                <div className="resource-meta">{l.desc}</div>
+              </div>
+              <span style={{fontSize:14,color:'var(--text3)',alignSelf:'center'}}>›</span>
+            </div>
+          </a>
+        ))}
+      </div>
+      <div className="affiliate-note">※一部リンクにはアフィリエイトが含まれます</div>
+    </>
+  );
+}
+
+// ─── SetupScreen ──────────────────────────────────────────────
+function SetupScreen({onDone,initialData,isFirst,onCancel}){
+  const [form,setForm]=useState(()=>({...DFLT_PROFILE,...(initialData||{})}));
+  const [budgetMode,setBudgetMode]=useState(()=>initialData?.budgetOption==='custom'?'custom':'select');
+  const tog=(k,v)=>setForm(p=>({...p,[k]:(p[k]||[]).includes(v)?(p[k]||[]).filter(x=>x!==v):[...(p[k]||[]),v]}));
+  const addChild=()=>setForm(p=>({...p,children:[...(p.children||[]),{...DFLT_CHILD}]}));
+  const removeChild=(i)=>setForm(p=>({...p,children:p.children.filter((_,j)=>j!==i)}));
+  const updChild=(i,k,v)=>setForm(p=>({...p,children:p.children.map((c,j)=>j===i?{...c,[k]:v}:c)}));
+  const updChildDay=(i,field,day,v)=>setForm(p=>({...p,children:p.children.map((c,j)=>j===i?{...c,[field]:{...(c[field]||{}),[day]:v}}:c)}));
+  const copyDown=(i,field,day,di)=>setForm(p=>({...p,children:p.children.map((c,j)=>j===i?{...c,[field]:{...(c[field]||{}),...Object.fromEntries(WD.slice(di+1).map(d=>[d,(c[field]||{})[day]]))}}:c)}));
+
+  return(
+    <div className="setup-ov">
+      <div className="setup-hero">
+        <div className="setup-htitle serif">{isFirst?'ままスケへようこそ':'設定を変更する'}</div>
+        <div className="setup-hsub">{isFirst?'あなたに合わせたサポートを始めましょう':'変更した項目だけ保存されます'}</div>
+      </div>
+      <div className="setup-body">
+
+        <div className="form-group">
+          <label className="form-label">お名前 <span style={{fontWeight:400,color:'var(--text3)'}}>任意</span></label>
+          <input className="form-inp" placeholder="例：さくら" value={form.name||''} onChange={e=>setForm(p=>({...p,name:e.target.value}))}/>
+        </div>
+
+        <div className="form-group">
+          <label className="form-label">出産予定日（LMP基準）</label>
+          <input className="form-inp" type="date" value={form.dueDate||''} onChange={e=>setForm(p=>({...p,dueDate:e.target.value}))}/>
+          {form.dueDate&&(()=>{const w=getWeek(form.dueDate);const d=getDays(form.dueDate);return<div style={{fontSize:11,color:'var(--purple2)',marginTop:5,padding:'4px 10px',background:'var(--purple3)',borderRadius:7,border:'1px solid rgba(181,110,255,.2)'}}>現在 <strong>{w}週</strong>　出産予定日まで <strong>{d}日</strong></div>;})()}
+        </div>
+
+        <div className="form-group">
+          <label className="form-label">出産方法</label>
+          <div className="radio-wrap">
+            {[['natural','🌿 自然分娩'],['planned','🏥 計画分娩（誘発・帝王切開など）']].map(([v,l])=><button key={v} className={`r-btn${form.birthType===v?' sel':''}`} onClick={()=>setForm(p=>({...p,birthType:v}))}>{l}</button>)}
+          </div>
+        </div>
+
+        {form.birthType==='planned'&&(
+          <div className="form-group">
+            <label className="form-label">計画出産予定日</label>
+            <input className="form-inp" type="date" value={form.plannedDate||''} onChange={e=>setForm(p=>({...p,plannedDate:e.target.value}))}/>
+            {form.plannedDate&&(()=>{const d=getDays(form.plannedDate);return<div style={{fontSize:11,color:'#B56EFF',marginTop:5,padding:'4px 10px',background:'var(--purple3)',borderRadius:7,border:'1px solid rgba(181,110,255,.2)'}}>計画出産まで <strong>{d}日</strong></div>;})()}
+          </div>
+        )}
+
+        <div className="form-group">
+          <label className="form-label">パターン</label>
+          <div className="radio-wrap">
+            <button className={`r-btn${form.pattern==='first'?' sel':''}`} onClick={()=>setForm(p=>({...p,pattern:'first'}))}>🌱 初めて・久しぶり</button>
+            <button className={`r-btn${form.pattern==='second'?' sel':''}`} onClick={()=>setForm(p=>({...p,pattern:'second'}))}>👨‍👩‍👧 上の子あり</button>
+          </div>
+        </div>
+
+        {form.pattern==='second'&&(
+          <div className="form-group">
+            <label className="form-label">上の子の情報</label>
+            {(form.children||[]).map((c,i)=>(
+              <div key={i} className="child-box">
+                <div className="child-head">
+                  <input className="form-inp" placeholder="名前" value={c.name||''} onChange={e=>updChild(i,'name',e.target.value)} style={{flex:1,fontSize:12,padding:'7px 10px'}}/>
+                  <input className="form-inp" placeholder="年齢" type="number" min="0" max="15" value={c.age||''} onChange={e=>updChild(i,'age',e.target.value)} style={{width:56,fontSize:12,padding:'7px 8px'}}/>
+                  <button className="remove-btn" onClick={()=>removeChild(i)}>×</button>
+                </div>
+                <div style={{fontSize:10,fontWeight:700,color:'var(--text3)',marginBottom:5,letterSpacing:'.3px'}}>📚 習い事・予定（曜日ごと）</div>
+                {WD.map((day,di)=>(
+                  <div key={day} className="day-row">
+                    <span className="day-lbl">{day}</span>
+                    <input className="form-inp" placeholder="習い事・予定" value={(c.routines||{})[day]||''} onChange={e=>updChildDay(i,'routines',day,e.target.value)} style={{flex:1,fontSize:11,padding:'5px 8px'}}/>
+                    {(c.routines||{})[day]&&<button className="copy-btn" onClick={()=>copyDown(i,'routines',day,di)}>↓コピ</button>}
+                  </div>
+                ))}
+                <div style={{fontSize:10,fontWeight:700,color:'var(--text3)',margin:'8px 0 5px',letterSpacing:'.3px'}}>🚗 送り時間</div>
+                {WD.map((day,di)=>(
+                  <div key={day} className="day-row">
+                    <span className="day-lbl">{day}</span>
+                    <TimeSelect value={(c.pickupFrom||{})[day]||''} onChange={v=>updChildDay(i,'pickupFrom',day,v==='--:00'?'':v)}/>
+                    <button className="copy-btn" onClick={()=>copyDown(i,'pickupFrom',day,di)}>↓コピ</button>
+                    <button className="rest-btn" onClick={()=>updChildDay(i,'pickupFrom',day,'')}>休</button>
+                  </div>
+                ))}
+                <div style={{fontSize:10,fontWeight:700,color:'var(--text3)',margin:'8px 0 5px',letterSpacing:'.3px'}}>🚗 迎え時間</div>
+                {WD.map((day,di)=>(
+                  <div key={day} className="day-row">
+                    <span className="day-lbl">{day}</span>
+                    <TimeSelect value={(c.pickupTo||{})[day]||''} onChange={v=>updChildDay(i,'pickupTo',day,v==='--:00'?'':v)}/>
+                    <button className="copy-btn" onClick={()=>copyDown(i,'pickupTo',day,di)}>↓コピ</button>
+                    <button className="rest-btn" onClick={()=>updChildDay(i,'pickupTo',day,'')}>休</button>
+                  </div>
+                ))}
+              </div>
+            ))}
+            <button className="add-btn" onClick={addChild}>＋ 子供を追加</button>
+          </div>
+        )}
+
+        <div className="form-group">
+          <label className="form-label">在宅ワーク</label>
+          <div className="toggle-row">
+            <span style={{fontSize:12,color:'var(--text2)'}}>在宅ワークがある</span>
+            <div className={`toggle${form.workEnabled?' on':''}`} onClick={()=>setForm(p=>({...p,workEnabled:!p.workEnabled}))}><div className="toggle-k"/></div>
+          </div>
+        </div>
+
+        <div className="form-group">
+          <label className="form-label">食材調達方法</label>
+          <div className="radio-wrap">{[['super','🛒 スーパー'],['delivery','🚚 宅配'],['both','両方']].map(([v,l])=><button key={v} className={`r-btn${form.food===v?' sel':''}`} onClick={()=>setForm(p=>({...p,food:v}))}>{l}</button>)}</div>
+        </div>
+
+        <div className="form-group">
+          <label className="form-label">準備品の総予算</label>
+          <div className="radio-wrap" style={{marginBottom:8}}>
+            <button className={`r-btn${budgetMode==='select'?' sel':''}`} onClick={()=>{setBudgetMode('select');setForm(p=>({...p,budgetOption:150000}))}}>選択式</button>
+            <button className={`r-btn${budgetMode==='custom'?' sel':''}`} onClick={()=>{setBudgetMode('custom');setForm(p=>({...p,budgetOption:'custom'}))}}>手入力</button>
+          </div>
+          {budgetMode==='select'?<select className="form-sel" value={form.budgetOption||150000} onChange={e=>setForm(p=>({...p,budgetOption:parseInt(e.target.value)}))}>
+            {BUDGET_OPTS.map(b=><option key={b.v} value={b.v}>{b.l}</option>)}
+          </select>:<input className="form-inp" type="number" placeholder="例：180000" value={form.budgetCustom||''} onChange={e=>setForm(p=>({...p,budgetCustom:e.target.value}))}/>}
+        </div>
+
+        <div className="form-group">
+          <label className="form-label">準備品選択の基準 <span style={{fontWeight:400,color:'var(--text3)'}}>複数選択可</span></label>
+          <div className="radio-wrap">{[['min','💰 コスパ'],['avg','⭐ 口コミ'],['high','✨ デザイン・利便性']].map(([v,l])=><button key={v} className={`r-btn${(form.defaultAxis||[]).includes(v)?' sel':''}`} onClick={()=>tog('defaultAxis',v)}>{l}</button>)}</div>
+        </div>
+
+        <div className="form-group">
+          <label className="form-label">セルフケア <span style={{fontWeight:400,color:'var(--text3)'}}>複数選択可</span></label>
+          <div className="radio-wrap">{[['beauty','💄 美容タイム'],['stretch','🧘 ストレッチ'],['walk','🚶 散歩']].map(([v,l])=><button key={v} className={`r-btn${(form.selfcare||[]).includes(v)?' sel':''}`} onClick={()=>tog('selfcare',v)}>{l}</button>)}</div>
+        </div>
+
+        <div className="form-group">
+          <label className="form-label">ゴミ出し日 <span style={{fontWeight:400,color:'var(--text3)'}}>複数選択可</span></label>
+          <div className="radio-wrap">{WD.map(d=><button key={d} className={`r-btn${(form.garbage||[]).includes(d)?' sel':''}`} onClick={()=>tog('garbage',d)}>{d}曜</button>)}</div>
+        </div>
+
+        <button className="submit-btn" onClick={()=>form.dueDate&&onDone(form)}>{isFirst?'🌸 スタート！':'変更を保存する'}</button>
+        {!isFirst&&<button className="cancel-btn" onClick={onCancel}>キャンセル</button>}
+      </div>
+    </div>
   );
 }
 
